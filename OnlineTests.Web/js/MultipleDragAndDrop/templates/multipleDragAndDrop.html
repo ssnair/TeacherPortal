@@ -1,0 +1,108 @@
+﻿<div>
+    <style>
+        .row {
+            margin-left: inherit !important;
+            margin-right: inherit !important;
+        }
+    </style>
+    <div class="row multiple-drag-drop">    
+        <div class="col-md-12">                
+            <div class="col-md-7">
+                <div class="row" ng-show="viewMode=='teacher'">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-9">
+                        <h3>{{title}}  <span ng-show="viewMode=='student'">- Student Mode</span></h3>
+                    </div>
+                </div>
+                <div class="row form-inline" ng-show="viewMode=='teacher'">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label class="long">Score only if every value is correct</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" ng-model="settings.strictPunctuation" class="form-control" />
+                        </div>                    
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <div id="maincontent" class="col-md-9">
+                        <div ng-scope-element="drawingContainer"></div>
+                        <div id="questionContent"></div>       
+                    </div>                
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="row">
+                        <label>Options</label>
+                    </div>
+                    <div class="row" ng-show="viewMode=='student'">
+                        <div ng-repeat="p in settings.options" refresh-options="item" class="list-box">
+                            <a id="s_{{p.uuid}}" href="#" draggable="true" data-attached-event="false" data-value="{{p.value}}" class="draggable-option btn btn-success">{{p.value}}</a>
+                        </div>
+                    </div>
+                    <div ng-show="viewMode=='teacher'">
+                        <div class="row">
+                            <div class="col-md-1">Drag</div>
+                            <div class="col-md-3">Value</div>
+                            <div class="col-md-2">Actions</div>
+                        </div>            
+                        <div class="row">
+                            <div ng-repeat="p in settings.options" refresh-options="item">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <a id="{{p.uuid}}" href="#" draggable="true" data-attached-event="false" data-value="{{p.value}}" class="draggable-option glyphicon glyphicon-move btn btn-success"></a>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" ng-model="p.value" ng-change="engine.updateValue(settings,p)" class="form-control"/></div>
+                                    <div class="col-md-2">
+                                        <a href="javascript:void(0)" class="btn btn-danger" ng-click="engine.removeOption(settings,p)">
+                                            <span class="glyphicon glyphicon-minus-sign"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-3">
+                                    <input type="text" ng-model="option.value" class="form-control"/>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="hidden" ng-model="option.uuid" />
+                                    <a href="javascript:void(0)" class="btn btn-primary" ng-click="engine.addOption(settings,option)">
+                                        <span class="glyphicon glyphicon-plus-sign"></span>
+                                    </a>
+                                </div>
+                            </div>                
+                        </div>            
+                    </div>            
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <p></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- important: needed to position the Toolbox on the Question Creator page -->
+    <br/>
+    <br/>
+</div>

@@ -1,0 +1,116 @@
+﻿<div class="row histogram">
+    <div class="col-md-12">
+        <h3>Histogram</h3>
+        <div class="row">
+            <div class="row form-inline" ng-show="viewMode=='teacher'">
+                <div class="form-group">
+                    <label>Title</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.histogram.title" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>X Axis Label</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.histogram.xAxisTitle" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Y Axis Label</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.histogram.yAxisTitle" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" class="form-control" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label>X Axis Min</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.histogram.xAxisMin" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>X Axis Max</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.histogram.xAxisMax" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>X Interval</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.histogram.xInterval" class="form-control" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label>Y Axis Min</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.histogram.yAxisMin" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Y Axis Max</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.histogram.yAxisMax" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Y Interval</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.histogram.yInterval" class="form-control" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label>Increment</label>
+                </div>                  
+                <div class="form-group">
+                    <input type="text" ng-model="settings.histogram.yAxisScale" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Grid Line</label>
+                </div>
+                <div class="form-group">
+                    <select ng-init="settings.histogram.gridLineStyle = lineStyles[0]" ng-model="settings.histogram.gridLineStyle" ng-options="ct.name for ct in lineStyles track by ct.id" ng-change="engine.redraw(settings)" class="form-control"></select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="long">Score only if every point value is correct</label>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" ng-model="settings.histogram.strictPunctuation" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <a href="javascript:void(0)" class="btn btn-primary" ng-click="engine.histogram.reset(settings)">Reset Grid</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div ng-scope-element="histogramDrawingContainer"></div>
+                </div>
+                <div class="col-md-6" ng-show="viewMode=='teacher'">
+                    <div>
+                        <div class="row">
+                            <div class="col-md-2">Label</div>
+                            <div class="col-md-2">Value</div>
+                            <div class="col-md-2">Worth</div>
+                        </div>
+                        <div ng-repeat="p in settings.histogram.intervals">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <input ng-model="p.label" ng-change="engine.redraw(settings)" ng-readonly="viewMode=='student'" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <input ng-model="p.value" ng-enter="engine.histogram.changeValue(settings,p)" ng-blur="engine.histogram.changeValue(settings,p)" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <input ng-model="p.worth" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

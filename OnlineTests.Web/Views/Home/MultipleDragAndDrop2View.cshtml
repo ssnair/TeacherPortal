@@ -1,0 +1,68 @@
+﻿@model OnlineTests.Web.Models.EditQuestionModel
+
+@{
+    ViewBag.Title = "View Question";
+}
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/questionTypes/multipleDragAndDrop2.js"></script>
+    }
+
+<div class="container">
+    <div  id="qTwo" class="my-tab-center">
+        <!-- QUESTION, ANSWERS AND TARGET OPTIONS-->
+        <div class="row">
+
+            <div class="col-md-12">
+                <!-- QUESTION -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Question Text - ID : @Model.QuestionId </div>
+                    <div class="panel-body">
+                       @Html.Raw(@Model.QuestionText)
+                    </div>
+                </div>
+
+                 <!-- ANSWERS  -->
+                <div id="divAnswersContainer" class="panel panel-default panel-primary">
+                    <div class="panel-heading">Answers</div>
+                    <div id="MultipleDragAndDropAnswers"></div>
+                </div>
+
+               <!-- TARGET OPTIONS  -->
+                <div id="divOptionsContainer" class="panel panel-default panel-success">
+                    <div class="panel-heading">Target Options</div>
+                    <div id="MultipleDragAndDropOptions"></div>
+                </div>
+            </div>
+
+            <!-- ANSWERS TEMPLATE -->
+            <div id="multipleDragAndDrop_AnswerTemplate" class="hidden">
+                <div class="qeditor-answer">
+                    <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="{{id}}">
+                        {{answer}}
+                    </div>
+                </div>
+            </div>
+
+            <!-- OPTIONS TEMPLATE -->
+            <div id="multipleDragAndDrop_OptionTemplate" class="hidden">
+                <div class="qeditor-option">
+                    <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="{{id}}" id="{{div_id}}">
+                        {{answerText}}
+                    </div>
+                    <div>
+                        {{option}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var globalSettings = @Html.Raw(Model.Settings);
+    var globalQuestionId = @Model.QuestionId;
+    var globalPageType = "View";
+</script>

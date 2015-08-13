@@ -1,0 +1,114 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Backend", "Backend", "{EEE71DB3-003D-40DF-B253-4B31A4E5B6C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{F63C20E3-3DAE-43BD-BA2C-C3E04FD95D64}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{A8EAC81A-3761-4DF5-A874-0CDC1A24403B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9DBFD2BD-7972-4BCF-B552-27945C8C7A61}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineTests.Common", "OnlineTests.Common\OnlineTests.Common.csproj", "{DC6B9B4A-3EEC-4B45-9055-92E342C76689}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineTests.Service", "OnlineTests.Service\OnlineTests.Service.csproj", "{2B8E8AE9-FB12-41AE-9A36-CCF20563EFDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineTests.DummyRepository", "OnlineTest.DummyRepository\OnlineTests.DummyRepository.csproj", "{23E69530-6FFA-489C-8CEE-B88C100A759D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineTests.BackendTest", "OnlineTests.BackendTest\OnlineTests.BackendTest.csproj", "{1112AB20-9082-4049-B448-1201797A7C46}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Frontend", "Frontend", "{A55AA8E4-4700-4195-BA34-B3C8DD618988}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineTests.Web", "OnlineTests.Web\OnlineTests.Web.csproj", "{019ACCA1-47C6-405D-88CE-443B01C1562F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineTests.Repository", "OnlineTests.Repository\OnlineTests.Repository.csproj", "{0E0EBAE1-51C6-41FC-BE0E-79F0BFC4ACF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineTests.RepositoryTest", "OnlineTests.RepositoryTest\OnlineTests.RepositoryTest.csproj", "{CB0D4CFC-87FF-48CA-B2A5-B2F5193B17A9}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs.collierschools.com:8080/tfs/dwcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = OnlineTest.DummyRepository\\OnlineTests.DummyRepository.csproj
+		SccProjectTopLevelParentUniqueName1 = OnlineTests.Backend.sln
+		SccProjectName1 = OnlineTest.DummyRepository
+		SccLocalPath1 = OnlineTest.DummyRepository
+		SccProjectUniqueName2 = OnlineTests.BackendTest\\OnlineTests.BackendTest.csproj
+		SccProjectTopLevelParentUniqueName2 = OnlineTests.Backend.sln
+		SccProjectName2 = OnlineTests.BackendTest
+		SccLocalPath2 = OnlineTests.BackendTest
+		SccProjectUniqueName3 = OnlineTests.Common\\OnlineTests.Common.csproj
+		SccProjectTopLevelParentUniqueName3 = OnlineTests.Backend.sln
+		SccProjectName3 = OnlineTests.Common
+		SccLocalPath3 = OnlineTests.Common
+		SccProjectUniqueName4 = OnlineTests.Repository\\OnlineTests.Repository.csproj
+		SccProjectTopLevelParentUniqueName4 = OnlineTests.Backend.sln
+		SccProjectName4 = OnlineTests.Repository
+		SccLocalPath4 = OnlineTests.Repository
+		SccProjectUniqueName5 = OnlineTests.RepositoryTest\\OnlineTests.RepositoryTest.csproj
+		SccProjectTopLevelParentUniqueName5 = OnlineTests.Backend.sln
+		SccProjectName5 = OnlineTests.RepositoryTest
+		SccLocalPath5 = OnlineTests.RepositoryTest
+		SccProjectUniqueName6 = OnlineTests.Service\\OnlineTests.Service.csproj
+		SccProjectTopLevelParentUniqueName6 = OnlineTests.Backend.sln
+		SccProjectName6 = OnlineTests.Service
+		SccLocalPath6 = OnlineTests.Service
+		SccProjectUniqueName7 = OnlineTests.Web\\OnlineTests.Web.csproj
+		SccProjectTopLevelParentUniqueName7 = OnlineTests.Backend.sln
+		SccProjectName7 = OnlineTests.Web
+		SccLocalPath7 = OnlineTests.Web
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC6B9B4A-3EEC-4B45-9055-92E342C76689}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC6B9B4A-3EEC-4B45-9055-92E342C76689}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC6B9B4A-3EEC-4B45-9055-92E342C76689}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC6B9B4A-3EEC-4B45-9055-92E342C76689}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B8E8AE9-FB12-41AE-9A36-CCF20563EFDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B8E8AE9-FB12-41AE-9A36-CCF20563EFDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B8E8AE9-FB12-41AE-9A36-CCF20563EFDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B8E8AE9-FB12-41AE-9A36-CCF20563EFDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23E69530-6FFA-489C-8CEE-B88C100A759D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E69530-6FFA-489C-8CEE-B88C100A759D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E69530-6FFA-489C-8CEE-B88C100A759D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E69530-6FFA-489C-8CEE-B88C100A759D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1112AB20-9082-4049-B448-1201797A7C46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1112AB20-9082-4049-B448-1201797A7C46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1112AB20-9082-4049-B448-1201797A7C46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1112AB20-9082-4049-B448-1201797A7C46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{019ACCA1-47C6-405D-88CE-443B01C1562F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{019ACCA1-47C6-405D-88CE-443B01C1562F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{019ACCA1-47C6-405D-88CE-443B01C1562F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{019ACCA1-47C6-405D-88CE-443B01C1562F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E0EBAE1-51C6-41FC-BE0E-79F0BFC4ACF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E0EBAE1-51C6-41FC-BE0E-79F0BFC4ACF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E0EBAE1-51C6-41FC-BE0E-79F0BFC4ACF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E0EBAE1-51C6-41FC-BE0E-79F0BFC4ACF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB0D4CFC-87FF-48CA-B2A5-B2F5193B17A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB0D4CFC-87FF-48CA-B2A5-B2F5193B17A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB0D4CFC-87FF-48CA-B2A5-B2F5193B17A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB0D4CFC-87FF-48CA-B2A5-B2F5193B17A9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2B8E8AE9-FB12-41AE-9A36-CCF20563EFDB} = {EEE71DB3-003D-40DF-B253-4B31A4E5B6C5}
+		{23E69530-6FFA-489C-8CEE-B88C100A759D} = {EEE71DB3-003D-40DF-B253-4B31A4E5B6C5}
+		{0E0EBAE1-51C6-41FC-BE0E-79F0BFC4ACF3} = {EEE71DB3-003D-40DF-B253-4B31A4E5B6C5}
+		{1112AB20-9082-4049-B448-1201797A7C46} = {F63C20E3-3DAE-43BD-BA2C-C3E04FD95D64}
+		{CB0D4CFC-87FF-48CA-B2A5-B2F5193B17A9} = {F63C20E3-3DAE-43BD-BA2C-C3E04FD95D64}
+		{DC6B9B4A-3EEC-4B45-9055-92E342C76689} = {A8EAC81A-3761-4DF5-A874-0CDC1A24403B}
+		{019ACCA1-47C6-405D-88CE-443B01C1562F} = {A55AA8E4-4700-4195-BA34-B3C8DD618988}
+	EndGlobalSection
+EndGlobal

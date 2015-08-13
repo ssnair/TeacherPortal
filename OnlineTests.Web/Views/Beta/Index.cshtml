@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+
+
+@Html.ActionLink("Create Question","Create", "BetaQuestion");
+
+<a id="lnkSaveQuestion" href="#" >Save Question</a>
+
+<script>
+    $(function() {
+        $("#lnkSaveQuestion").click(
+            function () {
+                var request = {
+                    id: null,
+                    subjectId: null,
+                    gradeLevel: null,
+                    questionTypeId: 10,
+                    questionText: "my nice question",
+                    passageId: null,
+                    complexity: null,
+                    difficulty: null,
+                    userId: null,
+                    minScore: null,
+                    maxScore: null,
+                    targ: null,
+                    courseId: null,
+                    notes: 'my beatiful notes',
+                    statusId: 1,
+                    approveUser: null,
+                    components: [
+                        {
+                            order: 1,
+                            componentType: 1,
+                            contents: 'foo bar baz',
+                        },
+                        {
+                            order: 2,
+                            componentType: 2,
+                            contents: '[{id:null, order:1, label: "foo"}, {id:null, order:2, label:"bar"}, {id:null, order:1, label:"baz"}]',
+                        }
+                    ]
+                };
+
+                $.post(
+                    "beta/save",
+                    request,
+                    function(data, textStatus, jqXHR) {
+                        console.log(data);
+                    },
+                    'json');
+            });
+    });
+
+</script>
+

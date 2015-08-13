@@ -1,0 +1,179 @@
+﻿@{
+    ViewBag.LineType = new List<SelectListItem>{
+        new SelectListItem{Value = "x", Text = "Horizontal"},
+        new SelectListItem{Value = "y", Text = "Vertical"}
+    };
+}
+
+<script src="~/Scripts/questionTypes/OnlineDwEditor.js"></script>
+<script type="text/javascript" src="~/Scripts/questionTypes/drawLinesInAChart.js"></script>
+
+<div class="tab-content my-tab-center">
+    <!-- QUESTIONS -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Question Text</div>
+                <div id="divQBody" runat="server" class="qEditor qBody" title="Click to edit the question body">
+                    <span>Click to edit...</span>
+                </div>
+                <input type="hidden" value="" id="hfQBody" runat="server" ClientIDMode="Static"  />
+            </div>
+        </div>
+    </div>
+
+    <!-- ANSWERS -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="drawLinesInAChart_Domain">Domain</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" id="drawLinesInAChart_Domain" onkeypress="return validateNum(event)" class="form-control" value="10" />
+                            </div>
+                            <div class="col-md-2">
+                                <label for="drawLinesInAChart_MajorScale">Scale</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" id="drawLinesInAChart_MajorScale" onkeypress="return validateNum(event)" class="form-control" value="1.0" />
+                            </div>
+
+                            <div class="col-md-2 hidden">
+                                <label for="drawLinesInAChart_MinorScale">Minor Scale</label>
+                            </div>
+                            <div class="col-md-1 hidden">
+                                <input type="text" id="drawLinesInAChart_MinorScale" onkeypress="return validateNum(event)" class="form-control" value="0.5" />
+                            </div>
+                            <div class="col-md-2">
+                                <input type="button" value="Reset Chart" id="drawLinesInAChart_ResetGraph" class="btn btn-primary" />
+                            </div>
+                        </div> 
+                        <br /><br />
+                        <div class="col-md-12">
+                            <div id="drawLinesInAChart_inputsContainer" class="row"></div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-2 col-md-offset-1">
+                                    <a id="drawLinesInAChart_btnAddNewLine" href="javascript:void(0)" class="btn btn-primary btn-xs">Add New Line</a>
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" value="Draw Lines" id="drawLinesInAChart_btnDrawLines" class="btn btn-primary btn-success" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div id="drawLinesInAChartContainer" style="width: 500px; height: 500px; margin-left:5em"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTES  -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Notes</div>
+                <div class="panel-body">
+                    <textarea class="textarea-note" placeholder="enter comments  about this question (optional)" id="drawLinesInAChart_Notes"></textarea>
+    @*                <div style="width: 130px;">
+                        <input type="text" id="worth" style="width: 50px;" placeholder="Worth"/>
+                        pts*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="panel panel-default">
+        <div class="footer-answer" style="display:block;padding-top:100px;text-align:center;">
+            <button id="btnDrawLinesInAChart_Preview" class="btn btn-info" data-toggle="modal" data-target="#drawLinesInAChart_Preview">Preview</button>
+            <button class="btn btn-success" id="bntDrawLinesInAChart_Save">Save</button>
+        </div>
+    </div>
+
+    <!-- EDITOR SECTION -------->
+    <div id="odwDialog" style="display:none;">
+        <textarea id="odwEditor"></textarea>
+    </div>
+
+    <div class="modal fade" id="drawLinesInAChart_Preview"
+        data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="drawLinesInAChart_Preview" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="drawLinesInAChart_closeModal">Close</button>
+                    <h4 class="modal-title">Preview</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="drawLinesInAChart_questionContainer"></p>
+                    <div id="previewAnswerInput">
+                        <div id="drawLinesInAChartPreview_inputsContainer" class="col-md-12"></div><br /><br />
+                        <div class="row">
+                            <div class="col-md-2 col-md-offset-2">
+                                <a id="drawLinesInAChartPreview_btnAddNewLine" href="javascript:void(0)" class="btn btn-primary btn-xs">Add New Line</a>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="button" value="Draw Lines" id="drawLinesInAChartPreview_btnDrawLines" class="btn btn-primary btn-success" />
+                            </div>
+                        </div>
+                    </div><br />
+                    <div id="drawLinesInAChart_previewContainer" style="width: 500px; height:500px; display: inline-block;">
+                    </div>
+                    <p id="drawLinesInAChart_result"></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" id="drawLinesInAChart_submitAnswer" class="btn btn-primary" value="Submit Answer" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="drawLinesInAChart_LineTemplate" class="hidden">
+        <div class="added">
+            <div class="row">
+                <div class="col-md-1">
+                    <label>Line</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control axisValue" name="mitexto[]" onkeypress="return validateNum(event)" id="{{lineValue_id}}" placeholder="AxisValue" />
+                </div>
+                <div class="col-md-3">
+                    @Html.DropDownList("{{lineType_id}}", @ViewBag.LineType as List<SelectListItem>, "Select a Line Type", new { @class = "form-control axisType" })
+                </div>
+                <div class="col-md-1">
+                    <a href="#" id="{{deleteLine_id}}" class="glyphicon glyphicon-remove drawLinesInAChart_deleteColumnValue"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="drawLinesInAChartPreview_LineTemplate" class="hidden">
+        <div class="added">
+            <div class="row">
+                <div class="col-md-1">
+                    <label>Line</label>
+                </div>
+                <div class="col-md-2">
+                    <input type="text" class="form-control axisValue" name="mitexto[]" onkeypress="return validateNum(event)" id="{{lineValue_id}}" placeholder="AxisValue" />
+                </div>
+                <div class="col-md-4">
+                    @Html.DropDownList("{{lineType_id}}", @ViewBag.LineType as List<SelectListItem>, "Select a Line Type", new { @class = "form-control axisType" })
+                </div>
+                <div class="col-md-1">
+                    <a href="#" id="{{deleteLine_id}}" class="glyphicon glyphicon-remove drawLinesInAChartPreview_deleteColumnValue"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IMPORTANT: Required to display the floating Toolbox from the Question Creator page -------->    
+    <br />
+</div>

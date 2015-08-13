@@ -1,0 +1,69 @@
+﻿<div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="row" ng-show="viewMode=='teacher'">
+          <div class="col-md-6" ng-if="uploader">
+            <label for="canvas-type">Background image</label>
+            <input type="file" nv-file-select uploader="uploader" /><br />
+            <div>
+              File: <span ng-bind="uploader.queue[0].file.name"></span>({{ uploader.queue[0].file.size/1024/1024|number:2 }} MB)<br />
+            </div>
+          </div>
+        </div>
+        <div class="row" ng-show="viewMode=='teacher'">
+          <div class="col-md-4">
+            <label for="grid-width">Width</label>
+            <input id="grid-width" type="text" ng-model="settings.grid.width" ng-change="engine.redraw(settings)" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label for="grid-height">Height</label>
+            <input id="grid-height" type="text" ng-model="settings.grid.height" ng-change="engine.redraw(settings)" class="form-control" />
+          </div>
+        </div>
+        <div class="row">
+          <span ng-repeat="obj in objectTypes">
+            <a href="javascript:void(0)" ng-click="setAction(obj.action)" class="btn btn-default"
+              ng-show="viewMode=='teacher' || (obj.teacherOnly==false && settings.answerType.id !== 'click-inside-shapes')" 
+              ng-class="{'btn-primary' : settings.currentAction==obj.action}">{{obj.name}}</a>
+          </span>
+        </div>
+
+        <div class="row">
+          <div ng-repeat="item in uploader.queue" class="shapes-over-images--background-image">
+            <div ng-thumb="{ file: item._file, height: 300 }"></div>
+          </div>
+        <div class="shapes-over-images--background-image" ng-show="flagUploadedFile==false">
+            <img id="thumb" src="" height: "300px"/>
+        </div>
+
+        </div>
+        <div ng-scope-element="drawingContainer" class="shapes-over-images--drawing-area"></div>
+      </div>
+      <div class="col-md-4" ng-show="viewMode=='teacher'">
+        <div class="row" ng-show="viewMode=='teacher'">
+          <label for="canvas-type">Answer Type</label>
+          <select ng-model="settings.answerType" ng-options="at.name for at in answerTypes track by at.id" ng-change="engine.redraw(settings)" class="form-control"></select>
+        </div>
+          <div class="row">
+          <div class="col-md-2" class="form-control">Position</div>
+          <div class="col-md-2" class="form-control">Size</div>
+          <div class="col-md-3">Worth</div>
+          <div class="col-md-2">Area</div>
+          <div class="col-md-3">Threshold</div>
+        </div>
+        <div class="row" ng-repeat="sh in settings.shapes">
+          <div class="col-md-2" class="form-control">({{sh.position.x}},{{sh.position.y}})</div>
+          <div class="col-md-2" class="form-control">{{sh.size.width}}x{{sh.size.height}}</div>
+          <div class="col-md-3">
+            <input type="text" ng-model="sh.worth" class="form-control" />
+          </div>
+          <div class="col-md-2">{{engine.getArea(sh) | number:2}}</div>
+          <div class="col-md-3">
+            <input type="text" ng-model="sh.threshold" class="form-control" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+﻿@model OnlineTests.Web.Models.EditQuestionModel
+
+@{
+    ViewBag.Title = "View Question";
+}
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/questionTypes/movePoints.js"></script>
+    }
+
+<div class="container">
+    <div  id="qFive">
+        <!-- QUESTION AND ANSWER-->
+        <div class="row">
+
+            <!-- QUESTION -->
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Question Text - ID : @Model.QuestionId </div>
+                    <div class="panel-body">
+                        @Html.Raw(@Model.QuestionText)
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end class="row" -->
+
+        <!-- ANSWERS  -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Answers</div>
+            <div class="panel-body">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="movePointsInALine_MinValue">Minimum Value</label>
+                        </div>
+                        <div class="col-md-2"> 
+                            <input type="text" id="movePointsInALine_MinValue" class="form-control" value="-5" readonly="true"  />
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="movePointsInALine_MaxValue">Maximum Value</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="movePointsInALine_MaxValue" class="form-control" value="5" readonly="true"  />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="movePointsInALine_MajorScale">Major Scale</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="movePointsInALine_MajorScale" class="form-control" value="1.0" readonly="true"  />
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="movePointsInALine_MinorScale">Minor Scale</label>
+                        </div>
+                        <div class="col-md-2">
+                            <input type="text" id="movePointsInALine_MinorScale" class="form-control" value="0.5" readonly="true" />
+                        </div>  
+                    </div>
+                </div> <!-- end class="col-md-8" -->
+            </div>
+            <div class="row">
+                <div id="movingPointsContainer" style="width: 900px; height: 200px"></div>
+            </div> <!-- end class="row" -->
+
+            <div class="row">
+                <div class="col-md-5 center-block" style="float:none;">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sample icon-btn1 btn-add-interval" data-val="closed:closed"></button>
+                        <button type="button" class="btn btn-sample icon-btn2 btn-add-interval" data-val="closed:open"></button>
+                        <button type="button" class="btn btn-sample icon-btn3 btn-add-interval" data-val="open:closed"></button>
+                        <button type="button" class="btn btn-sample icon-btn4 btn-add-interval" data-val="open:open""></button>
+                    </div><br />
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sample icon-btn5 btn-add-interval" data-val="minus-infinite:open" ></button>
+                        <button type="button" class="btn btn-sample icon-btn6 btn-add-interval" data-val="minus-infinite:closed"></button>
+                        <button type="button" class="btn btn-sample icon-btn7 btn-add-interval" data-val="open:plus-infinite"></button>
+                        <button type="button" class="btn btn-sample icon-btn8 btn-add-interval" data-val="closed:plus-infinite" ></button>
+                    </div>
+                </div>
+                <div class="col-md-5 center-block" style="float:none;">
+                    <div  id="removeIntervalsContainer">
+                    </div>
+                </div>
+            </div>
+        </div> <!-- end class="panel panel-default" -->
+
+    </div> <!-- id="qFive" -->
+</div> <!-- "container" -->
+
+<script>
+    var globalSettings = @Html.Raw(Model.Settings);
+    var globalQuestionId = @Model.QuestionId;
+    var globalPageType = "View";
+</script>

@@ -1,0 +1,102 @@
+﻿<div class="row scatter-plot">
+    <div class="col-md-12">
+        <h3>Scatter Plot</h3>
+        <div class="row">
+            <div class="row form-inline" ng-show="viewMode=='teacher'">
+                <div class="form-group">
+                    <label>Title</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.scatterPlot.title" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>X Axis Label</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.scatterPlot.xAxisTitle" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Y Axis Label</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.scatterPlot.yAxisTitle" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" class="form-control" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label>Y Axis Min</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.scatterPlot.yAxisMin" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Y Axis Max</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.scatterPlot.yAxisMax" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Y Axis Scale</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.scatterPlot.yAxisScale" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" class="form-control" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label>Increment</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.scatterPlot.yIncrement" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Grid Line</label>
+                </div>
+                <div class="form-group">
+                    <select ng-init="settings.scatterPlot.gridLineStyle = lineStyles[0]" ng-model="settings.scatterPlot.gridLineStyle" ng-options="ct.name for ct in lineStyles track by ct.id" ng-change="engine.redraw(settings)" class="form-control"></select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label class="long">Score only if every point value is correct</label>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" ng-model="settings.scatterPlot.strictPunctuation" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div ng-scope-element="scatterPlotDrawingContainer"></div>
+                </div>
+                <div class="col-md-6" ng-show="viewMode=='teacher'">
+                    <div>
+                        <div class="row">
+                            <div class="col-md-2"><a href="javascript:void(0)" class="btn btn-primary" ng-click="engine.scatterPlot.addPoint(settings)">Add Point</a></div>
+                        </div>                        
+                        <div class="row">
+                            <div class="col-md-2">Label</div>
+                            <div class="col-md-2">Value</div>
+                            <div class="col-md-2">Worth</div>
+                        </div>
+                        <div ng-repeat="p in settings.scatterPlot.points">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <input ng-model="p.label" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" maxlength="25" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <input ng-model="p.value" ng-enter="engine.scatterPlot.changeValue(settings,p)" ng-blur="engine.scatterPlot.changeValue(settings,p)" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <input ng-model="p.worth" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="javascript:void(0)" class="btn btn-danger" ng-click="engine.scatterPlot.removePoint(settings,p)">
+                                        <span class="glyphicon glyphicon-minus-sign"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

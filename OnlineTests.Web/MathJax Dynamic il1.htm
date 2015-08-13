@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>MathJax Dynamic Math Test Page with ASCIIMath Input</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+
+<!--<style>
+input {margin-top: .7em}
+.output {
+  border: 1px solid black;
+  padding: 1em;
+  width: auto;
+  position: absolute; top: 0; left: 2em;
+  min-width: 20em;
+}
+.box {position: relative}
+</style>-->
+
+<!-- Refresh MathJax syntax (http://stackoverflow.com/questions/15766994/let-mathjax-reload-page-after-an-rpc)                                       -->
+<script type="text/javascript">
+    function reloadMathJax(target) {
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub, target]);
+    }
+
+    function reloadAllMathJax() {
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+    function copyMath() {
+        var outputdiv = document.getElementById('divOutput');
+        var inputdiv = document.getElementById('MathInput');
+        outputdiv.innerHTML = inputdiv.value;
+        var outputdiv1 = document.getElementById('divOutput1');
+        var inputdiv1 = document.getElementById('MathInput1');
+        outputdiv1.innerHTML = inputdiv1.value;
+        //document.getElementById('divOutput').innerHTML(document.getElementById('MathInput').value);
+        //document.getElementById('divOutput1').innerHTML(document.getElementById('MathInput1').value);
+    }
+
+</script>
+
+</head>
+<body>
+
+<p>
+The page can include \(\rm\TeX\) code as well as ASCIIMath: `root(3)(x+1)`.
+</p>
+
+<p>
+Type some ASCIIMath code and press RETURN:<br /> 
+<!--<input id="MathInput" size="80" onkeyup="UpdateMath(this.value)" />-->
+</p>
+
+<input id="MathInput" size="80" value="\(h(x) = 3x^2+7\)"  />
+<input id="MathInput1" size="80" value="\(g(x) = \sqrt{7x+3}\)"  />
+
+<p>Copy all math</p>
+<input id="doMath" type="submit" onclick="copyMath()" />
+
+<p>Refresh one math</p>
+<input id="Submit1" type="submit" onclick="reloadMathJax('divOutput')" />
+
+<p>Refresh all math</p>
+<input id="Submit2" type="submit" onclick="reloadAllMathJax()" />
+
+
+<p>You typed:</p>
+<div id="divOutput">"hello"</div>
+
+<div id="divOutput1">"hello"</div>
+
+</body>
+</html>

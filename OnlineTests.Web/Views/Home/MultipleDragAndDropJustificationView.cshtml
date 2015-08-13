@@ -1,0 +1,95 @@
+﻿@model OnlineTests.Web.Models.EditQuestionModel
+
+@{
+    ViewBag.Title = "View Question";
+}
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/questionTypes/multipleDragAndDropJustification.js"></script>
+    }
+
+<div class="container">
+    <div  id="qTwo" class="my-tab-center">
+        <div class="row">
+
+            <div class="col-md-12">
+                <!-- QUESTION -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Question Text - ID : @Model.QuestionId </div>
+                    <div class="panel-body">
+                       @Html.Raw(@Model.QuestionText)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                 <!-- Method Choices  -->
+                <div id="divAnswersJContainer" class="panel panel-default panel-primary mddAnswerContainerFourColumn">
+                    <div class="panel-heading">Method Choices</div>
+                    <div id="MultipleDragAndDropAnswersJ"></div>
+                </div>
+
+                 <!-- Justification Choices  -->
+                <div id="divAnswersJustificationContainer" class="panel panel-default panel-primary mddOptionContainerFourColumn">
+                    <div class="panel-heading">Justification Choices</div>
+                    <div id="MultipleDragAndDropAnswersJustification"></div>
+                </div>
+
+               <!-- Method Answers  -->
+                <div id="divOptionsJContainer" class="panel panel-default panel-success mddOptionContainerFourColumn">
+                    <div class="panel-heading">Method Answers</div>
+                    <div id="MultipleDragAndDropOptionsJ"></div>
+                </div>
+
+                <!-- Justification Answers  -->
+                <div id="divOptionsJustificationContainer" class="panel panel-default panel-success mddOptionContainerFourColumn">
+                    <div class="panel-heading">Justification Answers</div>
+                    <div id="MultipleDragAndDropOptionsJustification"></div>
+                </div>
+            </div>
+
+            <!-- TEMPLATES TEMPLATES TEMPLATES TEMPLATES TEMPLATES -->
+            <div id="multipleDragAndDrop_AnswerTemplateJ" class="hidden">
+                <div class="qeditor-answer-block">
+                    <div class="btn btn-primary draggable-answer AnswerOption_55px_44px displayBlock" data-val="{{id}}">
+                        {{answer}}
+                    </div>
+                </div>
+            </div>
+            <div id="multipleDragAndDrop_AnswerJustificationTemplate" class="hidden">
+                <div class="qeditor-answer-block">
+                    <div class="btn btn-primary draggable-answer-j AnswerOption_55px_44px displayBlock" data-val="{{id_aj}}">
+                        {{answer_justification}}
+                    </div>
+                </div>
+            </div>
+
+            <div id="multipleDragAndDrop_OptionTemplateJ" class="hidden">
+                <div class="qeditor-option-block">
+                    <div class="droppable-option btn btn-success AnswerOption_55px_44px displayBlock" data-val="{{id}}" id="{{div_id}}">
+                        {{answerText}}
+                    </div><br/>
+                    <div>
+                        {{option}}
+                    </div>
+                </div>
+            </div>
+            <div id="multipleDragAndDrop_OptionJustificationTemplate" class="hidden">
+                <div class="qeditor-option-block">
+                    <div class="droppable-option-j btn btn-success AnswerOption_55px_44px displayBlock" data-val="{{id}}" id="{{div_id_oj}}">
+                        {{answerJustificationText}}
+                    </div><br/>
+                    <div>
+                        {{optionJustification}}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var globalSettings = @Html.Raw(Model.Settings);
+    var globalQuestionId = @Model.QuestionId;
+    var globalPageType = "View";
+</script>

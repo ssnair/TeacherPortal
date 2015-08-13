@@ -1,0 +1,81 @@
+﻿@model OnlineTests.Web.Models.EditQuestionModel
+
+@{
+    ViewBag.Title = "View Question";
+
+    ViewBag.Functions = new List<SelectListItem>{
+        new SelectListItem{Value = "sin", Text = "Sin"},
+        new SelectListItem{Value = "cos", Text = "Cos"}
+    };
+}
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/questionTypes/movePointsInAChart.js"></script>
+    }
+
+<div class="container">
+    <div  id="qFour">
+        <!-- QUESTION AND ANSWER-->
+        <div class="row">
+
+            <!-- QUESTION -->
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Question Text - ID : @Model.QuestionId </div>
+                    <div class="panel-body">
+                       @Html.Raw(@Model.QuestionText)
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANSWERS  -->
+            <div class="panel-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Answers</div>
+                        <div class="panel-body">
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="movePointsInAChart_Domain">Domain</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" id="movePointsInAChart_Domain" class="form-control" value="10" readonly="True" />
+                                    </div>
+                                    <div class="col-md-2" style="display:none">
+                                        @Html.DropDownList("movePointsInAChart_Function", @ViewBag.Functions as List<SelectListItem>, "Select a function", new { @class = "form-control" })
+                                    </div>
+                                </div> 
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="movePointsInAChart_MajorScale">Major Scale</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" id="movePointsInAChart_MajorScale" class="form-control" value="1.0" readonly="true" />
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label for="movePointsInAChart_MinorScale">Minor Scale</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" id="movePointsInAChart_MinorScale" onkeypress="return validateNum(event)" class="form-control" value="0.5" readonly="true" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div> <!-- class="col-md-10" -->
+
+                    <div class="row">
+                        <div id="movingPointsInAChartContainer" style="width: 500px; height: 500px; margin-left:5em"></div>
+                    </div>                    
+                </div> <!-- end class="panel-body" -->
+            </div> <!-- end class="row" -->
+        </div> <!-- end class="row" -->
+    </div>
+</div>
+
+
+<script>
+    var globalSettings = @Html.Raw(Model.Settings);
+  
+    var globalQuestionId = @Model.QuestionId;
+    var globalPageType = "View";
+</script>

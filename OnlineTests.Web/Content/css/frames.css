@@ -1,0 +1,23 @@
+body{
+	width: 98%;
+	margin: 0 auto;
+}
+
+#div-iframe-content{
+	height:100%;
+}
+
+#iframe_content {
+	max-width: 100%;
+	width:100%;
+	height: auto;
+}
+
+.my-nav-space{
+	margin-bottom:5px;
+}
+
+.my-tab-center{
+	margin-top: 50px;
+	text-align: center;
+}

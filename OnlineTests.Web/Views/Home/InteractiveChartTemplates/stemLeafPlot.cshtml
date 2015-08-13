@@ -1,0 +1,78 @@
+﻿<div class="row stem-leaf-plot">
+    <div class="col-md-12">
+        <h3>Stem and Leaf Plot</h3>
+        <div class="row">
+            <div class="row form-inline">
+                <div>
+                    <div class="form-group">
+                        <label>Leaf delimiter</label>
+                    </div>
+                    <div class="form-group" ng-show="viewMode=='teacher'">
+                        <input type="text" ng-model="settings.stemLeafPlot.leafDelimiter" ng-enter="engine.redraw(settings)" ng-blur="engine.redraw(settings)" maxlength="1" class="form-control" />
+                    </div>
+                    <div class="form-group" ng-show="viewMode=='student'">
+                       " <strong>{{settings.stemLeafPlot.leafDelimiter}}</strong> "
+                    </div>
+                </div>
+                <div ng-show="viewMode=='teacher'">
+                    <div class="form-group">
+                        <label class="long">Score only if every point value is correct</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" ng-model="settings.stemLeafPlot.strictPunctuation" class="form-control" />
+                    </div>
+                </div>                
+            </div>
+            <div class="row">
+                <div class="col-md-6 graph">
+                    <div ng-show="settings.chartType.id != 'stem-leaf-plot'" ng-scope-element="stemLeafPlotDrawingContainer"></div>
+                    <div class="row header-stem">
+                        <div class="col-md-2 stem">Stem&nbsp;</div>
+                        <div class="col-md-8">Leafs</div>
+                    </div>
+                    <div ng-repeat="p in settings.stemLeafPlot.stems">
+                        <div class="row">
+                            <div class="col-md-2 stem">
+                                {{p.label}}
+                            </div>
+                            <div class="col-md-8">
+                                {{p.value.join(' ')}}
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <div class="row">
+                            <div class="col-md-2"><a href="javascript:void(0)" class="btn btn-primary" ng-click="engine.stemLeafPlot.addStem(settings)">Add Stem</a></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2">Stem</div>
+                            <div class="col-md-6">Leaf</div>
+                            <div class="col-md-2" ng-show="viewMode=='teacher'">Worth</div>
+                        </div>
+                        <div ng-repeat="p in settings.stemLeafPlot.stems">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <input ng-model="p.label" ng-change="engine.redraw(settings)" class="form-control" />
+                                </div>
+                                <div class="col-md-6">
+                                    <input ng-model="p.stringValue" ng-change="engine.redraw(settings)" class="form-control" />
+                                </div>
+                                <div class="col-md-2" ng-show="viewMode=='teacher'">
+                                    <input ng-model="p.worth" class="form-control" />
+                                </div>
+                                <div class="col-md-2">
+                                    <a href="javascript:void(0)" class="btn btn-danger" ng-click="engine.stemLeafPlot.removeStem(settings,p)">
+                                        <span class="glyphicon glyphicon-minus-sign"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,131 @@
+﻿<script src="~/Scripts/questionTypes/OnlineDwEditor.js"></script>
+<script src="~/Scripts/questionTypes/DragOrder-1.0.js"></script>
+
+<style type="text/css">
+    /* override new widget style to match style on OT_qCreator */
+    .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+        border: 1px solid #aaaaaa/*{borderColorActive}*/;
+        background: #ffffff/*{bgColorActive}*/ url(images/ui-bg_glass_65_ffffff_1x400.png)/*{bgImgUrlActive}*/ 50%/*{bgActiveXPos}*/ 50%/*{bgActiveYPos}*/ repeat-x/*{bgActiveRepeat}*/;
+        font-weight: normal/*{fwDefault}*/;
+        color: #212121/*{fcActive}*/;
+    }
+    .ui-widget-header {
+        border: 1px solid #aaaaaa/*{borderColorHeader}*/;
+        background: #cccccc/*{bgColorHeader}*/ url(images/ui-bg_highlight-soft_75_cccccc_1x100.png)/*{bgImgUrlHeader}*/ 50%/*{bgHeaderXPos}*/ 50%/*{bgHeaderYPos}*/ repeat-x/*{bgHeaderRepeat}*/;
+        color: #222222/*{fcHeader}*/;
+        font-weight: bold;
+    }
+    .ui-widget-content {
+        border: 1px solid #aaaaaa/*{borderColorContent}*/;
+        background: #ffffff/*{bgColorContent}*/ url(images/ui-bg_flat_75_ffffff_40x100.png)/*{bgImgUrlContent}*/ 50%/*{bgContentXPos}*/ 50%/*{bgContentYPos}*/ repeat-x/*{bgContentRepeat}*/;
+        color: #222222/*{fcContent}*/;
+    }
+    .ui-widget {
+        font-family: Verdana,Arial,sans-serif/*{ffDefault}*/;
+        font-size: 1.1em/*{fsDefault}*/;
+    }
+    .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited {
+        color: #212121/*{fcActive}*/;
+        text-decoration: none;
+    }
+    .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active {
+        border: 1px solid #aaaaaa/*{borderColorActive}*/;
+        background: #ffffff/*{bgColorActive}*/ url(images/ui-bg_glass_65_ffffff_1x400.png)/*{bgImgUrlActive}*/ 50%/*{bgActiveXPos}*/ 50%/*{bgActiveYPos}*/ repeat-x/*{bgActiveRepeat}*/;
+        font-weight: normal/*{fwDefault}*/;
+        color: #212121/*{fcActive}*/;
+    }
+    .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+        border: 1px solid #d3d3d3/*{borderColorDefault}*/;
+        background: #e6e6e6/*{bgColorDefault}*/ url(images/ui-bg_glass_75_e6e6e6_1x400.png)/*{bgImgUrlDefault}*/ 50%/*{bgDefaultXPos}*/ 50%/*{bgDefaultYPos}*/ repeat-x/*{bgDefaultRepeat}*/;
+        font-weight: normal/*{fwDefault}*/;
+        color: #555555/*{fcDefault}*/;
+    }
+</style>
+
+<div class="tab-content my-tab-center">
+    <!-- QUESTIONS -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Question Text</div>
+                <div id="divQBody" runat="server" class="qEditor qBody" title="Click to edit the question body">
+                    <span>Click to edit...</span>
+                </div>
+                <input type="hidden" value="" id="hfQBody" runat="server" ClientIDMode="Static" />
+                @*<asp:HiddenField ID="hfQBody" runat="server" ClientIDMode="Static" />*@
+            </div>
+        </div>
+    </div>
+
+    <!-- ANSWERS  -->
+    <div class="panel panel-default">
+        <div class="panel-heading">Answers</div>
+        <div class="panel-body">
+
+            @*plugin drag and order*@
+            <div id="DragOrderContainer" style="display: none;"></div>
+
+            <div class="header-answer">
+                <b>Text: </b>
+                <input type="text" id="txtAnswer" />
+                @*            <b>Worth: </b>
+                    <input type="text" id="txtWorth" style="width: 25px;" />*@
+                <input class="btn btn-info" type="button" id="btnAdd" value="Add" />
+                <p id="smsError"></p>
+            </div>
+            <div id="body-answer"></div>
+        </div>
+    </div>
+
+    <!-- NOTES  -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Notes</div>
+                <div class="panel-body">
+                    <textarea id="txtNote" class="textarea-note" placeholder="enter comments  about this question (optional)"></textarea>
+                    @*                <div style="width: 130px;">
+                            <input type="text" id="worth" style="width: 50px;" placeholder="Worth"/>
+                            pts
+                        </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="panel panel-default">
+        <div class="footer-answer" style="display:block;padding-top:100px;text-align:center;">
+            <button id="btnModalPreview" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-lg">Preview</button>
+            <button id="btnDragAndOrder_Save" class="btn btn-success">Save</button>
+        </div>
+    </div>
+
+    <!-- EDITOR SECTION -------->
+    <div id="odwDialog" style="display:none;">
+        <textarea id="odwEditor"></textarea>
+    </div>
+
+    <div id="basicModal" class="modal fade bs-example-modal-lg" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="closeModal">Close</button>
+                    <h4 class="modal-title" id="myModalLabel">Preview Test</h4>
+                </div>
+                <div id="cont-modal-body" class="modal-body">
+                    <p id="pQuestionPreview"></p>
+                    <div id="containerPreview">
+                    </div>
+                    <div id="msgResult"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="submitAnswer" class="btn btn-primary">Submit Answer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IMPORTANT: Required to display the floating Toolbox from the Question Creator page -------->    
+    <br />
+</div>

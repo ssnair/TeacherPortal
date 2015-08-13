@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html ng-app="onlineTestApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+
+    <link href="~/Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <link href="~/Content/css/frames.css" rel="stylesheet">
+    <link href="~/Content/css/Question.css" rel="stylesheet" />
+    <link href="~/Content/css/main.css" rel="stylesheet" />
+    <link href="~/Content/css/bootstrap-dialog.min.css" rel="stylesheet" />
+@*    <script src="https://data.collierschools.com/onlinedw/Content/ckeditor/ckeditor.js"></script>
+    <script src="https://data.collierschools.com/onlinedw/Content/ckeditor/adapters/jquery.js"></script>*@
+    <link href="~/Content/css/ng-ckeditor.css" rel="stylesheet" />
+    <script src="~/Content/ckeditor/ckeditor.js"></script>
+    <script src="~/Content/ckeditor/adapters/jquery.js"></script>
+    <script src="~/Content/ckfinder/ckfinder.js"></script>
+
+    <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-ui.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="~/Content/css/jquery-ui.css" />
+    <script type="text/javascript" src="~/Scripts/jquery.ui.touch-punch.min.js"></script>
+    <script src="~/Scripts/questionTypes/libraries.js"></script>
+    <script type="text/javascript" src="~/Scripts/raphael-min.js"></script>
+    <script src="~/Scripts/jquery.flot.js"></script>
+    <script src="~/Scripts/jquery.flot.categories.js"></script>
+    <script src="~/Scripts/bootstrap-dialog.min.js"></script>
+    <link href="~/Content/css/DragOrder-Styles.css" rel="stylesheet" />
+    <script src="~/Scripts/questionTypes/libValidation.js"></script>
+    <link href="~/Content/css/DragMultipleDrop-Styles.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <!-- scripts and styles used by the TE Phase II pages   -->
+    <link rel="stylesheet" href="~/css/app.css" />
+    <link href="~/Content/spectrum/css/spectrum.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Content/spectrum/js/spectrum.js"></script>
+    <script type="text/javascript" src="~/Content/pixastic/js/pixastic.js"></script>    
+    <script type="text/javascript" src="~/Content/pixastic/js/pixastic.effects.js"></script>
+    <script type="text/javascript" src="~/Content/pixastic/js/pixastic.worker.js"></script>
+
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div ng-controller="QuestionCtrl">
+        <div class="row">
+            <!-- QUESTIONS -->
+            <div class="col-md-9">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Question Text</div>
+                    <div class="panel-body" ng-show="viewMode=='teacher'">
+                        <textarea ckeditor="editorOptions" name="questionTextTeacher" ng-model="questionText" ng-change="save()"></textarea>
+                    </div>
+                    <div class="panel-body" ng-show="viewMode=='student'">
+                        <textarea ckeditor="editorOptions" name="questionTextStudent" disabled="disabled" ng-model="questionText"></textarea>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- NOTES  -->
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Notes</div>
+                    <div class="panel-body">
+                        <textarea class="textarea-note" placeholder="Enter comments about this question" id="questionNotes" ng-model="questionNotes"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="panel panel-default">
+                <!-- ANSWERS  -->
+                <div class="panel-body">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            @RenderBody()
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <div class="btn-group">
+                <label class="btn btn-default" ng-model="viewMode" btn-radio="'teacher'" ng-change="toggleViewMode()">Teacher Mode</label>
+                <label class="btn btn-default" ng-model="viewMode" btn-radio="'student'" ng-change="toggleViewMode()">Student Mode</label>
+            </div>
+            <button id="btnSubmitAnswer" class="btn btn-info" ng-show="viewMode=='student'" ng-click="submitAnswer()">Submit Answer</button>
+            <button class="btn btn-success" ng-show="viewMode=='teacher'" ng-click="saveQuestion()">Save</button>
+        </div>
+    </div>
+    <script src="~/lib/angular/angular.js" type="text/javascript"></script>
+    <script src="~/lib/angular/angular-sanitize.js"></script>
+    <script src="~/js/app.js"></script>
+    <script type="text/javascript" src="~/Scripts/raphael-min.js"></script>
+    <script src="~/Scripts/ng-ckeditor.min.js"></script>
+    <script src="~/Scripts/ng-spectrum-colorpicker.js"></script>
+    <script src="~/lib/angular/ui-bootstrap-custom-0.12.1.min.js"></script>
+    <script src="~/lib/angular-file-upload.min.js"></script>
+    <script src="~/js/Question/services.js"></script>
+    <script src="~/js/InteractiveChart/services.js"></script>
+    <script src="~/js/DivideAndSelectShape/services.js"></script>
+
+    @RenderSection("Scripts", false)
+
+     <!-- used to resize the ifTech iframe automatically (when the content changes the iframe resizes) -->
+    <script src="~/Scripts/iframe-resizer-master/js/iframeResizer.contentWindow.min.js"></script>
+</body>
+</html>

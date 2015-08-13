@@ -1,0 +1,129 @@
+﻿@{
+    ViewBag.Functions = new List<SelectListItem>{
+        new SelectListItem{Value = "1", Text = "Sin"},
+        new SelectListItem{Value = "2", Text = "Cos"},
+         new SelectListItem{Value = "3", Text = "Linear"},
+        new SelectListItem{Value = "4", Text = "X^2"}
+    };
+}
+
+<script src="~/Scripts/questionTypes/OnlineDwEditor.js"></script>
+<script src="~/Scripts/questionTypes/movePointsInAChart.js"></script>
+
+<div class="tab-content my-tab-center">
+<!-- QUESTIONS -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Question Text</div>
+                <div id="divQBody" runat="server" class="qEditor qBody" title="Click to edit the question body">
+                    <span>Click to edit...</span>
+                </div>
+                <input type="hidden" value="" id="hfQBody" runat="server" ClientIDMode="Static"  />
+            </div>
+        </div>
+    </div>
+
+    <!-- ANSWERS  -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="movePointsInAChart_Domain">Domain</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" id="movePointsInAChart_Domain" onkeypress="return validateNum(event)" class="form-control" value="10" />
+                            </div>
+                            <div class="col-md-2">
+                                @Html.DropDownList("movePointsInAChart_Function", @ViewBag.Functions as List<SelectListItem>, "Select a function", new { @class = "form-control" })
+                            </div>
+                        </div> 
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label for="movePointsInAChart_MajorScale">Major Scale</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" id="movePointsInAChart_MajorScale" onkeypress="return validateNum(event)" class="form-control" value="1.0" />
+                            </div>
+
+                            <div class="col-md-2">
+                                <label for="movePointsInAChart_MinorScale">Minor Scale</label>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" id="movePointsInAChart_MinorScale" onkeypress="return validateNum(event)" class="form-control" value="0.5" />
+                            </div>
+                            <div class="col-md-2">
+                                <input type="button" value="Reset Graph" id="movePointsInAChart_ResetGraph" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div id="movingPointsInAChartContainer" style="width: 500px; height: 500px; margin-left:5em"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTES  -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Notes</div>
+                <div class="panel-body">
+                    <textarea class="textarea-note" placeholder="enter comments  about this question (optional)" id="movePointsInAChart_Notes"></textarea>
+    @*                <div style="width: 130px;">
+                        <input type="text" id="worth" style="width: 50px;" placeholder="Worth"/>
+                        pts
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTIONS -->
+    <div class="panel panel-default">
+        <div class="footer-answer" style="display:block;padding-top:100px;text-align:center;">
+            <button id="btnMovePointsInAChart_Preview" class="btn btn-info" data-toggle="modal" data-target="#movePointsInAChart_Preview">Preview</button>
+            <button class="btn btn-success" id="bntMovePointsInAChart_Save">Save</button>
+        </div>
+    </div>
+
+    <!-- EDITOR SECTION -------->
+    <div id="odwDialog" style="display:none;">
+        <textarea id="odwEditor"></textarea>
+    </div>
+
+    <div class="modal fade" id="movePointsInAChart_Preview"
+        data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="movePointsInAChart_Preview" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="movePointsInAChart_closeModal">Close</button>
+                    <h4 class="modal-title">Preview</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="movePointsInAChart_questionContainer"></p>
+
+                    <div id="movePointsInAChart_previewContainer" style="width: 500px; height:500px">
+                    </div>
+                    <p id="movePointsInAChart_result"></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" id="movePointsInAChart_submitAnswer" class="btn btn-primary" value="Submit Answer" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IMPORTANT: Required to display the floating Toolbox from the Question Creator page -------->    
+    <br />
+</div>

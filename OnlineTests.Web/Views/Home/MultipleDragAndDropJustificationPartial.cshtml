@@ -1,0 +1,266 @@
+﻿<script src="~/Scripts/questionTypes/OnlineDwEditor.js"></script>
+<script src="~/Scripts/questionTypes/multipleDragAndDropJustification.js"></script>
+
+<div class="tab-content my-tab-center">  
+    <!-- QUESTIONS -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Question Text</div>
+                <div class="panel-body">
+                    <div id="divQBody" runat="server" class="qEditor qBody" title="Click to edit the question body">
+                        <span>Click to edit...</span>
+                    </div>
+                    <input type="hidden" value="" id="hfQBody" runat="server" ClientIDMode="Static"  />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ANSWERS  -->
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+            <div id="MultipleDragAndDropContainer">
+                <!-- Methods  -->
+                <div class="col-md-12">
+                    <div class="col-md-6 panel panel-primary">
+                        <div class="panel-heading">Options - Methods</div>
+                        <div class="row" style="padding: 10px;">
+                            <div class="panel-body">
+                                <div id="divAnswerMethod" runat="server" class="qEditor qBody" title="Click to edit the question body">
+                                    <span>Click to edit...</span>
+                                </div>
+                                <input type="hidden" value="" id="hfAnswerMethod" runat="server" ClientIDMode="Static"  />
+                            </div>
+                            <div class="col-md-12">
+                                <input type="button" value="Add Method" id="multipleDragAndDrop_AddAnswerJ" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    <div id="MultipleDragAndDropAnswersJ" class="panel panel-primary"></div>
+                    </div>
+
+                    <div class="col-md-6 panel panel-success">
+                        <div class="panel-heading">Answers - Methods</div>
+                        <div class="row" style="padding: 10px;">
+                            <div class="panel-body">
+                                <div id="divOptionMethod" runat="server" class="qEditor qBody" title="Click to edit the question body">
+                                    <span>Click to edit...</span>
+                                </div>
+                                <input type="hidden" value="" id="hfOptionMethod" runat="server" ClientIDMode="Static"  />
+                            </div>
+                            <div class="col-md-12">
+                                <input type="button" value="Add Method" id="multipleDragAndDrop_AddOptionJ" class="btn btn-success" />
+                            </div>
+                        </div>
+                        <div id="MultipleDragAndDropOptionsJ" class="panel panel-success"></div>
+                    </div>
+                </div>
+
+                <!-- Justifications  -->
+                <div class="col-md-12">
+                    <div class="col-md-6 panel panel-primary">
+                        <div class="panel-heading">Options - Justifications</div>
+                        <div class="row" style="padding: 10px;">
+                            <div class="panel-body">
+                                <div id="divAnswerJustification" runat="server" class="qEditor qBody" title="Click to edit the question body">
+                                    <span>Click to edit...</span>
+                                </div>
+                                <input type="hidden" value="" id="hfAnswerJustification" runat="server" ClientIDMode="Static"  />
+                            </div>
+                            <div class="col-md-12">
+                                <input type="button" value="Add Justification" id="multipleDragAndDrop_AddAnswerJustification" class="btn btn-primary" />
+                            </div>
+                        </div>
+                        <div id="MultipleDragAndDropAnswersJustification" class="panel panel-primary"></div>
+                    </div>
+
+                    <div class="col-md-6 panel panel-success">
+                        <div class="panel-heading">Answers - Justifications</div>
+                        <div class="row" style="padding: 10px;">
+                            <div class="panel-body">
+                                <div id="divOptionJustification" runat="server" class="qEditor qBody" title="Click to edit the question body">
+                                    <span>Click to edit...</span>
+                                </div>
+                                <input type="hidden" value="" id="hfOptionJustification" runat="server" ClientIDMode="Static"  />
+                            </div>
+                            <div class="col-md-12">
+                                <input type="button" value="Add Justification" id="multipleDragAndDrop_AddOptionJustification" class="btn btn-success" />
+                            </div>
+                        </div>
+                        <div id="MultipleDragAndDropOptionsJustification" class="panel panel-success"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTES  -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Notes</div>
+                <div class="panel-body">
+                    <textarea class="textarea-note" placeholder="enter comments  about this question (optional)" id="commentsQuestion7"></textarea>
+    @*                <div style="width: 130px;">
+                        <input type="text" id="worthQuestion7" style="width: 50px;" placeholder="Worth"/>
+                        pts
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTIONS  -->
+    <div class="panel panel-default">
+        <div class="footer-answer" style="display:block;padding-top:100px;text-align:center;">
+            <button id="btnMultipleDragAndDrop_PreviewJ" class="btn btn-info" data-toggle="modal" data-target="#multipleDragAndDrop_PreviewJ">Preview</button>
+            <button class="btn btn-success" id="bntMultipleDragAndDrop_SaveJ">Save</button>
+        </div>
+    </div>
+
+    <!-- EDITOR SECTION -------->
+    <div id="odwDialog" style="display:none;">
+        <textarea id="odwEditor"></textarea>
+    </div>
+
+    <div class="modal fade" id="multipleDragAndDrop_PreviewJ"
+        data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="multipleDragAndDrop_PreviewJ" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="multipleDragAndDrop_closeModalJ">Close</button>
+                    <h4 class="modal-title">Preview</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="multipleDragAndDrop_questionContainerJ"></p>
+                    
+                    <div class="row col-md-12">
+                        <!-- methods and justification choices  -->
+                        <div id="multipleDragAndDropPreviewContainerJ">
+                            <div class="col-md-3 panel panel-default panel-primary" style="padding: 10px;">
+                                <div class="panel-heading">Method Choices</div>
+                                <div id="MultipleDragAndDropPreviewAnswersJ">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="multipleDragAndDropPreviewContainerJustification">
+                            <div class="col-md-3 panel panel-default panel-primary" style="padding: 10px;">
+                                <div class="panel-heading">Justification Choices</div>
+                                <div id="MultipleDragAndDropPreviewAnswersJustification">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- methods and justification answers  -->
+                        <div id="multipleDragAndDropOptionsPreviewContainerJ" class="col-md-3 panel panel-default panel-success" style="padding: 10px;">
+                            <div class="panel-heading">Method Answers</div>
+                            <div id="MultipleDragAndDropPreviewOptionsJ">
+                            </div>
+                        </div>
+                        <div id="multipleDragAndDropOptionsPreviewContainerJustification" class="col-md-3 panel panel-default panel-success" style="padding: 10px;">
+                            <div class="panel-heading">Justification Answers</div>
+                            <div id="MultipleDragAndDropPreviewOptionsJustification">
+                            </div>
+                        </div>
+                    </div>
+                    <p id="multipleDragAndDrop_resultJ"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <input type="button" id="multipleDragAndDrop_submitAnswerJ" class="btn btn-primary" value="Submit Answer" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="multipleDragAndDrop_AnswerTemplateJ" class="hidden">
+        <div class="qeditor-answer">
+            <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="{{id}}">
+                {{answer}}
+            </div>
+            <div>
+                <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteAnswer icon-delete" data-val="{{id}}">Delete</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="multipleDragAndDrop_AnswerJustificationTemplate" class="hidden">
+        <div class="qeditor-answer">
+            <div class="btn btn-primary draggable-answer-j AnswerOption_75px_55px" data-val="{{id_aj}}">
+                {{answer_justification}}
+            </div>
+            <div>
+                <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteAnswerJustification icon-delete" data-val="{{id_aj}}">Delete</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="multipleDragAndDrop_OptionTemplateJ" class="hidden">
+        <div class="qeditor-option">
+            <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="{{id}}" id="{{div_id}}">
+                {{answerText}}
+            </div><br/>
+            <div>
+                {{option}}
+            </div>
+            <div>
+                <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteOption icon-delete" data-val="{{id}}">Delete</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="multipleDragAndDrop_OptionJustificationTemplate" class="hidden">
+        <div class="qeditor-option">
+            <div class="droppable-option-j btn btn-success AnswerOption_75px_55px" data-val="{{id}}" id="{{div_id_oj}}">
+                {{answerJustificationText}}
+            </div><br/>
+            <div>
+                {{optionJustification}}
+            </div>
+            <div>
+                <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteOptionJustification icon-delete" data-val="{{id}}">Delete</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="multipleDragAndDrop_PreviewAnswerTemplateJ" class="hidden">
+        <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="{{id}}">
+            {{answer}}
+        </div>
+    </div>
+
+    <!-- Preview Templates  -->
+    <div id="multipleDragAndDrop_PreviewOptionTemplateJ" class="hidden">
+        <div class="qeditor-option">
+            <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="{{id}}" id="{{div_id}}">
+                {{answerText}}
+            </div><br></br>
+            <div>
+                {{option}}
+            </div>
+        </div>
+    </div>
+
+    <div id="multipleDragAndDrop_PreviewAnswerJustificationTemplate" class="hidden">
+        <div class="btn btn-primary draggable-answer-j AnswerOption_75px_55px" data-val="{{id_aj}}">
+            {{answer_justification}}
+        </div>
+    </div>
+
+    <div id="multipleDragAndDrop_PreviewOptionJustificationTemplate" class="hidden">
+        <div class="qeditor-option">
+            <div class="droppable-option-j btn btn-success AnswerOption_75px_55px" data-val="{{id}}" id="{{div_id_oj}}">
+                {{answerJustificationText}}
+            </div><br></br>
+            <div>
+                {{optionJustification}}
+            </div>
+        </div>
+    </div>
+
+    <!-- IMPORTANT: Required to display the floating Toolbox from the Question Creator page -------->    
+    <br />
+</div>

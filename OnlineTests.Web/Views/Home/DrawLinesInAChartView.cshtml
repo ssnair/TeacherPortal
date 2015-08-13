@@ -1,0 +1,136 @@
+﻿@model OnlineTests.Web.Models.EditQuestionModel
+
+@{
+    ViewBag.LineType = new List<SelectListItem>{
+        new SelectListItem{Value = "x", Text = "Horizontal"},
+        new SelectListItem{Value = "y", Text = "Vertical"}
+    };
+
+    ViewBag.Title = "View Question";
+}
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/questionTypes/drawLinesInAChart.js"></script>
+    }
+
+<div class="container">
+    <div  id="qEight" class="my-tab-center">
+
+        <div class="col-md-12">
+            <!-- QUESTIONS -->
+            <div class="panel panel-default">
+                <div class="panel-heading">Question Text - ID : @Model.QuestionId </div>
+                <div class="panel-body">
+                    @Html.Raw(@Model.QuestionText)
+                </div>
+            </div>
+
+            <!-- ANSWERS  -->
+            <div class="panel panel-default panel-success">
+                <div class="panel-heading">Answers</div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="col-md-12">
+                            <div class="row hidden">
+                                <div class="col-md-1">
+                                    <label for="drawLinesInAChart_Domain">Domain</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="text" id="drawLinesInAChart_Domain" onkeypress="return validateNum(event)" class="form-control" value="10" readonly="true" />
+                                </div>
+                                <div class="col-md-1">
+                                    <label for="drawLinesInAChart_MajorScale">Scale</label>
+                                </div>
+                                <div class="col-md-1">
+                                    <input type="text" id="drawLinesInAChart_MajorScale" onkeypress="return validateNum(event)" class="form-control" value="1.0" />
+                                </div>
+
+                                <div class="col-md-2 hidden">
+                                    <label for="drawLinesInAChart_MinorScale">Minor Scale</label>
+                                </div>
+                                <div class="col-md-1 hidden">
+                                    <input type="text" id="drawLinesInAChart_MinorScale" onkeypress="return validateNum(event)" class="form-control" value="0.5" />
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="button" value="Reset Chart" id="drawLinesInAChart_ResetGraph" class="btn btn-primary" />
+                                </div>
+                            </div> 
+                            <br /><br />
+                            <div class="col-md-12 hidden">
+                                <div id="drawLinesInAChart_inputsContainer" class="row">
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-1">
+                                        <a id="drawLinesInAChart_btnAddNewLine" href="javascript:void(0)" class="btn btn-primary btn-xs">Add New Line</a>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="button" value="Draw Lines" id="drawLinesInAChart_btnDrawLines" class="btn btn-primary btn-success" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="drawLinesInAChartContainer" style="width: 500px; height: 500px; display: inline-block;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="drawLinesInAChart_Preview"
+            data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+            aria-labelledby="drawLinesInAChart_Preview" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" id="drawLinesInAChart_closeModal">Close</button>
+                        <h4 class="modal-title">Preview</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="drawLinesInAChart_questionContainer"></p>
+
+                        <div id="drawLinesInAChart_previewContainer" style="width: 500px; height:500px">
+                        </div>
+                        <p id="drawLinesInAChart_result"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" id="drawLinesInAChart_submitAnswer" class="btn btn-primary" value="Submit Answer" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="drawLinesInAChart_LineTemplate" class="hidden">
+            <div class="added">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Line</label>
+                    </div>
+                    <div class="col-md-1">
+                        <input type="text" class="form-control axisValue" name="mitexto[]" onkeypress="return validateNum(event)" id="{{lineValue_id}}" placeholder="AxisValue" />
+                    </div>
+                    <div class="col-md-2">
+                        @Html.DropDownList("{{lineType_id}}", @ViewBag.LineType as List<SelectListItem>, "Select a Line Type", new { @class = "form-control axisType" })
+                    </div>
+                    <div class="col-md-1">
+                        <a href="#" id="{{deleteLine_id}}" class="glyphicon glyphicon-remove drawLinesInAChart_deleteColumnValue"></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div> <!-- end div id="eight"  -->
+</div> <!-- end div class="container"  -->
+
+<script>
+    var globalSettings = @Html.Raw(Model.Settings);
+    var globalQuestionId = @Model.QuestionId;
+    var globalPageType = "View";
+</script>
+
+
+
+
+

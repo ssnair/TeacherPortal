@@ -1,0 +1,40 @@
+﻿@model IEnumerable<OnlineTests.Common.Models.Question>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Questions List</h2>
+
+<p>
+    @Html.ActionLink("Create New Question", "Index", "Home", null, new { @class="btn btn-success"})
+</p>
+<table class="table table-striped table-bordered table-condensed table-hover">
+    <tr class="info">
+        <th >
+            @Html.DisplayNameFor(model => model.QuestionText)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>       
+        <th>
+            Actions
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.QuestionText)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", "Home", new { id = item.Id }, new { }) 
+        </td>
+    </tr>
+}
+
+</table>

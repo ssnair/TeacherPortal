@@ -1,0 +1,81 @@
+﻿<div class="row rectangle-shape">
+    <div class="col-md-12">
+        <h3>Rectangle</h3>
+        <div class="row">
+            <div class="row form-inline" ng-show="viewMode=='teacher'">
+                <div class="form-group">
+                    <label>Divisions</label>
+                </div>
+                <div class="form-group">
+                    <select ng-model="settings.rectangleShape.divisionType" ng-options="ct.name for ct in divisionTypes track by ct.id" ng-change="engine.reset(settings)" class="form-control"></select>
+                </div>
+                <br />
+                <div class="form-group">
+                    <label>Width</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.rectangleShape.width" ng-change="engine.reset(settings)" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Height</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.rectangleShape.height" ng-change="engine.reset(settings)" class="form-control" />
+                </div>
+                <br />
+                <div class="form-group">
+                    <label>Columns</label>
+                </div>
+                <div class="form-group">
+                    <input type="number" ng-model="settings.rectangleShape.columns" min="1" ng-change="engine.reset(settings)" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Rows</label>
+                </div>
+                <div class="form-group">
+                    <input type="number" ng-model="settings.rectangleShape.rows" min="1" ng-change="engine.reset(settings)" class="form-control" />
+                </div>                
+                <br />
+                <div class="form-group">
+                    <label>Worth</label>
+                </div>
+                <div class="form-group">
+                    <input type="text" ng-model="settings.rectangleShape.worth" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Answer Mode</label>
+                </div>
+                <div class="form-group">
+                    <select ng-init="settings.rectangleShape.answerMode = answerModes[0]" ng-model="settings.rectangleShape.answerMode" ng-options="ct.name for ct in answerModes track by ct.id" class="form-control"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div ng-scope-element="rectangleShapeDrawingContainer"></div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <div class="row">
+                            <div class="col-md-2">Rows</div>
+                            <div class="col-md-2">Columns</div>
+                        </div>
+                        <div ng-repeat="row in settings.rectangleShape.grid track by $index">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <input type="text" value="{{$index + 1}}" readonly="readonly" class="form-control"/>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="sectors-grid" ng-repeat="p in row">
+                                        <input type="checkbox" ng-model="p.selected" ng-change="engine.redraw(settings)" />
+                                    </div>
+                                </div>                                
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

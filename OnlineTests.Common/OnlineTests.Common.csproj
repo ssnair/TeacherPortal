@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DC6B9B4A-3EEC-4B45-9055-92E342C76689}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OnlineTests.Common</RootNamespace>
+    <AssemblyName>OnlineTests.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Contracts\Repositories\IAnswerRepository.cs" />
+    <Compile Include="Contracts\Repositories\IGradeRepository.cs" />
+    <Compile Include="Contracts\Repositories\IMovePointsInAChartRepository.cs" />
+    <Compile Include="Contracts\Repositories\IPassageRepository.cs" />
+    <Compile Include="Contracts\Repositories\IComplexityRepository.cs" />
+    <Compile Include="Contracts\Repositories\IDifficultyRepository.cs" />
+    <Compile Include="Contracts\Repositories\IItemTypeRepository.cs" />
+    <Compile Include="Contracts\Repositories\IOnlineTestRepository.cs" />
+    <Compile Include="Contracts\Repositories\IQuestionRepository.cs" />
+    <Compile Include="Contracts\Repositories\ISubjectRepository.cs" />
+    <Compile Include="Contracts\Services\IGradeService.cs" />
+    <Compile Include="Contracts\Services\IPassageService.cs" />
+    <Compile Include="Contracts\Services\IComplexityService.cs" />
+    <Compile Include="Contracts\Services\IDifficultyService.cs" />
+    <Compile Include="Contracts\Services\IItemTypeService.cs" />
+    <Compile Include="Contracts\Services\IOnlineTestService.cs" />
+    <Compile Include="Contracts\Services\IQuestionService.cs" />
+    <Compile Include="Contracts\Services\ISubjectService.cs" />
+    <Compile Include="Helpers\HtmlHelpers.cs" />
+    <Compile Include="Helpers\Serializer.cs" />
+    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\Complexity.cs" />
+    <Compile Include="Models\Difficulty.cs" />
+    <Compile Include="Models\Grade.cs" />
+    <Compile Include="Models\IQuestionComponent.cs" />
+    <Compile Include="Models\ItemType.cs" />
+    <Compile Include="Models\MovePointsInAChartQuestion.cs" />
+    <Compile Include="Models\OnlineTest.cs" />
+    <Compile Include="Models\Passage.cs" />
+    <Compile Include="Models\Phase2Models.cs" />
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\Subject.cs" />
+    <Compile Include="Models\XmlModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

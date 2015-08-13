@@ -1,0 +1,45 @@
+﻿@{
+    Layout = null;
+}
+<style>
+    .row {
+        margin-left: inherit !important;
+        margin-right: inherit !important;
+    }
+</style>
+<div class="row">
+    <div class="col-md-12">
+        <h3>Interactive Chart  <span ng-show="viewMode=='student'">- Student Mode</span></h3>
+        <div class="form-inline" ng-show="viewMode=='teacher'">
+            <label for="canvas-type">Chart type</label>
+            <select ng-model="settings.chartType" ng-change="chartTypeChanged(settings.chartType)" ng-options="ct.name for ct in chartTypes track by ct.id" class="form-control"></select>
+        </div>
+
+        <div ng-show="settings.chartType.id == 'line-chart'">@Html.Partial("InteractiveChartTemplates/lineChart")</div>
+        <div ng-show="settings.chartType.id == 'pie-chart'">@Html.Partial("InteractiveChartTemplates/pieChart")</div>
+        <div ng-show="settings.chartType.id == 'bar-chart'">@Html.Partial("InteractiveChartTemplates/barChart")</div>
+        <div ng-show="settings.chartType.id == 'scatter-plot'">@Html.Partial("InteractiveChartTemplates/scatterPlot")</div>
+        <div ng-show="settings.chartType.id == 'histogram'">@Html.Partial("InteractiveChartTemplates/histogram")</div>
+        <div ng-show="settings.chartType.id == 'stem-leaf-plot'">@Html.Partial("InteractiveChartTemplates/stemLeafPlot")</div>
+        <div ng-show="settings.chartType.id == 'frequency-polygon-chart'">@Html.Partial("InteractiveChartTemplates/frequencyPolygonChart")</div>
+        <div ng-show="settings.chartType.id == 'pictogram'">@Html.Partial("InteractiveChartTemplates/pictogram")</div>
+    </div>
+</div>
+
+<div class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <p></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

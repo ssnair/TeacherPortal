@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+.container {
+	border: thick solid #000;
+	width: 600px;
+}
+.container:after
+{
+	content: ".";
+	display:block;
+	height:0;
+	clear:both;
+	visibility:hidden;
+}
+.child1 {
+	width: 200px;
+	background-color: #0C0;
+	float: left;
+}
+.child2 {
+	width: 200px;
+	background-color: #C30;
+	float: left;
+}
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="child1">This is child 1This is child 1This is child 1This is child 1This is child 1This is child 1</div>
+    <div class="child2">This is child 2This is child 2This is child 2This is child 2This is child 2This is child 2</div>
+</div>
+
+</body>
+</html>

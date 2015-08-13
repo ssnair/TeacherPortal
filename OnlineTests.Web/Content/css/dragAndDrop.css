@@ -1,0 +1,126 @@
+body {
+    margin: 0px;
+    font-family: Calibri, "Lucida Grande", sans-serif;
+    background-color: #eee;
+}
+div.content {
+    max-width: 600px;
+    padding: 20px;
+    margin: auto;
+    
+    border:1px solid black;
+}
+h2 {
+    margin: 0px 0px 15px 0px;
+    font-size: 16pt;
+}
+li {
+    font-size: 14pt;
+}
+p {
+    margin: 0px 0px 20px 0px;
+    font-size: 14pt;
+}
+.source {
+    width: 360px;
+    height: 60px;
+    margin: auto;
+}
+.boxes div {
+    float: left;
+    width: 60px;
+    height: 50px;
+    border:1px solid black;
+    font-size: 24pt;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 10px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+.source div {
+    cursor: pointer;
+}
+div.whileDragging {
+    background-image: none;
+    background-color: black;
+    color: white;
+}
+div.not {
+    background-image: none;
+    background-color: #eef;
+    cursor: inherit;
+}
+div.pendingDrop {
+    opacity: 0.5;
+}
+.drop {
+    width: 360px;
+    height: 120px;
+    overflow: auto;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: #efe140;
+    border: solid 1px #333;
+    box-shadow: 2px 2px 2px #666;
+    -webkit-box-shadow: 2px 2px 2px #666;
+    text-align: center;
+    font-size: 24pt;
+    font-weight: bold;
+}
+.highlight {
+    background-color: #dd8;
+}
+ul#list {
+    padding: 0px;
+    list-style-type: none; margin: 0; padding: 0; 
+}
+
+ul#list li   {
+   background-color: white;border: 1px solid #AAA;color: #222;float: left;height: 84px;list-style: none;margin: 0.3em;
+          padding: 0.2em;
+          width: 164px;
+          display: inline-block;
+          height:auto;
+          width:150px;
+    overflow: hidden;
+    font-size: 1em;
+    margin: 3px 3px 3px 0;  float: left;    text-align: center;
+   }
+
+
+ul#list2 {
+    padding: 0px;
+}
+ul#list2 li {
+    background-color: yellow;border: 1px solid #AAA;color: #222;
+    float: left;height: 84px;list-style: none;margin: 0.3em;
+          padding: 0.2em;width: 164px;
+          display: inline-block;
+          height:auto;
+          width:150px;
+    
+    font-size: 1em;
+}
+
+a.remove {
+    float: right;
+    width: 24px;
+    height: 24px;
+    background: transparent url('../images/cancel.png') repeat left top;
+    margin-top: 30px;
+    margin-right: -5px;
+    cursor: pointer;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    padding:20px;
+    
+    float: left;
+}
+
+/*.modal { overflow: visible; }*/
+.modal-body { overflow-x: visible; height:auto; }

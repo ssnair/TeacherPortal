@@ -1,0 +1,95 @@
+﻿@model OnlineTests.Web.Models.EditQuestionModel
+
+@{
+    ViewBag.Title = "View Question";
+}
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/questionTypes/multipleDragAndDropExpresion.js"></script>
+    }
+
+<div class="container">
+    <div  id="qNine" class="my-tab-center">
+        <!-- QUESTION, ANSWERS AND TARGET OPTIONS-->
+        <div class="row">
+
+            <div class="col-md-12">
+                <!-- QUESTION -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Question Text - ID : @Model.QuestionId </div>
+                    <div class="panel-body">
+                       @Html.Raw(@Model.QuestionText)
+                    </div>
+                </div>
+
+                 <!-- ANSWERS  -->
+                <div id="divAnswersContainer" class="panel panel-default panel-primary">
+                    <div class="panel-heading">Options</div>
+                    <div id="MultipleDragAndDropExpresionAnswers"></div>
+                </div>
+
+               <!-- TARGET OPTIONS  -->
+                <div id="divOptionsContainer" class="panel panel-default panel-success">
+                    <div class="panel-heading">Answers</div>
+                    <div id="MultipleDragAndDropExpresionOptionsA" class="optionContainer" style="padding: 5px; margin: 5px; border-color: gray; border-style: dotted; border-width: thin"><span style="font-weight:bold">A.</span></div>
+                    <div id="MultipleDragAndDropExpresionOptionsB" class="optionContainer" style="padding: 5px; margin: 5px; border-color: gray; border-style: dotted; border-width: thin"><span style="font-weight:bold">B.</span></div>
+                    <div id="MultipleDragAndDropExpresionOptionsC" class="optionContainer" style="padding: 5px; margin: 5px; border-color: gray; border-style: dotted; border-width: thin"><span style="font-weight:bold">C.</span></div>
+                </div>
+            </div>
+
+            <!-- ANSWERS TEMPLATE -->
+            <div id="shapeSquare_AnswerTemplate" style="margin-left:20px; width: 100px" class="hidden">                                                        
+                <div class="qeditor-answer square_65px_56px">
+                    <div class="btn btn-primary draggable-answer AnswerOption_55px_44px" data-val="{{id}}" id="{{idos}}">
+                        {{answer}}
+                    </div>
+                </div>
+            </div>  
+
+            <!-- OPTIONS TEMPLATE -->
+            <div id="shapeCircle" style="margin-left:20px; width: 100px" class="hidden">
+                <div class="qeditor-answer square_65px_56px" >
+                    <div class="droppable-option btn btn-success AnswerOption_55px_44px circle center_shape_inside_div" data-val="{{id}}" id="{{idc}}">
+                        @*{{option}}*@
+                    </div>
+                </div>
+            </div>
+            <div id="shapeSquare" style="margin-left:20px; width: 100px" class="hidden">                                                        
+                <div class="qeditor-answer square_65px_56px">
+                    <div class="droppable-option btn btn-success AnswerOption_55px_44px center_shape_inside_div" data-val="{{id}}" id="{{ids}}">
+                       @* {{option}}*@
+                    </div>
+                </div>
+            </div>                               
+            <div id="shapeSquareTransparent" style="margin-left:20px; width: 100px" class="hidden">                                                        
+                <div class="qeditor-answer square_44px_56px">
+                    <div class="droppable-option btn btn-success AnswerOption_35px_44px center_shape_inside_div no_drop_color" data-val="{{id}}" id="{{idst}}">
+                        @*{{option}}*@
+                    </div>
+                </div>
+            </div>
+            <div id="shapeHrLine" style="margin-left:20px; width: 100px" class="hidden">                                                        
+                <div class="qeditor-answer square_auto_42px">
+                    <div class="btn btn-success AnswerOption_60px_16px squareTransparent hrLine center_shape_inside_div no_drop_color" 
+                        data-val="{{id}}" id="{{idshrl}}" style="padding: 2px;">
+                        <hr style="color: #000; background-color: #000; height: 2px; width: 98%; margin-top: 2px;" />                                        
+                    </div>
+                </div>
+            </div>                                                                                                
+            <div id="shapeSquareNotDropable" style="margin-left:20px; width: 100px" class="hidden">                                                        
+                <div class="qeditor-answer square_65px_56px">
+                    <div class="droppable-option btn btn-success AnswerOption_55px_44px squareNotDropable center_shape_inside_div no_drop_color" data-val="{{id}}" id="{{idsnd}}">
+                        @*{{option}}*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    var globalSettings = @Html.Raw(Model.Settings);
+    var globalQuestionId = @Model.QuestionId;
+    var globalPageType = "Edit";
+</script>

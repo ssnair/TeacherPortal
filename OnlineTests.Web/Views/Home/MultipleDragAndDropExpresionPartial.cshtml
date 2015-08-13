@@ -1,0 +1,277 @@
+﻿<script src="~/Scripts/questionTypes/OnlineDwEditor.js"></script>
+<script type="text/javascript" src="~/Scripts/questionTypes/multipleDragAndDropExpresion.js"></script>
+
+<div class="tab-content my-tab-center">  
+    <!-- QUESTIONS -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Question Text</div>
+                <div class="panel-body">
+                    <div id="divQBody" runat="server" class="qEditor qBody" style="text-align: left" title="Click to edit the question body">
+                        <span>Click to edit...</span>
+                    </div>
+                    <input type="hidden" value="" id="hfQBody" runat="server" ClientIDMode="Static"  />
+                </div>
+                @*Display answers vertically:&nbsp<input type="checkbox" id="cboxAnswersVertically">*@
+            </div>
+        </div>
+    </div>
+
+    <!-- ANSWERS  -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="multipleDragAndDropExpresionContainer">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Options</div>
+                    <div id="MultipleDragAndDropExpresionAnswers"></div>
+                    
+                    <div class="row" style="padding: 10px;">
+                        <div class="panel-body">
+                            <div id="divOptionEditor" runat="server" class="qEditor qBody" title="Click to edit the question body">
+                                <span>Click to edit...</span>
+                            </div>
+                            <input type="hidden" value="" id="hfOptionEditor" runat="server" ClientIDMode="Static"  />
+                        </div>
+                        <div class="col-md-12" style="text-align:center; clear:both">
+                            <br/><hr />
+                            <input type="button" value="Add Option" id="multipleDragAndDropExpresion_AddAnswer" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-success">
+                    <div class="panel-heading">Answers</div>
+                    <div id="MultipleDragAndDropExpresionOptionsA" class="optionContainer optionContainerSortable" style="padding: 5px; margin: 5px; border-color: gray; border-style: dotted; border-width: thin"><span style="font-weight:bold">A.</span></div>
+                    <div id="MultipleDragAndDropExpresionOptionsB" class="optionContainer optionContainerSortable" style="padding: 5px; margin: 5px; border-color: gray; border-style: dotted; border-width: thin"><span style="font-weight:bold">B.</span></div>
+                    <div id="MultipleDragAndDropExpresionOptionsC" class="optionContainer optionContainerSortable" style="padding: 5px; margin: 5px; border-color: gray; border-style: dotted; border-width: thin"><span style="font-weight:bold">C.</span></div>
+
+                    <div class="row" style="padding-left: 25px; padding-right: 25px">
+                        <div id="divAnswerContainers">
+                            <hr /><h4>Select container:</h4>
+                            <div id="answerContainer" style="margin-left:20px;">
+                                Container A: <input type="checkbox" id="optionContainerA" checked="checked" style="min-width:20px;">&nbsp&nbsp&nbsp&nbsp
+                                Container B: <input type="checkbox" id="optionContainerB" style="min-width:20px;">&nbsp&nbsp&nbsp&nbsp
+                                Container C: <input type="checkbox" id="optionContainerC" style="min-width:20px;"><br />
+                                Add Label: <input type="checkbox" id="optionContainerLabel" checked="checked" style="min-width:20px;">&nbsp&nbsp&nbsp&nbsp
+                                Add Border: <input type="checkbox" id="optionContainerBorder" checked="checked" style="min-width:20px;">&nbsp&nbsp&nbsp&nbsp
+                                Border Position: <select id="optionContainerPosition"><option value="all">All</option><option value="top">Top</option>
+                                                    <option value="right">Right</option><option value="bottom">Bottom</option><option value="left">Left</option>
+                                                    </select><br />
+                            </div>
+                        </div>
+                        <div id="divShapes">
+                            <hr /><h4>Select target shape:</h4>
+                            <div id="shapeCircle" style="margin-left:20px; width: 100px; display: inline;">
+                                <div class="qeditor-answer square_65px_68px" >
+                                    <div class="droppable-option btn btn-success AnswerOption_55px_44px circle center_shape_inside_div optionShapeSortable" data-val="{{id}}" id="{{idc}}">
+                                        @*{{option}}*@
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="cbShapeCircle" class="multipleDragAndDropExpresion_SelectShapeCircle icon-delete center_checkbox_inside_div" data-val="{{id}}" style="min-width: 60px;">
+                                        <a href="javascript:void(0)" class="multipleDragAndDropExpresion_DeleteTarget icon-delete" data-val="{{id}}" style="visibility: hidden">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="shapeSquare" style="margin-left:20px; width: 100px; display: inline;">                                                        
+                                <div class="qeditor-answer square_65px_68px">
+                                    <div class="droppable-option btn btn-success AnswerOption_55px_44px square center_shape_inside_div optionShapeSortable" data-val="{{id}}" id="{{ids}}">
+                                        @*{{option}}*@
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="cbShapeSquare" class="multipleDragAndDropExpresion_SelectShapeSquare icon-delete center_checkbox_inside_div" data-val="{{id}}" style="min-width: 60px;">
+                                        <a href="javascript:void(0)" class="multipleDragAndDropExpresion_DeleteTarget icon-delete" data-val="{{id}}" style="visibility: hidden">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr /><h4>Select read-only shape:</h4>
+                            <div id="shapeSquareTransparent" style="margin-left:20px; width: 100px; display: inline;">                                                        
+                                <div class="qeditor-answer square_44px_68px">
+                                    <div class="droppable-option btn btn-success AnswerOption_35px_44px squareTransparent center_shape_inside_div no_drop_color optionShapeSortable" data-val="{{id}}" id="{{idst}}">
+                                        @*{{option}}*@
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="cbShapeSquareTransparente" class="multipleDragAndDropExpresion_SelectShapeSquareTransparent icon-delete center_checkbox_inside_div" data-val="{{id}}" style="min-width: 38px;">
+                                        <a href="javascript:void(0)" class="multipleDragAndDropExpresion_DeleteTarget icon-delete" data-val="{{id}}" style="visibility: hidden">Delete</a>
+                                    </div>
+                                </div>
+                            </div>       
+                            <div id="shapeHrLine" style="margin-left:20px; width: 100px; display: inline;">                                                        
+                                <div class="qeditor-answer square_auto_42px">
+                                    <div class="btn btn-success AnswerOption_auto_16px squareTransparent hrLine center_shape_inside_div no_drop_color optionShapeSortable" 
+                                        data-val="{{id}}" id="{{idshrl}}" style="padding: 2px;">
+                                        <hr style="color: #000; background-color: #000; height: 2px; width: 98%; margin-top: 2px;" />                                        
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="cbShapeHrLine" class="multipleDragAndDropExpresion_SelectShapeHrLine icon-delete center_checkbox_inside_div" data-val="{{id}}" style="min-width: 38px; margin-left: 8px;">
+                                        <a href="javascript:void(0)" class="multipleDragAndDropExpresion_DeleteTarget icon-delete" data-val="{{id}}" style="visibility: hidden">Delete</a>
+                                    </div>
+                                </div>
+                            </div>                                                                                                
+                            <div id="shapeSquareNotDropable" style="margin-left:20px; width: 100px; display: inline;">                                                        
+                                <div class="qeditor-answer square_65px_68px">
+                                    <div class="droppable-option btn btn-success AnswerOption_55px_44px squareNotDropable center_shape_inside_div no_drop_color optionShapeSortable" data-val="{{id}}" id="{{idsnd}}">
+                                        @*{{option}}*@
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="cbShapeSquareNotDropable" class="multipleDragAndDropExpresion_SelectShapeSquareNotDropable icon-delete center_checkbox_inside_div" data-val="{{id}}" style="min-width: 60px;">
+                                        <a href="javascript:void(0)" class="multipleDragAndDropExpresion_DeleteTarget icon-delete" data-val="{{id}}" style="visibility: hidden">Delete</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <input type="button" value="Add Answer" id="multipleDragAndDropExpresion_AddOption" class="btn btn-success" />
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTES  -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Notes</div>
+                <div class="panel-body">
+                    <textarea class="textarea-note" placeholder="enter comments  about this question (optional)" id="commentsQuestionMDDE"></textarea>
+    @*                <div style="width: 130px;">
+                        <input type="text" id="worthQuestionMDDE" style="width: 50px;" placeholder="Worth"/>
+                        pts
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="footer-answer" style="display:block;padding-top:100px;text-align:center;">
+            <button id="btnMultipleDragAndDropExpresion_Preview" class="btn btn-info" data-toggle="modal" data-target="#multipleDragAndDropExpresion_Preview">Preview</button>
+            <button class="btn btn-success" id="bntmultipleDragAndDropExpresion_Save">Save</button>
+        </div>
+    </div>
+
+    <!-- EDITOR SECTION -------->
+    <div id="odwDialog" style="display:none;">
+        <textarea id="odwEditor"></textarea>
+    </div>
+
+
+    <div class="modal fade" id="multipleDragAndDropExpresion_Preview"
+        data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="multipleDragAndDropExpresion_Preview" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="multipleDragAndDropExpresion_closeModal">Close</button>
+                    <h4 class="modal-title">Preview</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="multipleDragAndDropExpresion_questionContainer"></p>
+
+                    <div id="multipleDragAndDropExpresionAnswersPreviewContainer">
+                        <div class="panel panel-default" style="padding: 10px;">
+                            <div id="MultipleDragAndDropExpresionPreviewAnswers">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="multipleDragAndDropExpresionOptionsPreviewContainer" class="panel panel-default" style="padding: 10px;">
+                        <div id="MultipleDragAndDropExpresionPreviewOptions">
+                                <div id="MultipleDragAndDropExpresionOptionsPreviewA" class="optionContainerPreview hidden" style="padding: 5px; margin: 5px;"></div>
+                                <div id="MultipleDragAndDropExpresionOptionsPreviewB" class="optionContainerPreview hidden" style="padding: 5px; margin: 5px;"></div>
+                                <div id="MultipleDragAndDropExpresionOptionsPreviewC" class="optionContainerPreview hidden" style="padding: 5px; margin: 5px;"></div>
+                        </div>
+                    </div>
+                    <p id="multipleDragAndDropExpresion_result"></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" id="multipleDragAndDropExpresion_submitAnswer" class="btn btn-primary" value="Submit Answer" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="shapeSquare_AnswerTemplate" style="margin-left:20px; width: 100px" class="hidden">                                                        
+        <div class="qeditor-answer square_65px_68px">
+            @*<div class="btn btn-primary draggable-answer center_shape_inside_div" data-val="{{id}}" id="{{idos}}">*@
+            <div class="btn btn-primary draggable-answer AnswerOption_55px_44px" data-val="{{id}}" id="{{idos}}">
+                {{answer}}
+            </div>
+            <div>
+                @* <input type="checkbox" class="multipleDragAndDropExpresion_SelectShapeSquare icon-delete center_checkbox_inside_div" data-val="{{id}}"> *@
+                <a href="javascript:void(0)" class="multipleDragAndDropExpresion_DeleteShapeSquare icon-delete" data-val="{{id}}">Delete</a>
+            </div>
+        </div>
+    </div>    
+
+    <div id="shapeSquare_PreviewAnswerTemplate" style="margin-left:20px; width: 100px" class="hidden">                                                        
+        <div class="qeditor-answer square_65px_68px">
+            <div class="btn btn-primary draggable-answer AnswerOption_55px_44px" data-val="{{id}}">
+                {{answer}}
+            </div>
+        </div>
+    </div>    
+
+    <div id="divShapes_PreviewOptionTemplates" class="hidden">
+        <div id="shapeCirclePreview" style="margin-left:20px; width: 100px">
+            <div class="qeditor-answer square_65px_56px" >
+                <div class="droppable-option btn btn-success AnswerOption_55px_44px circle center_shape_inside_div" data-val="{{id}}" id="{{idcp}}">
+                    @*{{answerText}}*@
+                </div>
+                <div class="hidden">
+                    {{option}}
+                </div>
+            </div>
+        </div>
+        <div id="shapeSquarePreview" style="margin-left:20px; width: 100px">                                                        
+            <div class="qeditor-answer square_65px_56px">
+                <div class="droppable-option btn btn-success AnswerOption_55px_44px square center_shape_inside_div" data-val="{{id}}" id="{{idsp}}">
+                    @*{{answerText}}*@
+                </div>
+                <div class="hidden">
+                    {{option}}
+                </div>
+            </div>
+        </div>
+        <div id="shapeSquareTransparentPreview" style="margin-left:20px; width: 100px">                                                        
+            <div class="qeditor-answer square_44px_56px">
+                <div class="btn btn-success AnswerOption_35px_44px squareTransparent center_shape_inside_div no_drop_color" data-val="{{id}}" id="{{idstp}}">
+                    @*{{answerText}}*@
+                </div>
+                <div class="hidden">
+                    {{option}}
+                </div>
+            </div>
+        </div>       
+        <div id="shapeHrLinePreview" style="margin-left:20px; width: 100px">                                                        
+            <div class="qeditor-answer square_auto_42px">
+                <div class="btn btn-success AnswerOption_60px_16px squareTransparent center_shape_inside_div no_drop_color" 
+                    data-val="{{id}}" id="{{idshrlp}}" style="padding: 2px;">
+                    <hr style="color: #000; background-color: #000; height: 2px; width: 98%; margin-top: 2px;" />                                        
+                </div>
+    @*                <div>
+                    {{option}}
+                </div>*@
+            </div>
+        </div>                                                                                                
+        <div id="shapeSquareNotDropablePreview" style="margin-left:20px; width: 100px">                                                        
+            <div class="qeditor-answer square_65px_56px">
+                <div class="btn btn-success AnswerOption_55px_44px squarNotDropable center_shape_inside_div no_drop_color" data-val="{{id}}" id="{{idsndp}}">
+    @*                   {{answerText}}*@
+                </div>
+    @*                <div>
+                    {{option}}
+                </div>*@
+            </div>
+        </div>
+    </div>
+
+    <!-- IMPORTANT: Required to display the floating Toolbox from the Question Creator page -------->    
+    <br />
+</div>
+
+<script>
+    var globalPageType = "Create";
+</script>

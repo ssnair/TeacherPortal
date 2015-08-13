@@ -1,0 +1,58 @@
+﻿@model OnlineTests.Web.Models.EditQuestionModel
+
+@{
+    ViewBag.Title = "View Question";
+}
+
+@section scripts {
+    <script type="text/javascript" src="~/Scripts/questionTypes/selectableChart.js"></script>
+    }
+
+<div class="container">
+    <div  id="qThree">
+        <!-- QUESTION -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- QUESTION -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Question Text - ID : @Model.QuestionId </div> 
+                    <div class="panel-body">
+                        @Html.Raw(@Model.QuestionText)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ANSWERS  -->
+        <div class="panel panel-default">
+            <div class="panel-heading">Answers</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-5 col-md-offset-1">
+                        <div id="selectableChart_inputsContainer" class="row">
+                            <div class="added">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" name="mitexto[]" id="campo_1" placeholder="Value" readonly="true" />
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" class="form-control" name="miLabel[]" id="label_1" placeholder="Label" readonly="true"  />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div id="selectableChart_chartContainer" style="width: 100%; height: 300px; font-size: 14px; line-height: 1.2em;"></div>            
+            </div>
+
+        </div>
+    </div> <!-- END qThree -->
+</div> <!-- END Container -->
+
+<script>
+    var globalSettings = @Html.Raw(Model.Settings);
+    var globalQuestionId = @Model.QuestionId;
+    var globalPageType = "View";
+</script>

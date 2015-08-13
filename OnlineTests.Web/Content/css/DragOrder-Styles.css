@@ -1,0 +1,94 @@
+div#sub-contanier{
+    background-color: rgb(242,242,242);
+    border: 1px solid rgb(192, 192, 192);
+    text-align: center;
+}
+
+div.header-answer{
+    padding: 10px;
+}
+
+div#body-answer{
+    padding: 5px;
+}
+
+div.footer-answer{
+    padding: 10px;
+    clear: both;
+}
+
+#listSortable,#listPreview{
+    list-style-type: none;
+   
+}
+#containerPreview {
+    width:100%;
+}
+#listPreview li {
+}
+
+#listSortable li{
+    margin: 3px 3px 3px 6px;
+    padding: 2px;
+    float: left;
+    width: 25%;
+    height: auto;
+    font-size: 1em;
+    text-align: center;
+    background-color:  rgba(68, 98, 145, 1);
+    border:1px solid #31708f;
+    border-radius: 5px;
+    cursor: move;
+}
+#listPreview li{
+    margin: 3px 3px 3px 3px;
+    
+    float: left;
+    width: 200px;
+    height: auto;
+    font-size: 1em;
+    text-align: center;
+    background-color:  rgba(68, 98, 145, 1);
+    border:1px solid #31708f;
+    border-radius: 5px;
+    cursor: move;
+}
+
+#listSortable li:hover,#listPreview li:hover{
+    background-color: rgba(76, 164, 115, 1);
+}
+
+#listSortable li p,#listPreview li p{
+    color: #ffffff;
+}
+
+#listSortable li a{
+    color: #cccccc !important;
+    float: right;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+#smsError{
+    color: red;
+}
+
+#msgResult{
+    padding-top: 20px;
+    clear: both;
+    text-align: center;
+}
+
+/*------------------------------------------ Input,Buttons,Labels Styles*/
+input{
+    min-width: 100px;
+    margin-right: 5px !important;
+}
+button{
+    margin-right: 5px !important;
+}
+
+/*------------------------------------------ MEDIA RESPONSIVE*/
+@media (max-width: 1024px) {
+
+}

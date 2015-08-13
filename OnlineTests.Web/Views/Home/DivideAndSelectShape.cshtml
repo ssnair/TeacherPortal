@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Divide and Select Shape";
+    Layout = "~/Views/Shared/_LayoutAngular.cshtml";    
+}
+
+<div>
+    @Html.Hidden("vmSettings", ViewBag.settings as string)
+    <h2>{{title}}</h2>
+    <br />
+    <br />
+    <div class="row">
+        <divide-and-select-shape></divide-and-select-shape>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Question/controllers.js"></script>
+    <script src="~/js/Question/directives.js"></script>
+    <script src="~/js/QuestionsContainer/controllers.js"></script>
+    <script src="~/js/QuestionsContainer/directives.js"></script>
+    <script src="~/js/QuestionsContainer/services.js"></script>
+    <script src="~/js/Helpers.js"></script>
+    <script src="~/js/DivideAndSelectShape/directives.js"></script>
+    <script src="~/js/DivideAndSelectShape/polygonShape.js"></script>
+    <script src="~/js/DivideAndSelectShape/circleShape.js"></script>
+    <script src="~/js/DivideAndSelectShape/rectangleShape.js"></script>
+    <script src="~/js/DivideAndSelectShape/starShape.js"></script>
+    <script src="~/js/DivideAndSelectShape/divideAndSelectShape.js"></script>
+}
+

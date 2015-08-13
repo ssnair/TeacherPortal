@@ -1,0 +1,14 @@
+﻿<div>
+    <h1>I'm a [{{question.questionType}}] question</h1>
+<!--    <div ng-bind-html="htmlContent"></div>
+    <div ng-bind-html="question.draw()"></div>-->
+
+    <div ng-if="question.questionType=='draw-lines-in-a-chart'">
+        It is a DrawLines ina a chart question
+        <draw-lines-in-a-chart></draw-lines-in-a-chart>
+    </div>
+    <div ng-if="question.questionType=='multiple-drag-and-drop'">
+        It is a MUultiple Drag and drop question
+        <multiple-drag-and-drop></multiple-drag-and-drop>
+    </div>
+</div>

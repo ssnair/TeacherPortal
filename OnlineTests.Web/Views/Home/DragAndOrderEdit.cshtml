@@ -1,0 +1,34 @@
+﻿@model OnlineTests.Web.Models.EditQuestionModel
+
+@{
+    ViewBag.Title = "Edit Question";
+}
+
+@*<div class="container">
+    <div  id="qOne">*@
+        @Html.Partial("DragAndOrderPartial")
+@*    </div>
+</div>*@
+
+@*<script>
+    $(function () {
+        if (typeof CKEDITOR != 'undefined') {
+            var ckEditor = CKEDITOR.replace('questionText');
+            CKFinder.setupCKEditor(ckEditor, '/ckfinder/');
+        }
+    });
+</script>*@
+
+<script>
+    var globalSettings = @Html.Raw(Model.Settings);
+    var globalQuestionId = @Model.QuestionId;
+    $(function () {
+        hfQBody.value = '@Html.Raw(@Model.QuestionText)';
+        if (hfQBody.value != "") {
+            $("#divQBody").html('@Html.Raw(@Model.QuestionText)')
+        }
+        $("#txtNote").val("@Model.Notes");
+        $("#worth").val("@Model.Worth");
+    });
+
+</script>

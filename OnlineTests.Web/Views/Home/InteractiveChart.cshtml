@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Interactive charts2";
+    Layout = "~/Views/Shared/_LayoutAngular.cshtml";
+}
+
+<div>
+    @Html.Hidden("vmSettings", ViewBag.settings as string)
+    <h2>{{title}}</h2>
+    <br />
+    <br />
+    <div class="row">
+        <interactive-chart></interactive-chart>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/Question/controllers.js"></script>
+    <script src="~/js/Question/directives.js"></script>
+    <script src="~/js/QuestionsContainer/controllers.js"></script>
+    <script src="~/js/QuestionsContainer/directives.js"></script>
+    <script src="~/js/QuestionsContainer/services.js"></script>
+    <script src="~/js/Helpers.js"></script>
+    <script src="~/js/InteractiveChart/directives.js"></script>
+    <script src="~/js/InteractiveChart/lineChart.js"></script>
+    <script src="~/js/InteractiveChart/barChart.js"></script>
+    <script src="~/js/InteractiveChart/scatterPlot.js"></script>
+    <script src="~/js/InteractiveChart/histogram.js"></script>
+    <script src="~/js/InteractiveChart/pieChart.js"></script>
+    <script src="~/js/InteractiveChart/stemLeafPlot.js"></script>
+    <script src="~/js/InteractiveChart/frequencyPolygonChart.js"></script>
+    <script src="~/js/InteractiveChart/pictogram.js"></script>
+    <script src="~/js/InteractiveChart/interactiveChart.js"></script>    
+}
+

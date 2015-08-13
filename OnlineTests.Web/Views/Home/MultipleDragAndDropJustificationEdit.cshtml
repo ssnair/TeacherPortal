@@ -1,0 +1,26 @@
+﻿@model OnlineTests.Web.Models.EditQuestionModel
+
+@{
+    ViewBag.Title = "Edit Question";
+}
+
+@*<div class="container">
+    <div  id="qSeven" class="my-tab-center">*@
+        @Html.Partial("MultipleDragAndDropJustificationPartial")
+@*    </div>
+</div>*@
+
+<script>
+    var globalSettings = @Html.Raw(Model.Settings);
+    var globalQuestionId = @Model.QuestionId;
+    var globalPageType = "Edit";
+    
+    $(function () {
+        hfQBody.value = '@Html.Raw(@Model.QuestionText)';
+        if (hfQBody.value != "") {
+            $("#divQBody").html('@Html.Raw(@Model.QuestionText)')
+        }       
+        $("#commentsQuestion7").val("@Model.Notes");
+        $("#worth").val("@Model.Worth");
+    });
+</script>

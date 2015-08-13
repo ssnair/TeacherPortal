@@ -1,0 +1,30 @@
+﻿@model OnlineTests.Web.Models.EditQuestionModel
+
+@{
+    ViewBag.Title = "Edit Question";
+}
+
+<div id="placeholders" style="display:none">
+    <div id="selectableChartContainer"></div>
+</div>
+
+@*<div class="container">
+    <div  id="qThree">*@
+        @Html.Partial("SelectableChartPartial")
+@*    </div>
+</div>*@
+
+<script>
+    var globalSettings = @Html.Raw(Model.Settings);
+    var globalQuestionId = @Model.QuestionId;
+    var globalPageType = "Edit";
+    $(function () {
+        hfQBody.value = '@Html.Raw(@Model.QuestionText)';
+        if (hfQBody.value != "") {
+            $("#divQBody").html('@Html.Raw(@Model.QuestionText)')
+        }
+        $("#selectableChart_Notes").val("@Model.Notes");
+        $("#worth3").val("@Model.Worth");
+    });
+
+</script>

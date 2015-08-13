@@ -1,0 +1,33 @@
+﻿@model OnlineTests.Web.Models.EditQuestionModel
+
+@{
+    ViewBag.Title = "Edit Question";
+}
+
+
+@*@section scripts {
+    <script src="~/Scripts/questionTypes/multipleDragAndDrop.js"></script>
+    }*@
+
+
+@*<div class="container">
+    <div  id="qTwo" class="my-tab-center">*@
+        @Html.Partial("MultipleDragAndDrop2Partial")
+@*    </div>
+</div>*@
+
+<script>
+    var globalSettings = @Html.Raw(Model.Settings);
+    var globalQuestionId = @Model.QuestionId;
+    var globalPageType = "Edit";
+
+    $(function () {
+        hfQBody.value = '@Html.Raw(@Model.QuestionText)';
+        if (hfQBody.value != "") {
+            $("#divQBody").html('@Html.Raw(@Model.QuestionText)')
+        }        
+        $("#multipleDragAndDrop_Notes").val("@Model.Notes");
+        $("#worth").val("@Model.Worth");
+    });
+
+</script>

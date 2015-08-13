@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+@*@section scripts {
+    <script src="~/Scripts/questionTypes/DragOrder-1.0.js"></script>
+    <script src="~/Scripts/questionTypes/movePointsInAChart.js"></script>
+    <script src="~/Scripts/questionTypes/multipleDragAndDrop.js"></script>
+    <script src="~/Scripts/questionTypes/multipleDragAndDropExpresion.js"></script>
+    <script type="text/javascript" src="~/Scripts/questionTypes/movePoints.js"></script>
+    <script type="text/javascript" src="~/Scripts/questionTypes/selectableChart.js"></script>
+    <script src="~/Scripts/questionTypes/multipleDragAndDropImage.js"></script>
+    <script src="~/Scripts/questionTypes/multipleDragAndDropJustification.js"></script>
+    <script src="~/Scripts/questionTypes/drawLinesInAChart.js"></script>
+    }*@
+
+    <style type="text/css">
+        /* styles for tabs */
+        #tabNavHeader ul {
+            display: table-row;
+            table-layout: fixed;
+            width: 98%;
+        }
+
+        #tabNavHeader li {
+            display: table-cell;
+        }
+
+    </style>
+
+    <!-- make tabs work as in OT_qCreator (use JQuery UI instead of Bootstrap) -->
+    <script>
+        $(function () {
+            $("#tabs").tabs();
+        });
+    </script>
+
+<div class="container">
+    <!-- MENU ITEMS-->
+    <nav class="navbar navbar-default m_nav-default" role="navigation">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation </span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <div class="tabs" id="tabs">
+
+                <div id="tabNavHeader">
+                    <ul id="tabNav">
+                        <li><a href="#tabs-0">Drag & Order</a></li>
+                        <li><a href="#tabs-1">Multiple Drag & Drop</a></li>
+                        <li><a href="#tabs-2">Multiple Drag & Drop Expression</a></li>
+                        <li><a href="#tabs-3">Multiple Drag & Drop Image</a></li>                    
+                        <li><a href="#tabs-4">Multiple Drag & Drop Method-Justification</a></li>                    
+                        <li><a href="#tabs-5">Selectable Chart</a></li>
+                        <li><a href="#tabs-6">Move Points Based on Equation</a></li>
+                        <li><a href="#tabs-7">Move Points in a Number Line</a></li>
+                        <li><a href="#tabs-8">Draw Linear Line</a></li>
+                    </ul>
+                </div>
+
+                <div class="tab-content my-tab-center">
+
+                   <div id="tabs-0">
+                        <!-- FIRST OPTION CONTAINER -->
+                         @Html.Partial("DragAndOrderPartial");          
+                    </div>
+                    <div id="tabs-1">
+                        <!-- SECOND OPTION CONTAINER -->
+                        @Html.Partial("MultipleDragAndDropPartial");
+                    </div>
+                    <div id="tabs-2">
+                        <!-- Nineth OPTION CONTAINER -->
+                        @Html.Partial("MultipleDragAndDropExpresionPartial");
+                    </div>
+                    <div id="tabs-3">
+                        @Html.Partial("MultipleDragAndDropImagePartial");
+                    </div>
+                   <div id="tabs-4">
+                        @Html.Partial("MultipleDragAndDropJustificationPartial");
+                    </div>
+                    <div id="tabs-5">
+                        @Html.Partial("SelectableChartPartial");
+                    </div>
+                    <div id="tabs-6">
+                        @Html.Partial("MovePointsInAChartPartial");
+                    </div>
+                    <div id="tabs-7">
+                        @Html.Partial("MovePointsInALinePartial");
+                    </div>
+                   <div id="tabs-8">
+                        @Html.Partial("DrawLinesInAChartPartial");
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </nav>
+
+</div>
+
+<script>
+    $(function () {
+        //$('#questionText2').ckeditor();
+        //$('#questionText3').ckeditor();
+        //$('#questionText4').ckeditor();
+        //$('#questionText5').ckeditor();
+        //$('#questionText6').ckeditor();
+        //$('#questionText21').ckeditor();
+        //$('#questionText22').ckeditor();
+        // multiple drag and drog justification
+        //$('#questionText7').ckeditor();
+        //$('#questionText71').ckeditor();
+        //$('#questionText72').ckeditor();
+        //$('#questionText73').ckeditor();
+        //$('#questionText74').ckeditor();
+        //// draw lines in a chart
+        //$('#questionText8').ckeditor();
+        //// multiple drag and drog expression
+        //$('#questionText460').ckeditor();
+        //$('#questionText462').ckeditor();
+        ////$('#questionText461').ckeditor();
+
+       // CKEDITOR.config.toolbar = [
+       //['Styles', 'Format', 'Font', 'FontSize'],
+       //'/',
+       //['Bold', 'Italic', 'Underline', 'StrikeThrough', '-', 'Undo', 'Redo', '-', 'Cut', 'Copy', 'Paste', 'Find', 'Replace', '-', 'Outdent', 'Indent', '-', 'Print'],
+       //'/',
+       //['NumberedList', 'BulletedList', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+       //['Image', 'Table', '-', 'Link', 'Flash', 'Smiley', 'TextColor', 'BGColor', 'Source']
+       // ];
+        //var message = 'hello, QuestionID'; //could be of any type, string, number, array, object, have fun
+        //window.parent.postMessage(message, '*'); //the '*' has to do with cross-domain messaging. leave it like it is for same-domain messaging.
+    });
+</script>
+
+@*<!-- used to resize the ifTech iframe automatically (when the content changes the iframe resizes) -->
+<script src="~/Scripts/iframe-resizer-master/js/iframeResizer.contentWindow.min.js"></script>*@

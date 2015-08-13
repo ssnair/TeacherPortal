@@ -1,0 +1,73 @@
+﻿<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row" ng-show="viewMode=='teacher'">
+                <div class="col-md-6">
+                    <label for="canvas-type">Scale Mode</label>
+                    <select ng-model="settings.scaleMode" ng-options="sm.name for sm in scaleModes track by sm.id" ng-change="engine.redraw(settings)" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="row" ng-show="viewMode=='teacher'">
+                    <div class="col-md-2">
+                        <label for="grid-width">Width</label>
+                        <input id="grid-width" type="text" ng-model="settings.grid.width" ng-change="engine.redraw(settings)" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="grid-height">Height</label>
+                        <input id="grid-height" type="text" ng-model="settings.grid.height" ng-change="engine.redraw(settings)" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="grid-height">Point Radius</label>
+                        <input id="dot-radius" type="number" ng-model="settings.dot.radius" min="5" max="20" ng-change="engine.redraw(settings)" class="form-control" />
+                    </div>
+                </div>
+                <div class="row form-inline" ng-show="viewMode=='teacher'">
+                    <div class="col-md-7">
+                        <label for="strict-punctuation">Score only if every point value is correct</label>&nbsp;
+                        <input type="checkbox" ng-model="settings.strictPunctuation" class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <span ng-repeat="obj in objectTypes">
+                        <a href="javascript:void(0)" ng-click="setAction(obj.action)" class="btn btn-default"
+                            ng-show="viewMode=='teacher' || obj.teacherOnly==false"
+                            ng-class="{'btn-primary' : settings.currentAction==obj.action}">{{obj.name}}</a>
+                    </span>
+                </div>
+
+                <div class="row">
+                    <div ng-scope-element="drawingContainer"></div>
+                </div>
+            </div>
+            <div class="col-md-4" ng-show="viewMode=='teacher'">
+                <div class="row" ng-show="viewMode=='teacher'">
+                    <label for="canvas-type">Answer Type</label>
+                    <select ng-model="settings.answerType" ng-options="at.name for at in answerTypes track by at.id" ng-change="engine.redraw(settings)" class="form-control"></select>
+                </div>
+                <div class="row" ng-show="settings.answerType.id == 'points-in-the-same-position'" ng-repeat="pt in settings.points">
+                    <div class="col-md-2" class="form-control">{{settings.displayPointPosition(pt).x}}, {{settings.displayPointPosition(pt).y}}</div>
+                    <div class="col-md-3">
+                        <input type="text" ng-model="pt.worth" class="form-control" />
+                    </div>
+                    <div class="col-md-8"></div>
+                </div>
+                <div class="row" ng-show="settings.answerType.id == 'distance-between-two-points'">
+                    <div class="row">
+                        <label for="distance-type">Distance type</label>
+                        <select ng-model="settings.distanceBetweenTwoPoints.distanceType" ng-options="dt.name for dt in distanceBetweenTwoPoints_distanceTypes track by dt.id" 
+                            class="form-control"></select>
+                    </div>
+                    <div class="row">
+                        <label for="distance">Distance</label>
+                        <input type="text" ng-model="settings.distanceBetweenTwoPoints.distance" class="form-control" />
+                    </div>
+                    <div class="row">
+                        <label for="distance">Worth</label>
+                        <input type="text" ng-model="settings.distanceBetweenTwoPoints.worth" class="form-control" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

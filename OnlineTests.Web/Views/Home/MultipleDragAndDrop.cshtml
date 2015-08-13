@@ -1,0 +1,25 @@
+﻿@{
+  ViewBag.Title = "Multiple Question";
+  Layout = "~/Views/Shared/_LayoutAngular.cshtml";      
+}
+
+<div>
+    @Html.Hidden("vmSettings", ViewBag.settings as string)
+  <div class="row">
+    <multiple-drag-and-drop></multiple-drag-and-drop>
+  </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/Question/controllers.js"></script>
+    <script src="~/js/Question/directives.js"></script>
+    <script src="~/js/QuestionsContainer/controllers.js"></script>
+    <script src="~/js/QuestionsContainer/directives.js"></script>
+    <script src="~/js/QuestionsContainer/services.js"></script>
+    <script src="~/js/Helpers.js"></script>
+    <script src="~/js/MultipleDragAndDrop/services.js"></script>
+    <script src="~/js/MultipleDragAndDrop/multipleDragAndDrop.js"></script>
+    <script src="~/js/MultipleDragAndDrop/directives.js"></script>    
+}
+

@@ -1,0 +1,81 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>MathJax Dynamic Math Test Page with ASCIIMath Input</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+
+<!--<style>
+input {margin-top: .7em}
+.output {
+  border: 1px solid black;
+  padding: 1em;
+  width: auto;
+  position: absolute; top: 0; left: 2em;
+  min-width: 20em;
+}
+.box {position: relative}
+</style>-->
+
+<!-- Refresh MathJax syntax (http://stackoverflow.com/questions/15766994/let-mathjax-reload-page-after-an-rpc)                                       -->
+<script type="text/javascript">
+    function reloadMathJax() {
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+    }
+</script>
+
+</head>
+<body>
+
+<!--<script>
+    (function () {
+        var QUEUE = MathJax.Hub.queue;  // shorthand for the queue
+        var math = null, box = null;    // the element jax for the math output, and the box it's in
+
+        var HIDEBOX = function () { box.style.visibility = "hidden" }
+        var SHOWBOX = function () { box.style.visibility = "visible" }
+
+        QUEUE.Push(function () {
+            math = MathJax.Hub.getAllJax("MathOutput")[0];
+            box = document.getElementById("box");
+            SHOWBOX(); // box is initially hidden so the braces don't show
+        });
+
+        //window.UpdateMath = function (amath) {
+        //    QUEUE.Push(HIDEBOX, ["Text", math, amath], SHOWBOX);
+        //}
+
+        //window.UpdateMath = function (amath) {
+        //    QUEUE.Push(HIDEBOX, ["Text", math, amath], SHOWBOX);
+        //}
+
+    })();
+</script>-->
+
+<p>
+The page can include \(\rm\TeX\) code as well as ASCIIMath: `root(3)(x+1)`.
+</p>
+
+<p>
+Type some ASCIIMath code and press RETURN:<br /> 
+<!--<input id="MathInput" size="80" onkeyup="UpdateMath(this.value)" />-->
+    <input id="doMath" type="submit" onclick="reloadMathJax()" />
+</p>
+
+<p>You typed:</p>
+<div class="box" id="box" style="visibility:hidden">
+    <div id="MathOutput" class="output">
+        <p><span class="my-math">\(h(x) = 3x^2+7\)</span></p>
+    </div>
+</div>
+
+<div class="box" id="Div1" style="visibility:hidden">
+    <div id="Div2" class="output">
+        <p><span class="my-math">\(h(x) = 3x^2+7\)</span></p>
+        <span class="my-math">\(f(n) = \log_37x\)</span>
+    </div>
+</div>
+
+</body>
+</html>

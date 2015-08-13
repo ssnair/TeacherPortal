@@ -1,0 +1,279 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Entities.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="EntitiesStoreContainer" />
+        <Function Name="Answers_ByQuestionId_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="QuestionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Answers_ByQuestionId_Select" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="QuestionId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Answers_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="QuestionId" Type="int" Mode="In" />
+          <Parameter Name="txt" Type="varchar" Mode="In" />
+          <Parameter Name="ansVal" Type="int" Mode="In" />
+          <Parameter Name="worth" Type="int" Mode="In" />
+          <Parameter Name="ordinalPos" Type="int" Mode="In" />
+          <Parameter Name="Notes" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ExtendedDetails" Type="xml" Mode="In" />
+        </Function>
+        <Function Name="Items_ById_Select" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Items_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="QuestionTypeId" Type="tinyint" Mode="In" />
+          <Parameter Name="QuestionText" Type="varchar" Mode="In" />
+          <Parameter Name="Notes" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ExtendedDetails" Type="xml" Mode="In" />
+          <Parameter Name="QuestionId" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="Items_Select" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="Items_Update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="QuestionId" Type="int" Mode="In" />
+          <Parameter Name="QuestionText" Type="varchar" Mode="In" />
+          <Parameter Name="Notes" Type="varchar(max)" Mode="In" />
+          <Parameter Name="ExtendedDetails" Type="xml" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Entities" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="EntitiesContainer" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="Answers_Insert">
+            <Parameter Name="QuestionId" Mode="In" Type="Int32" />
+            <Parameter Name="txt" Mode="In" Type="String" />
+            <Parameter Name="ansVal" Mode="In" Type="Int32" />
+            <Parameter Name="worth" Mode="In" Type="Int32" />
+            <Parameter Name="ordinalPos" Mode="In" Type="Int32" />
+            <Parameter Name="Notes" Mode="In" Type="String" />
+            <Parameter Name="ExtendedDetails" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Items_Insert">
+            <Parameter Name="QuestionTypeId" Mode="In" Type="Byte" />
+            <Parameter Name="QuestionText" Mode="In" Type="String" />
+            <Parameter Name="Notes" Mode="In" Type="String" />
+            <Parameter Name="ExtendedDetails" Mode="In" Type="String" />
+            <Parameter Name="QuestionId" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Items_Select" ReturnType="Collection(Entities.Items_Select_Result)" />
+          <FunctionImport Name="Items_ById_Select" ReturnType="Collection(Entities.Items_Select_Result)">
+          <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Answers_ByQuestionId_Select" ReturnType="Collection(Entities.Answers_Select_Result)">
+          <Parameter Name="QuestionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Answers_ByQuestionId_Delete">
+            <Parameter Name="QuestionId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Items_Update">
+            <Parameter Name="QuestionId" Mode="In" Type="Int32" />
+            <Parameter Name="QuestionText" Mode="In" Type="String" />
+            <Parameter Name="Notes" Mode="In" Type="String" />
+            <Parameter Name="ExtendedDetails" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="Items_Select_Result">
+          <Property Type="Int32" Name="questionID" Nullable="false" />
+          <Property Type="Int32" Name="masterQuestionID" Nullable="true" />
+          <Property Type="Int32" Name="QuestionID_FromOldOT" Nullable="true" />
+          <Property Type="Byte" Name="SubjectID" Nullable="true" />
+          <Property Type="String" Name="GradeLevel" Nullable="true" MaxLength="2" />
+          <Property Type="Byte" Name="QuestionTypeID" Nullable="true" />
+          <Property Type="String" Name="questionText" Nullable="true" MaxLength="8000" />
+          <Property Type="Int32" Name="passageID" Nullable="true" />
+          <Property Type="Int32" Name="PassageID_FromOldOT" Nullable="true" />
+          <Property Type="Byte" Name="GridTypeID" Nullable="true" />
+          <Property Type="String" Name="Complexity" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="Difficulty" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ModifyDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CreateUserID" Nullable="true" />
+          <Property Type="Int32" Name="ModifyUserID" Nullable="true" />
+          <Property Type="Byte" Name="minScore" Nullable="true" />
+          <Property Type="Byte" Name="maxScore" Nullable="true" />
+          <Property Type="Int16" Name="targ" Nullable="true" />
+          <Property Type="String" Name="courseID" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Notes" Nullable="true" />
+          <Property Type="Byte" Name="statusID" Nullable="true" />
+          <Property Type="DateTime" Name="ApproveDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="ApproveUser" Nullable="true" />
+          <Property Type="String" Name="ExtendedDetails" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="Items_ById_Select_Result">
+          <Property Type="Int32" Name="questionID" Nullable="false" />
+          <Property Type="Int32" Name="masterQuestionID" Nullable="true" />
+          <Property Type="Int32" Name="QuestionID_FromOldOT" Nullable="true" />
+          <Property Type="Byte" Name="SubjectID" Nullable="true" />
+          <Property Type="String" Name="GradeLevel" Nullable="true" MaxLength="2" />
+          <Property Type="Byte" Name="QuestionTypeID" Nullable="true" />
+          <Property Type="String" Name="questionText" Nullable="true" MaxLength="8000" />
+          <Property Type="Int32" Name="passageID" Nullable="true" />
+          <Property Type="Int32" Name="PassageID_FromOldOT" Nullable="true" />
+          <Property Type="Byte" Name="GridTypeID" Nullable="true" />
+          <Property Type="String" Name="Complexity" Nullable="true" MaxLength="1" />
+          <Property Type="String" Name="Difficulty" Nullable="true" MaxLength="1" />
+          <Property Type="DateTime" Name="CreateDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ModifyDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CreateUserID" Nullable="true" />
+          <Property Type="Int32" Name="ModifyUserID" Nullable="true" />
+          <Property Type="Byte" Name="minScore" Nullable="true" />
+          <Property Type="Byte" Name="maxScore" Nullable="true" />
+          <Property Type="Int16" Name="targ" Nullable="true" />
+          <Property Type="String" Name="courseID" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Notes" Nullable="true" />
+          <Property Type="Byte" Name="statusID" Nullable="true" />
+          <Property Type="DateTime" Name="ApproveDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="ApproveUser" Nullable="true" />
+          <Property Type="String" Name="ExtendedDetails" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="Answers_ByQuestionId_Select_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="id_FromOldOT" Nullable="true" />
+          <Property Type="Int32" Name="QID" Nullable="true" />
+          <Property Type="Int32" Name="questionID_FromOldOT" Nullable="true" />
+          <Property Type="String" Name="txt" Nullable="true" MaxLength="3000" />
+          <Property Type="Int32" Name="ansVal" Nullable="true" />
+          <Property Type="Int32" Name="worth" Nullable="true" />
+          <Property Type="Int32" Name="ordinalPos" Nullable="true" />
+          <Property Type="Int32" Name="modifyBy" Nullable="true" />
+          <Property Type="DateTime" Name="modifyDate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="isImage" Nullable="true" />
+          <Property Type="String" Name="Notes" Nullable="true" />
+          <Property Type="String" Name="ExtendedDetails" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+        <ComplexType Name="Answers_Select_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="id_FromOldOT" Nullable="true" />
+          <Property Type="Int32" Name="QID" Nullable="true" />
+          <Property Type="Int32" Name="questionID_FromOldOT" Nullable="true" />
+          <Property Type="String" Name="txt" Nullable="true" MaxLength="3000" />
+          <Property Type="Int32" Name="ansVal" Nullable="true" />
+          <Property Type="Int32" Name="worth" Nullable="true" />
+          <Property Type="Int32" Name="ordinalPos" Nullable="true" />
+          <Property Type="Int32" Name="modifyBy" Nullable="true" />
+          <Property Type="DateTime" Name="modifyDate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="isImage" Nullable="true" />
+          <Property Type="String" Name="Notes" Nullable="true" />
+          <Property Type="String" Name="ExtendedDetails" Nullable="true" MaxLength="Max" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
+        <Alias Key="Model" Value="Entities" />
+        <Alias Key="Target" Value="Entities.Store" />
+        <EntityContainerMapping CdmEntityContainer="EntitiesContainer" StorageEntityContainer="EntitiesStoreContainer">
+          <FunctionImportMapping FunctionImportName="Answers_Insert" FunctionName="Entities.Store.Answers_Insert" />
+          <FunctionImportMapping FunctionImportName="Items_Insert" FunctionName="Entities.Store.Items_Insert" />
+          <FunctionImportMapping FunctionImportName="Items_Select" FunctionName="Entities.Store.Items_Select">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Entities.Items_Select_Result">
+                <ScalarProperty Name="questionID" ColumnName="questionID" />
+                <ScalarProperty Name="masterQuestionID" ColumnName="masterQuestionID" />
+                <ScalarProperty Name="QuestionID_FromOldOT" ColumnName="QuestionID_FromOldOT" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="GradeLevel" ColumnName="GradeLevel" />
+                <ScalarProperty Name="QuestionTypeID" ColumnName="QuestionTypeID" />
+                <ScalarProperty Name="questionText" ColumnName="questionText" />
+                <ScalarProperty Name="passageID" ColumnName="passageID" />
+                <ScalarProperty Name="PassageID_FromOldOT" ColumnName="PassageID_FromOldOT" />
+                <ScalarProperty Name="GridTypeID" ColumnName="GridTypeID" />
+                <ScalarProperty Name="Complexity" ColumnName="Complexity" />
+                <ScalarProperty Name="Difficulty" ColumnName="Difficulty" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+                <ScalarProperty Name="ModifyUserID" ColumnName="ModifyUserID" />
+                <ScalarProperty Name="minScore" ColumnName="minScore" />
+                <ScalarProperty Name="maxScore" ColumnName="maxScore" />
+                <ScalarProperty Name="targ" ColumnName="targ" />
+                <ScalarProperty Name="courseID" ColumnName="courseID" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="statusID" ColumnName="statusID" />
+                <ScalarProperty Name="ApproveDate" ColumnName="ApproveDate" />
+                <ScalarProperty Name="ApproveUser" ColumnName="ApproveUser" />
+                <ScalarProperty Name="ExtendedDetails" ColumnName="ExtendedDetails" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Items_ById_Select" FunctionName="Entities.Store.Items_ById_Select">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="Entities.Items_Select_Result">
+                <ScalarProperty Name="questionID" ColumnName="questionID" />
+                <ScalarProperty Name="masterQuestionID" ColumnName="masterQuestionID" />
+                <ScalarProperty Name="QuestionID_FromOldOT" ColumnName="QuestionID_FromOldOT" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="GradeLevel" ColumnName="GradeLevel" />
+                <ScalarProperty Name="QuestionTypeID" ColumnName="QuestionTypeID" />
+                <ScalarProperty Name="questionText" ColumnName="questionText" />
+                <ScalarProperty Name="passageID" ColumnName="passageID" />
+                <ScalarProperty Name="PassageID_FromOldOT" ColumnName="PassageID_FromOldOT" />
+                <ScalarProperty Name="GridTypeID" ColumnName="GridTypeID" />
+                <ScalarProperty Name="Complexity" ColumnName="Complexity" />
+                <ScalarProperty Name="Difficulty" ColumnName="Difficulty" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ModifyDate" ColumnName="ModifyDate" />
+                <ScalarProperty Name="CreateUserID" ColumnName="CreateUserID" />
+                <ScalarProperty Name="ModifyUserID" ColumnName="ModifyUserID" />
+                <ScalarProperty Name="minScore" ColumnName="minScore" />
+                <ScalarProperty Name="maxScore" ColumnName="maxScore" />
+                <ScalarProperty Name="targ" ColumnName="targ" />
+                <ScalarProperty Name="courseID" ColumnName="courseID" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="statusID" ColumnName="statusID" />
+                <ScalarProperty Name="ApproveDate" ColumnName="ApproveDate" />
+                <ScalarProperty Name="ApproveUser" ColumnName="ApproveUser" />
+                <ScalarProperty Name="ExtendedDetails" ColumnName="ExtendedDetails" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Answers_ByQuestionId_Select" FunctionName="Entities.Store.Answers_ByQuestionId_Select">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="Entities.Answers_Select_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="id_FromOldOT" ColumnName="id_FromOldOT" />
+                <ScalarProperty Name="QID" ColumnName="QID" />
+                <ScalarProperty Name="questionID_FromOldOT" ColumnName="questionID_FromOldOT" />
+                <ScalarProperty Name="txt" ColumnName="txt" />
+                <ScalarProperty Name="ansVal" ColumnName="ansVal" />
+                <ScalarProperty Name="worth" ColumnName="worth" />
+                <ScalarProperty Name="ordinalPos" ColumnName="ordinalPos" />
+                <ScalarProperty Name="modifyBy" ColumnName="modifyBy" />
+                <ScalarProperty Name="modifyDate" ColumnName="modifyDate" />
+                <ScalarProperty Name="isImage" ColumnName="isImage" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="ExtendedDetails" ColumnName="ExtendedDetails" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Answers_ByQuestionId_Delete" FunctionName="Entities.Store.Answers_ByQuestionId_Delete" />
+          <FunctionImportMapping FunctionImportName="Items_Update" FunctionName="Entities.Store.Items_Update" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

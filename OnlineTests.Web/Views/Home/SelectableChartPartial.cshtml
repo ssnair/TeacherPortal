@@ -1,0 +1,110 @@
+﻿<script src="~/Scripts/questionTypes/OnlineDwEditor.js"></script>
+<script type="text/javascript" src="~/Scripts/questionTypes/selectableChart.js"></script>
+
+<div class="tab-content my-tab-center">
+    <!-- QUESTIONS -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Question Text</div>
+                <div id="divQBody" runat="server" class="qEditor qBody" title="Click to edit the question body">
+                    <span>Click to edit...</span>
+                </div>
+                <input type="hidden" value="" id="hfQBody" runat="server" ClientIDMode="Static"  />
+            </div>
+        </div>
+    </div>
+
+    <!-- ANSWERS  -->
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-5 col-md-offset-1">
+                    <div id="selectableChart_inputsContainer" class="row">
+                        <div class="added">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name="mitexto[]" onkeypress="return validateNum(event)" id="campo_1" placeholder="Value" />
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" name="miLabel[]" id="label_1" placeholder="Label" />
+                                </div>
+                                <div class="col-md-1">
+                                    <a href="#" id="1" class="glyphicon glyphicon-remove selectableChart_deleteColumnValue"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-3 col-md-offset-4">
+                            <a id="agregarCampo" href="javascript:void(0)" class="btn btn-primary btn-xs">Add New Column</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <a id="selectableChart_showChart" href="javascript:void()" class="btn btn-success btn-sl">Show Chart</a>
+                </div>
+            </div>
+
+            <div id="selectableChart_chartContainer" style="width: 100%; height: 300px; font-size: 14px; line-height: 1.2em;"></div>
+        </div>
+    </div>
+
+    <!-- NOTES  -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Notes</div>
+                <div class="panel-body">
+                    <textarea class="textarea-note" placeholder="enter comments  about this question (optional)" id="selectableChart_Notes"></textarea>
+    @*                <div style="width: 130px;">
+                        <input type="text" id="worth3" style="width: 50px;" placeholder="Worth"/>
+                        pts
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTIONS  -->
+    <div class="panel panel-default">
+        <div class="footer-answer" style="display:block;padding-top:100px;text-align:center;">
+            <button id="btnSelectableChart_Preview" class="btn btn-info" data-toggle="modal" data-target="#selectableChart_Preview">Preview</button>
+            <button class="btn btn-success" id="bntSelectableCharts_Save">Save</button>
+        </div>
+    </div>
+
+    <!-- EDITOR SECTION -------->
+    <div id="odwDialog" style="display:none;">
+        <textarea id="odwEditor"></textarea>
+    </div>
+
+    <div class="modal fade" id="selectableChart_Preview"
+    data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+    aria-labelledby="selectableChart_Preview" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" id="selectableChart_closeModal">Close</button>
+                    <h4 class="modal-title">Preview</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="selectableChart_questionContainer"></p>
+
+                    <div id="selectableChart_previewContainer" style="width: 560px; height: 200px">
+                    </div>
+
+                    <p id="selectableChart_result"></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" id="selectableChart_submitAnswer" class="btn btn-primary" value="Submit Answer" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IMPORTANT: Required to display the floating Toolbox from the Question Creator page -------->    
+    <br />
+</div>
