@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.language = 'fr';
     // config.uiColor = '#AADC6E';
     config.scayt_autoStartup = true;
-    config.extraPlugins = 'lineutils,widget,mathjax,video,eqneditor,audio,image2,uploadcare';
+    config.extraPlugins = 'lineutils,widget,mathjax,video,eqneditor,audio,image2';  //TODO: restore 'uploadcare' before delivery jmt
     config.mathJaxClass = 'my-math';
     config.allowedContent = true;
 
