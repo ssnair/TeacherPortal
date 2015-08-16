@@ -135,34 +135,59 @@
 
     this.buildCKEditor = function (settings) {
         _self.editor = CKEDITOR.replace('questionContent', {
-            extraPlugins: 'droptarget',
+            extraPlugins: 'droptarget,flash,video,audio,eqneditor,mathjax,smiley,iframe',
+            
+            toolbar: "full",
+            toolbar_full: [
+                { name: "document", items: ["Droptarget", "Save", "NewPage", "Preview", "Print", "-", "Templates"] },
+                { name: 'clipboard', items: ["Cut", "Copy", "Paste", "PasteText", "PasteFromWord", "-", "Undo", "Redo"] },
+                { name: "editing", items: ["Find", "Replace", "-", "SelectAll", "-", "Scayt"] },
+                "/",
+                { name: "basicstyles", items: ["Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript", "-", "RemoveFormat"] },
+                { name: "paragraph", items: ["NumberedList", "BulletedList", "-", "Outdent", "Indent", "-", "Blockquote", "CreateDiv", "-", "JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock", "-", "BidiLtr", "BidiRtl"] },
+                "/",
+                { name: "insertmedia", items: ["Image", "Flash", "Video", "Audio", "EqnEditor", "Mathjax"] },
+                { name: "insert", items: ["Table", "HorizontalRule", "Smiley", "SpecialChar", "PageBreak", "Iframe"] },
+                { name: "forms", items: ["Form", "Checkbox", "Radio", "TextField", "Textarea", "Select", "Button", "HiddenField"] },
+                { name: "links", items: ["Link", "Unlink", "Anchor"] },
+                "/",
+                { name: "styles", items: ["Styles", "Format", "Font", "FontSize"] },
+                { name: "colors", items: ["TextColor", "BGColor"] },
+                { name: "tools", items: ["Maximize", "ShowBlocks"] }
+            ],
+            filebrowserUploadUrl: '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files',
+            filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
+            filebrowserImageBrowseUrl: '/ckfinder/ckfinder.html?type=Images',
+            filebrowserVideoBrowseUrl: '/ckfinder/ckfinder.html?type=Video',
+            filebrowserFlashBrowseUrl: '/ckfinder/ckfinder.html?type=Flash',
+            filebrowserImageUploadUrl: '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images',
+            filebrowserVideoUploadUrl: '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Video',
+            filebrowserFlashUploadUrl: '/ckfinder/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
+
+            /*toolbar: [
+                { name: 'actions', items: ['Droptarget'] },
+                { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'] },
+                { name: 'behaviors', items: ['Undo', 'Redo'] },
+                { name: 'zoom', items: ['Maximize'] },
+                '/',
+                { name: 'inserts', items: ['Image', 'Mathjax', 'Table', 'SpecialChar', 'PageBreak'] },
+                { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+                { name: 'alignments', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
+                { name: 'indent', items: ['NumberedList', 'BulletedList'] },
+                { name: 'paragraph', items: ['Outdent', 'Indent', 'HorizontalRule', 'Blockquote'] },
+                '/',
+                { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize'] },
+                { name: 'fontStyles', items: ['Bold', 'Italic', 'Underline'] },
+                { name: 'colors', items: ['TextColor', 'BGColor'] },
+                { name: 'styleTools', items: ['Subscript', 'Superscript', 'RemoveFormat'] }
+            ],*/
             enterMode: CKEDITOR.ENTER_BR,
             shiftEnterMode: CKEDITOR.ENTER_P
         });
 
         _self.editor.config.width = settings.container.width;
         _self.editor.config.height = settings.container.height;
-        _self.editor.config.allowedContent = true;
-
-        _self.editor.config.toolbar = [
-            { name: 'actions', items: ['Target', 'Droptarget'] },
-            { name: 'clipboard', items: ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord'] },
-            { name: 'behaviors', items: ['Undo', 'Redo'] },
-            //{ name: 'document', items: ['Source'] },
-            { name: 'zoom', items: ['Maximize'] },
-            '/',
-            { name: 'inserts', items: ['Image', 'Mathjax', 'Table', 'SpecialChar', 'PageBreak'] },
-            { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
-            { name: 'alignments', items: ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'] },
-            { name: 'indent', items: ['NumberedList', 'BulletedList'] },
-            { name: 'paragraph', items: ['Outdent', 'Indent', 'HorizontalRule', 'Blockquote'] },
-            '/',
-            { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize'] },
-            { name: 'fontStyles', items: ['Bold', 'Italic', 'Underline'] },
-            { name: 'colors', items: ['TextColor', 'BGColor'] },
-            { name: 'styleTools', items: ['Subscript', 'Superscript', 'RemoveFormat'] }
-        ];
-
+        _self.editor.config.allowedContent = true;        
         //CKEDITOR.dtd.$editable.label = 1;
         _self.onEditorChange(settings, CKEDITOR.instances.questionContent);
         _self.onEditorSetData(settings, CKEDITOR.instances.questionContent);
