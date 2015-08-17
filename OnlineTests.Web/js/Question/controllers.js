@@ -18,6 +18,7 @@ onlineTestsApp.controller("QuestionCtrl", ['$scope', '$location', '$timeout', fu
     }
 
     $scope.saveQuestion = function () {
+        $scope.questionText = $("#hfQBody").val();
         $scope.$broadcast("save");
     }
 
