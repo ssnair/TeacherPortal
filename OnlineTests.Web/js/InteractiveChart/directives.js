@@ -84,6 +84,8 @@ onlineTestsApp.directive('interactiveChart', ['$timeout', 'FileUploader', 'quest
                     scope.$emit("initParent", parsedSettings);
                     scope.settings = parsedSettings.Settings;
                     scope.settings.id = parsedSettings.QuestionId;
+                    $("#hfQBody").val(parsedSettings.QuestionText);
+                    $("#divQBody").html(parsedSettings.QuestionText);
                     //scope.questionId = parsedSettings.QuestionId;
                     //scope.questionNotes = parsedSettings.Notes;
                     interactiveChartSrvc.completeSettings(scope.settings);
