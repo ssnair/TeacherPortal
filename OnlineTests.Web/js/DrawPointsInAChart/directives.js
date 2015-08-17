@@ -84,6 +84,8 @@ onlineTestsApp.directive('drawLinesInAChart', ['$timeout', 'questionSrvc', 'draw
                     scope.$emit("initParent", parsedSettings);
                     scope.settings = parsedSettings.Settings;
                     scope.settings.id = parsedSettings.QuestionId;
+                    $("#hfQBody").val(parsedSettings.QuestionText);
+                    $("#divQBody").html(parsedSettings.QuestionText);
                     //scope.settings.questionText = parsedSettings.QuestionText;
                     //scope.questionId = parsedSettings.QuestionId;
                     //scope.questionNotes = parsedSettings.Notes;
@@ -98,10 +100,6 @@ onlineTestsApp.directive('drawLinesInAChart', ['$timeout', 'questionSrvc', 'draw
             };
 
             scope.init();
-
-            //$timeout(function () {
-            //    scope.init();
-            //}, 300, false);
         }
     }
 }]);
