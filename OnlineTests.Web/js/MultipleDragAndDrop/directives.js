@@ -35,6 +35,8 @@ onlineTestsApp.directive('multipleDragAndDrop', ['$timeout', 'questionSrvc', 'mu
                     scope.$emit("initParent", parsedSettings);
                     scope.settings = parsedSettings.Settings;
                     scope.settings.id = parsedSettings.QuestionId;
+                    $("#hfQBody").val(parsedSettings.QuestionText);
+                    $("#divQBody").html(parsedSettings.QuestionText);
                     //scope.settings.questionText = parsedSettings.QuestionText;
                     //scope.questionId = parsedSettings.QuestionId;
                     //scope.questionNotes = parsedSettings.Notes;

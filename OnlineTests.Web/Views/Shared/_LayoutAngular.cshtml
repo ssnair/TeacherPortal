@@ -13,7 +13,7 @@
     <link href="~/Content/css/Question.css" rel="stylesheet" />
     <link href="~/Content/css/main.css" rel="stylesheet" />
     <link href="~/Content/css/bootstrap-dialog.min.css" rel="stylesheet" />
-@*    <script src="https://data.collierschools.com/onlinedw/Content/ckeditor/ckeditor.js"></script>
+    @*    <script src="https://data.collierschools.com/onlinedw/Content/ckeditor/ckeditor.js"></script>
     <script src="https://data.collierschools.com/onlinedw/Content/ckeditor/adapters/jquery.js"></script>*@
     <link href="~/Content/css/ng-ckeditor.css" rel="stylesheet" />
     <script src="~/Content/ckeditor/ckeditor.js"></script>
@@ -40,26 +40,32 @@
     <link rel="stylesheet" href="~/css/app.css" />
     <link href="~/Content/spectrum/css/spectrum.css" rel="stylesheet" />
     <script type="text/javascript" src="~/Content/spectrum/js/spectrum.js"></script>
-    <script type="text/javascript" src="~/Content/pixastic/js/pixastic.js"></script>    
+    <script type="text/javascript" src="~/Content/pixastic/js/pixastic.js"></script>
     <script type="text/javascript" src="~/Content/pixastic/js/pixastic.effects.js"></script>
     <script type="text/javascript" src="~/Content/pixastic/js/pixastic.worker.js"></script>
+    <script src="~/js/questionTextEditor.js"></script>
 
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
     <div ng-controller="QuestionCtrl">
+
         <div class="row">
             <!-- QUESTIONS -->
             <div class="col-md-9">
                 <div class="panel panel-default">
                     <div class="panel-heading">Question Text</div>
-                    <div class="panel-body" ng-show="viewMode=='teacher'">
+                    <div id="divQBody" runat="server" class="qEditor qBody" title="Click to edit the question body">
+                        <span>Click to edit...</span>
+                    </div>                    
+                    <input type="hidden" value="" id="hfQBody" ng-model="questionText" runat="server" ClientIDMode="Static" />                    
+                    
+                    @*<div class="panel-body" ng-show="viewMode=='teacher'">
                         <textarea ckeditor="editorOptions" name="questionTextTeacher" ng-model="questionText" ng-change="save()"></textarea>
                     </div>
                     <div class="panel-body" ng-show="viewMode=='student'">
                         <textarea ckeditor="editorOptions" name="questionTextStudent" disabled="disabled" ng-model="questionText"></textarea>
-                    </div>
-
+                    </div>*@
                 </div>
             </div>
 
@@ -95,6 +101,11 @@
             <button id="btnSubmitAnswer" class="btn btn-info" ng-show="viewMode=='student'" ng-click="submitAnswer()">Submit Answer</button>
             <button class="btn btn-success" ng-show="viewMode=='teacher'" ng-click="saveQuestion()">Save</button>
         </div>
+
+        <!-- EDITOR DIALOG -------->
+        <div id="odwDialog" style="display: none;">
+            <textarea id="odwEditor"></textarea>
+        </div>
     </div>
     <script src="~/lib/angular/angular.js" type="text/javascript"></script>
     <script src="~/lib/angular/angular-sanitize.js"></script>
@@ -110,7 +121,7 @@
 
     @RenderSection("Scripts", false)
 
-     <!-- used to resize the ifTech iframe automatically (when the content changes the iframe resizes) -->
+    <!-- used to resize the ifTech iframe automatically (when the content changes the iframe resizes) -->
     <script src="~/Scripts/iframe-resizer-master/js/iframeResizer.contentWindow.min.js"></script>
 </body>
 </html>

@@ -316,7 +316,7 @@ namespace OnlineTests.Web.Controllers
                         var data = new
                         {
                             QuestionId = question.Id,
-                            Notes = question.QuestionText ?? "",
+                            Notes = question.Notes ?? "",
                             QuestionText = question.QuestionText ?? "",
                             QuestionTypeId = (short)(question.QuestionTypeId.HasValue ? question.QuestionTypeId.Value : QT_DPC),
                             Settings = settings
@@ -353,7 +353,7 @@ namespace OnlineTests.Web.Controllers
                         var data = new
                         {
                             QuestionId = question.Id,
-                            Notes = question.QuestionText ?? "",
+                            Notes = question.Notes ?? "",
                             QuestionText = question.QuestionText ?? "",
                             QuestionTypeId = (short)(question.QuestionTypeId.HasValue ? question.QuestionTypeId.Value : QT_SOI),
                             Settings = settings
