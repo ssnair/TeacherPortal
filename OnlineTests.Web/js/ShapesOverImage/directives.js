@@ -72,6 +72,8 @@ onlineTestsApp.directive('shapesOverImage', ['$timeout', 'FileUploader', 'questi
                     scope.$emit("initParent", parsedSettings);
                     scope.settings = parsedSettings.Settings;
                     scope.settings.id = parsedSettings.QuestionId;
+                    $("#hfQBody").val(parsedSettings.QuestionText);
+                    $("#divQBody").html(parsedSettings.QuestionText);
                     //scope.settings.questionText = parsedSettings.QuestionText;
                     shapesOverImageSrvc.completeSettings(scope.settings);
                     scope.getEngine(scope.settings);
