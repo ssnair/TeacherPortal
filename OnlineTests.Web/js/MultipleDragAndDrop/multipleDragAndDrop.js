@@ -139,7 +139,7 @@
             
             toolbar: "full",
             toolbar_full: [
-                { name: "document", items: ["Droptarget", "Save", "NewPage", "Preview", "Print", "-", "Templates"] },
+                { name: "document", items: ["Source", "-", "Droptarget", "-", "Save", "NewPage", "Preview", "Print", "-", "Templates"] },
                 { name: 'clipboard', items: ["Cut", "Copy", "Paste", "PasteText", "PasteFromWord", "-", "Undo", "Redo"] },
                 { name: "editing", items: ["Find", "Replace", "-", "SelectAll", "-", "Scayt"] },
                 "/",

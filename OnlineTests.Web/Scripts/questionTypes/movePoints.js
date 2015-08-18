@@ -31,7 +31,8 @@ $(function () {
             var tokens = $(this).attr("data-val").split(':');
             var interval = null;
             if (tokens[0] === 'singlePoint') {
-                interval = mp.addPoint(0);
+                var initialValue = ((mp.settings.maxValue - mp.settings.minValue) /2) + mp.settings.minValue;
+                interval = mp.addPoint(initialValue);
                 classIcon = 'icon-btn-9';
 
             } else {
@@ -197,7 +198,7 @@ $(function () {
         var tokens = $(this).attr("data-val").split(':');
         var classIcon;
         if (tokens[0] === 'singlePoint') {
-            var initialValue = 0;
+            var initialValue = ((mp.settings.maxValue - mp.settings.minValue) / 2) + mp.settings.minValue;
             interval = mpPreview.addPoint(initialValue);
             classIcon = 'icon-btn-9';
         } else {
@@ -676,7 +677,7 @@ MovePoint = function (parent, point) {
 
     this.draggingCircle = null
 
-    this.point = this.createPoint(this.valuePoint, client.baseline, client.singlePointRadius, { "fill": "#f00", stroke: "none", "fill-opacity": 0.2 });
+    this.point = this.createPoint(this.valuePoint, client.baseline, client.singlePointRadius, { "fill": "#f00", stroke: "none", "fill-opacity": 0.75 });
     if (this.label != null) {
         var cy = this.point.attrs["cy"] - this.point.attrs["r"] - 10
         this.labelElement = this.parent.paper.text(this.point.attrs["cx"], cy, this.label);
