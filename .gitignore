@@ -45,3 +45,6 @@ OnlineTests.Backend.v11.suo
 OnlineTests.Repository/obj/
 OnlineTests.RepositoryTest/obj/
 OnlineTests.RepositoryTest/bin/
+OnlineTests.Repository/bin/
+OnlineTests.Backend.v12.suo
+BuildProcessTemplates/
