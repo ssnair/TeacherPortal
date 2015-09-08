@@ -31,7 +31,7 @@ $(function () {
             var tokens = $(this).attr("data-val").split(':');
             var interval = null;
             if (tokens[0] === 'singlePoint') {
-                var initialValue = ((mp.settings.maxValue - mp.settings.minValue) /2) + mp.settings.minValue;
+                var initialValue = ((mp.settings.maxValue - mp.settings.minValue) / 2) + mp.settings.minValue;
                 interval = mp.addPoint(initialValue);
                 classIcon = 'icon-btn-9';
 

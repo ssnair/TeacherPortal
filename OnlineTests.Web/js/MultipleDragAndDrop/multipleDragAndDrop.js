@@ -136,7 +136,7 @@
     this.buildCKEditor = function (settings) {
         _self.editor = CKEDITOR.replace('questionContent', {
             extraPlugins: 'droptarget,flash,video,audio,eqneditor,mathjax,smiley,iframe',
-            
+
             toolbar: "full",
             toolbar_full: [
                 { name: "document", items: ["Source", "-", "Droptarget", "-", "Save", "NewPage", "Preview", "Print", "-", "Templates"] },
@@ -187,7 +187,7 @@
 
         _self.editor.config.width = settings.container.width;
         _self.editor.config.height = settings.container.height;
-        _self.editor.config.allowedContent = true;        
+        _self.editor.config.allowedContent = true;
         //CKEDITOR.dtd.$editable.label = 1;
         _self.onEditorChange(settings, CKEDITOR.instances.questionContent);
         _self.onEditorSetData(settings, CKEDITOR.instances.questionContent);

@@ -1202,7 +1202,7 @@ namespace OnlineTests.Web.Controllers
                 {
                     status = "Ok",
                     data = shapesOverImage.Id,
-                    type = QT_DPC
+                    type = QT_SOI
                 });
             }
 
