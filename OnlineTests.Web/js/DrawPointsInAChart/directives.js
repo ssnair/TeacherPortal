@@ -100,6 +100,7 @@ onlineTestsApp.directive('drawLinesInAChart', ['$timeout', 'questionSrvc', 'draw
             };
 
             scope.init();
+
         }
     }
 }]);

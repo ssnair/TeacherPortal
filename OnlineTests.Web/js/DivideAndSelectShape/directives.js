@@ -68,12 +68,12 @@ onlineTestsApp.directive('divideAndSelectShape', ['$timeout', 'questionSrvc', 'd
                 var backendSettings = $('#vmSettings').val();
                 if (backendSettings != "") {
                     var parsedSettings = JSON.parse(backendSettings);
+                    //scope.questionText = parsedSettings.QuestionText;
                     scope.$emit("initParent", parsedSettings);
                     scope.settings = parsedSettings.Settings;
                     scope.settings.id = parsedSettings.QuestionId;
                     $("#hfQBody").val(parsedSettings.QuestionText);
                     $("#divQBody").html(parsedSettings.QuestionText);
-                    //scope.questionText = parsedSettings.QuestionText;
                     //scope.settings.questionText = parsedSettings.QuestionText;
                     //scope.questionId = parsedSettings.QuestionId;
                     //scope.questionNotes = parsedSettings.Notes;

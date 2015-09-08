@@ -161,28 +161,16 @@
     width: 288px; 
 }
 .stem-leaf-plot .graph { 
-    font-size: 1.2em;
-    margin-bottom: 10px;
+    font-size: 1.2em; 
 }
-.stem-leaf-plot .graph-row {
-    display: table;
-    width: 100%;
+.stem-leaf-plot .stem { 
+    border-right: 1px solid #ff0000;
 }
-.stem-leaf-plot .graph-row.header {
+.stem-leaf-plot .header-stem { 
     border-bottom: 1px solid #ff0000;
 }
-.stem-leaf-plot .graph-row .stem {
-    display: inline-block;
-    width: 23%;
-    position: relative;
+.stem-leaf-plot .header-stem .stem { 
     border-right: 1px solid #ff0000;
-    padding: 0 10px 0 15px;
-}
-.stem-leaf-plot .graph-row .leaf {
-    display: inline-block;
-    width: 67%;
-    position: relative;
-    padding-left: 10px;   
 }
 .pictogram .form-inline .form-group label { 
     width: 100px; 

@@ -74,7 +74,10 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\System.Web.Helpers\v4.0_2.0.0.0__31bf3856ad364e35\System.Web.Helpers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -588,6 +591,8 @@
     <Content Include="Content\ckeditor\plugins\texzilla\icons\texzilla.png" />
     <Content Include="Content\ckeditor\plugins\texzilla\plugin.js" />
     <Content Include="Content\ckeditor\plugins\texzilla\src\samples\index.html" />
+    <Content Include="Content\ckeditor\plugins\uploadcare\images\logo.png" />
+    <Content Include="Content\ckeditor\plugins\uploadcare\plugin.js" />
     <Content Include="Content\ckeditor\plugins\video\dialogs\video.js" />
     <Content Include="Content\ckeditor\plugins\video\docs\install.html" />
     <Content Include="Content\ckeditor\plugins\video\docs\styles.css" />
@@ -1395,8 +1400,10 @@
     <Content Include="js\DrawPointsInAChart\services.js" />
     <Content Include="js\InteractiveChart\services.js" />
     <Content Include="js\MultipleDragAndDrop\services.js" />
+    <Content Include="js\questionTextEditor.js" />
     <Content Include="js\ShapesOverImage\services.js" />
     <Content Include="lib\angular-file-upload.min.map" />
+    <Content Include="Content\ckeditor\plugins\uploadcare\README.md" />
     <None Include="Properties\PublishProfiles\OnlineDW.pubxml" />
     <Content Include="js\app.js" />
     <Content Include="js\DivideAndSelectShape\circleShape.js" />
@@ -1615,7 +1622,6 @@
     <Folder Include="Content\ckeditor\plugins\allmedias\icons\" />
     <Folder Include="Content\ckeditor\plugins\allmedias\images\" />
     <Folder Include="Content\ckeditor\plugins\allmedias\lang\" />
-    <Folder Include="Content\ckeditor\plugins\uploadcare\" />
     <Folder Include="Content\images\QuestionTypes\" />
   </ItemGroup>
   <ItemGroup>
@@ -1649,7 +1655,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>7777</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

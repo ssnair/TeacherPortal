@@ -13,11 +13,10 @@
     <link href="~/Content/css/Question.css" rel="stylesheet" />
     <link href="~/Content/css/main.css" rel="stylesheet" />
     <link href="~/Content/css/bootstrap-dialog.min.css" rel="stylesheet" />
-    @*    <script src="https://data.collierschools.com/onlinedw/Content/ckeditor/ckeditor.js"></script>
-    <script src="https://data.collierschools.com/onlinedw/Content/ckeditor/adapters/jquery.js"></script>*@
     <link href="~/Content/css/ng-ckeditor.css" rel="stylesheet" />
     <script src="~/Content/ckeditor/ckeditor.js"></script>
     <script src="~/Content/ckeditor/adapters/jquery.js"></script>
+
     <script src="~/Content/ckfinder/ckfinder.js"></script>
 
     <script type="text/javascript" src="~/Content/bootstrap/js/bootstrap.min.js"></script>
@@ -40,7 +39,7 @@
     <link rel="stylesheet" href="~/css/app.css" />
     <link href="~/Content/spectrum/css/spectrum.css" rel="stylesheet" />
     <script type="text/javascript" src="~/Content/spectrum/js/spectrum.js"></script>
-    <script type="text/javascript" src="~/Content/pixastic/js/pixastic.js"></script>
+    <script type="text/javascript" src="~/Content/pixastic/js/pixastic.js"></script>    
     <script type="text/javascript" src="~/Content/pixastic/js/pixastic.effects.js"></script>
     <script type="text/javascript" src="~/Content/pixastic/js/pixastic.worker.js"></script>
     <script src="~/js/questionTextEditor.js"></script>
@@ -49,7 +48,6 @@
 </head>
 <body>
     <div ng-controller="QuestionCtrl">
-
         <div class="row">
             <!-- QUESTIONS -->
             <div class="col-md-9">
@@ -58,9 +56,9 @@
                     <div id="divQBody" runat="server" class="qEditor qBody" title="Click to edit the question body">
                         <span>Click to edit...</span>
                     </div>                    
-                    <input type="hidden" value="" id="hfQBody" ng-model="questionText" runat="server" ClientIDMode="Static" />                    
-                    
-                    @*<div class="panel-body" ng-show="viewMode=='teacher'">
+                    <input type="hidden" value="" id="hfQBody" ng-model="questionText" runat="server" ClientIDMode="Static" />    
+
+@*                    <div class="panel-body" ng-show="viewMode=='teacher'">
                         <textarea ckeditor="editorOptions" name="questionTextTeacher" ng-model="questionText" ng-change="save()"></textarea>
                     </div>
                     <div class="panel-body" ng-show="viewMode=='student'">
@@ -116,12 +114,13 @@
     <script src="~/lib/angular/ui-bootstrap-custom-0.12.1.min.js"></script>
     <script src="~/lib/angular-file-upload.min.js"></script>
     <script src="~/js/Question/services.js"></script>
+
     <script src="~/js/InteractiveChart/services.js"></script>
     <script src="~/js/DivideAndSelectShape/services.js"></script>
 
     @RenderSection("Scripts", false)
 
-    <!-- used to resize the ifTech iframe automatically (when the content changes the iframe resizes) -->
+     <!-- used to resize the ifTech iframe automatically (when the content changes the iframe resizes) -->
     <script src="~/Scripts/iframe-resizer-master/js/iframeResizer.contentWindow.min.js"></script>
 </body>
 </html>
