@@ -25,21 +25,21 @@
             </div>
             <div class="row">
                 <div class="col-md-6 graph">
-                    <div ng-show="settings.chartType.id != 'stem-leaf-plot'" ng-scope-element="stemLeafPlotDrawingContainer"></div>
-                    <div class="row header-stem">
-                        <div class="col-md-2 stem">Stem&nbsp;</div>
-                        <div class="col-md-8">Leafs</div>
-                    </div>
-                    <div ng-repeat="p in settings.stemLeafPlot.stems">
-                        <div class="row">
-                            <div class="col-md-2 stem">
+                    <div ng-show="settings.chartType.id != 'stem-leaf-plot'" ng-scope-element="stemLeafPlotDrawingContainer"></div>                    
+                    <div class="row">
+                        <div class="graph-row header">
+                            <div class="stem">Stem</div>
+                            <div class="leaf">Leafs</div>
+                        </div>
+                        <div ng-repeat="p in settings.stemLeafPlot.stems" class="graph-row">
+                            <div class="stem">
                                 {{p.label}}
                             </div>
-                            <div class="col-md-8">
+                            <div class="leaf">
                                 {{p.value.join(' ')}}
                             </div>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <div>
