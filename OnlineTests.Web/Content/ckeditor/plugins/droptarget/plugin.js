@@ -6,7 +6,7 @@ CKEDITOR.plugins.add('droptarget', {
         CKEDITOR.dialog.add('droptarget', this.path + 'dialogs/droptarget.js');
         editor.widgets.add('droptarget', {
             button: 'Drop Target',
-            inline: true,            
+            //inline: true,            
             template: '<div class="droptarget"></div>',
             editables: {
                 content: {
