@@ -103,7 +103,7 @@
 
     this.defineStem = function (settings, canvas, stems, i) {
         var parameters = _self.parameters(settings);
-        stems[i].value = _self.mapValues(parameters, stems[i].stringValue).sort(_self.sortAscendent);
+        stems[i].value = _self.mapValues(parameters, stems[i].stringValue);
     }
 
     this.addStem = function (settings) {
