@@ -155,6 +155,15 @@ $(function () {
             },
             'json');
     });
+
+    $("#movePointsInAChart_Function").change(function () {
+        if (this.value === '3') {
+            $('.answer-type').removeClass('hidden');
+        } else {
+            $('.answer-type').addClass('hidden');
+        }
+        console.info("change.this", this);
+    });
 });
 
 MovePointsInAChart = function (container, settings) {
@@ -185,7 +194,11 @@ MovePointsInAChart = function (container, settings) {
             this.plotFnCos();
         }
         else if (this.settings.grid.chartType == 3) {
-            this.plotFnLinear();
+            if ($('#movePointsInAChart_AnswerType').val() == '1') {
+                this.plotFnLinear();
+            } else {
+                this.plotLine();
+            }
         }
         else if (this.settings.grid.chartType == 4) {
             this.plotFnQuad();
@@ -278,6 +291,16 @@ MovePointsInAChart = function (container, settings) {
         this.plot = this.paper.path(path).attr({ stroke: "#00f", "stroke-width": 3 });
     };
 
+    this.plotLine = function () {
+        var point1 = this.client.pointToClient(this.minMaxSpot.valueX, this.minMaxSpot.valueY);
+        var point2 = this.client.pointToClient(this.centerSpot.valueX, this.centerSpot.valueY);
+
+        var path = ["M", point1.x, point1.y, "L", point2.x, point2.y];
+        if (this.plot)
+            this.plot.attr('path', path);
+        else
+            this.plot = this.paper.path(path).attr({ stroke: "#00f", "stroke-width": 3 });
+    };
 
     // run
     settings = settings || {
@@ -505,7 +528,11 @@ MovePointsInAChartSpot = function (parent, coordinates) {
             spot.parent.plotFnCos();
         }
         else if (settings.grid.chartType == 3) {
-            spot.parent.plotFnLinear();
+            if ($('#movePointsInAChart_AnswerType').val() == '1') {
+                spot.parent.plotFnLinear();
+            } else {
+                spot.parent.plotLine();
+            }
         }
         else if (settings.grid.chartType == 4) {
             spot.parent.plotFnQuad();

@@ -5,6 +5,12 @@
          new SelectListItem{Value = "3", Text = "Linear"},
         new SelectListItem{Value = "4", Text = "X^2"}
     };
+
+    ViewBag.AnswerTypes = new List<SelectListItem>{
+        new SelectListItem{Value = "1", Text = "Center/MinMax"},
+        new SelectListItem{Value = "2", Text = "Line"},
+    };
+
 }
 
 <script src="~/Scripts/questionTypes/OnlineDwEditor.js"></script>
@@ -59,6 +65,15 @@
                             </div>
                             <div class="col-md-2">
                                 <input type="button" value="Reset Graph" id="movePointsInAChart_ResetGraph" class="btn btn-primary" />
+                            </div>
+                        </div>
+
+                        <div class="row hidden answer-type">
+                            <div class="col-md-2">
+                                <label for="movePointsInAChart_Domain">Answer Type</label>
+                            </div>
+                            <div class="col-md-2">
+                                @Html.DropDownList("movePointsInAChart_AnswerType", @ViewBag.AnswerTypes as List<SelectListItem>, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
