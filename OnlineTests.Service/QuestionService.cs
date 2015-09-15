@@ -161,7 +161,10 @@ namespace OnlineTests.Service
                                 maxValueType = answerDetails.MaxValueType,
                                 shapeType = answerDetails.ShapeType,
                                 value = answerDetails.Value,
-                                label = answerDetails.Label
+                                label = answerDetails.Label,
+                                q1Value = answerDetails.Q1Value.HasValue ? answerDetails.Q1Value.Value : 0,
+                                q2Value = answerDetails.Q2Value.HasValue ? answerDetails.Q2Value.Value : 0,
+                                q3Value = answerDetails.Q3Value.HasValue ? answerDetails.Q3Value.Value : 0
                             });
                     }
                     mpil.Intervals = intervalsBuffer.ToArray();

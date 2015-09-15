@@ -82,6 +82,8 @@
 .icon-btn8:hover {background:#E6E6E6  url('../images/btn8.png') no-repeat;}
 .icon-btn9 {background: #f6f6f6 url('../images/btn9.png') no-repeat;}
 .icon-btn9:hover {background:#E6E6E6  url('../images/btn9.png') no-repeat;}
+.icon-btn10 {background: #f6f6f6 url('../images/btn10.png') no-repeat;}
+.icon-btn10:hover {background:#E6E6E6  url('../images/btn10.png') no-repeat;}
 
 .icon-btn-1 { background: #878787 url('../images/btn1.png') no-repeat;}
 .icon-btn-2 { background: #878787 url('../images/btn2.png') no-repeat;}
@@ -92,6 +94,7 @@
 .icon-btn-7 { background: #878787 url('../images/btn7.png') no-repeat;}
 .icon-btn-8 { background: #878787 url('../images/btn8.png') no-repeat;}
 .icon-btn-9 { background: #878787 url('../images/btn9.png') no-repeat;}
+.icon-btn-10 { background: #878787 url('../images/btn10.png') no-repeat;}
 
 .codecogs_math {
     -webkit-column-rule-color: rgb(0, 0, 0);

@@ -45,6 +45,9 @@ namespace OnlineTests.Common.Models
         public string ShapeType { get; set; }
         public decimal Value { get; set; }
         public string Label { get; set; }
+        public decimal? Q1Value { get; set; }
+        public decimal? Q2Value { get; set; }
+        public decimal? Q3Value { get; set; }
     }
 
     public class SelectableChart_ColumnXmlModel

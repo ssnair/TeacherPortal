@@ -680,7 +680,10 @@ namespace OnlineTests.Web.Controllers
                         maxValueType = x.MaxValueType,
                         shapeType = x.ShapeType,
                         value = x.Value,
-                        label = x.Label ?? string.Empty
+                        label = x.Label ?? string.Empty,
+                        q1Value= x.Q1Value,
+                        q2Value = x.Q2Value,
+                        q3Value = x.Q3Value
                     }
                     ).ToArray()
                 };

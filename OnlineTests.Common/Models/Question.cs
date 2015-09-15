@@ -151,6 +151,9 @@ namespace OnlineTests.Common.Models
         public decimal value { get; set; }
         public string shapeType { get; set; }
         public string label { get; set; }
+        public decimal q1Value { get; set; }
+        public decimal q2Value { get; set; }
+        public decimal q3Value { get; set; }
     }
 
     [Serializable]

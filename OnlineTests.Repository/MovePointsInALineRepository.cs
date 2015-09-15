@@ -46,7 +46,10 @@ namespace OnlineTests.Repository
                     MaxValueType = interval.maxValueType,
                     ShapeType = interval.shapeType,
                     Value = interval.value,
-                    Label = interval.label
+                    Label = interval.label,
+                    Q1Value = interval.q1Value,
+                    Q2Value = interval.q2Value,
+                    Q3Value = interval.q3Value
                 };
                 var intervalXmlSerialized = Serializer.Serialize(intervalXml);
                 this.connection.Db.Answers_Insert(question.Id, "", null, 0, 0, "", intervalXmlSerialized);

@@ -64,6 +64,12 @@ namespace OnlineTests.Web.Models
         public string ShapeType { get; set; }
         [DataMember(Name = "label")]
         public string Label { get; set; }
+        [DataMember(Name = "q1Value")]
+        public decimal Q1Value { get; set; }
+        [DataMember(Name = "q2Value")]
+        public decimal Q2Value { get; set; }
+        [DataMember(Name = "q3Value")]
+        public decimal Q3Value { get; set; }
     }
 
     public class SelectableChartModel : QuestionModel
