@@ -34,7 +34,9 @@ $(function () {
                 var initialValue = ((mp.settings.maxValue - mp.settings.minValue) / 2) + mp.settings.minValue;
                 interval = mp.addPoint(initialValue);
                 classIcon = 'icon-btn-9';
-
+            } else if (tokens[0] === 'boxAndWhisker') {
+                interval = mp.addBoxAndWhisker(mp.settings.minValue);
+                classIcon = 'icon-btn-10';
             } else {
                 interval = mp.addInterval(0, 1, tokens[0], tokens[1]);
                 var classIcon;
@@ -56,8 +58,10 @@ $(function () {
                     classIcon = 'icon-btn-7';
                 else if (intervalType == 'closed-plus-infinite')
                     classIcon = 'icon-btn-8';
-                else if (intervalType == 'closed-plus-infinite')
-                    classIcon = 'icon-btn-8';
+                else if (intervalType == 'single-point')
+                    classIcon = 'icon-btn-9';
+                else if (intervalType == 'box-and-whiskers')
+                    classIcon = 'icon-btn-10';
                 else
                     classIcon = 'icon-btn1';
             }
@@ -119,7 +123,10 @@ $(function () {
                 maxValueType: mp.intervals[i].maxValueType || 0,
                 shapeType: mp.intervals[i].shapeType,
                 value: mp.intervals[i].value || 0,
-                label: mp.intervals[i].label || ''
+                label: mp.intervals[i].label || '',
+                q1Value: mp.intervals[i].q1Value || 0,
+                q2Value: mp.intervals[i].q2Value || 0,
+                q3Value: mp.intervals[i].q3Value || 0
             });
         }
         var request = {
@@ -147,7 +154,7 @@ $(function () {
             intervals: mp.settings.intervals
         };
         $.post(
-            "/onlinedw/home/MovePointsInALine_Save",
+            "home/MovePointsInALine_Save",
             $.toDictionary(request),
             function (data, textStatus, jqXHR) {
                 window.parent.postMessage(data.data + ',20', '*');
@@ -201,6 +208,9 @@ $(function () {
             var initialValue = ((mp.settings.maxValue - mp.settings.minValue) / 2) + mp.settings.minValue;
             interval = mpPreview.addPoint(initialValue);
             classIcon = 'icon-btn-9';
+        } else if (tokens[0] === 'boxAndWhisker') {
+            interval = mpPreview.addBoxAndWhisker(mp.settings.minValue);
+            classIcon = 'icon-btn-10';
         } else {
             interval = mpPreview.addInterval(0, 1, tokens[0], tokens[1]);
 
@@ -269,6 +279,8 @@ function addSelectedIntervals() {
     for (var i = 0; i < mp.intervals.length; i++) {
         if (mp.intervals[i].shapeType == 'point') {
             classIcon = 'icon-btn-9';
+        } else if (mp.intervals[i].shapeType == 'boxAndWhisker') {
+                classIcon = 'icon-btn-10';
         } else {
             switch (mp.intervals[i].minValueType + '-' + mp.intervals[i].maxValueType) {
                 case 'open-open':
@@ -324,7 +336,10 @@ function compareResults(mp, mpPreview) {
                 mp.intervals[i].maxValueType === mpPreview.intervals[j].maxValueType &&
                 mp.intervals[i].maxValue === mpPreview.intervals[j].maxValue &&
                 mp.intervals[i].value === mpPreview.intervals[j].value &&
-                mp.intervals[i].label === mpPreview.intervals[j].label) {
+                mp.intervals[i].label === mpPreview.intervals[j].label &&
+                mp.intervals[i].q1Value === mpPreview.intervals[j].q1Value &&
+                mp.intervals[i].q2Value === mpPreview.intervals[j].q2Value &&
+                mp.intervals[i].q3Value === mpPreview.intervals[j].q3Value) {
                 correctValues++;
             }
         }
@@ -349,7 +364,10 @@ MovePoints.prototype.init = function (container, settings) {
             self.intervals.push(new MovePointsInterval(self, value));
         } else if (value.shapeType === 'point') {
             self.intervals.push(new MovePoint(self, value));
+        } else if (value.shapeType === 'boxAndWhisker') {
+            self.intervals.push(new MoveBoxAndWhisker(self, value));
         }
+
     });
     this.ruler.draw();
 };
@@ -401,6 +419,22 @@ MovePoints.prototype.addPoint = function (value) {
     return newInterval;
 };
 
+MovePoints.prototype.addBoxAndWhisker = function (value) {
+    var box = {
+        id: Math.round(Math.random() * 100000 + 1),
+        shapeType: 'boxAndWhisker',
+        minValue: value,
+        q1Value: value + 1,
+        q2Value: value + 2,
+        q3Value: value + 3,
+        maxValue: value + 4,
+        
+    };
+    var newInterval = new MoveBoxAndWhisker(this, box);
+    this.intervals.push(newInterval);
+    return newInterval;
+};
+
 MovePoints.prototype.removeInterval = function (id) {
     for (var i = 0; i < this.intervals.length; i++) {
         if (this.intervals[i].id == id) {
@@ -409,6 +443,16 @@ MovePoints.prototype.removeInterval = function (id) {
                 if (this.intervals[i].labelElement != null) {
                     this.intervals[i].labelElement.remove();
                 }
+            } else if (this.intervals[i].shapeType == 'boxAndWhisker') {
+                this.intervals[i].shape.minValue.remove();
+                this.intervals[i].shape.maxValue.remove();
+                this.intervals[i].shape.lineMinQ1.remove();
+                this.intervals[i].shape.rectQ1Q2.remove();
+                this.intervals[i].shape.rectQ2Q3.remove();
+                this.intervals[i].shape.lineQ3Max.remove();
+                this.intervals[i].shape.q1Dragger.remove();
+                this.intervals[i].shape.q2Dragger.remove();
+                this.intervals[i].shape.q3Dragger.remove();
             } else {
                 if (this.intervals[i].minCircle)
                     this.intervals[i].minCircle.remove();
@@ -743,6 +787,170 @@ MovePoint.prototype.dragEnd = function () {
     this.draggingCircle = null;
 };
 
+// MoveBoxAndWhisker
+MoveBoxAndWhisker = function (parent, box) {
+    this.parent = parent;
+
+    var client = this.parent.client;
+    var settings = this.parent.settings;
+    var paper = this.parent.paper;
+
+    this.id = box.id;
+    this.minValue = box.minValue;
+    this.maxValue = box.maxValue;
+    this.q1Value = box.q1Value;
+    this.q2Value = box.q2Value;
+    this.q3Value = box.q3Value;
+    this.shapeType = box.shapeType;
+    this.label = box.label;
+
+    this.draggingCircle = null
+
+    this.shape = this.drawShape(client);
+};
+
+MoveBoxAndWhisker.prototype.drawShape = function () {
+    var client = this.parent.client;
+    var result = {};
+    result.minValue = this.createCircle(client.pointToClient(this.minValue), client.baseline, 7, { "fill": "#f00", stroke: "none", "fill-opacity": 0.5 }, "minValue");
+    result.lineMinQ1 = this.createLine(client.pointToClient(this.minValue), client.pointToClient(this.q1Value), client.baseline, { "fill": "#f00", stroke: "#f00", "fill-opacity": 1, 'stroke-width': 3 }, "lineMinQ1");
+    result.rectQ1Q2 = this.createRectangle(client.pointToClient(this.q1Value), client.pointToClient(this.q2Value), client.baseline, { "fill": "#fff", 'stroke': "#f00", "fill-opacity": 0.7, 'stroke-width': 3 }, "rectQ1Q2");
+    result.rectQ2Q3 = this.createRectangle(client.pointToClient(this.q2Value), client.pointToClient(this.q3Value), client.baseline, { "fill": "#fff", 'stroke': "#f00", "fill-opacity": 0.7, 'stroke-width': 3 }, "rectQ2Q3");
+    result.lineQ3Max = this.createLine(client.pointToClient(this.q3Value), client.pointToClient(this.maxValue), client.baseline, { "fill": "#f00", stroke: "#f00", "fill-opacity": 1, 'stroke-width': 3 }, "lineQ3Max");
+    result.maxValue = this.createCircle(client.pointToClient(this.maxValue), client.baseline, 7, { "fill": "#f00", stroke: "none", "fill-opacity": 0.9 }, "maxValue");
+
+    result.q1Dragger = this.createCircle(client.pointToClient(this.q1Value), client.baseline, 5, { "fill": "#00f", stroke: "none", "fill-opacity": 0.5 }, "q1Dragger");
+    result.q2Dragger = this.createCircle(client.pointToClient(this.q2Value), client.baseline, 5, { "fill": "#00f", stroke: "none", "fill-opacity": 0.5 }, "q2Dragger");
+    result.q3Dragger = this.createCircle(client.pointToClient(this.q3Value), client.baseline, 5, { "fill": "#00f", stroke: "none", "fill-opacity": 0.5 }, "q3Dragger");
+    return result;
+}
+
+MoveBoxAndWhisker.prototype.createCircle = function (cx, cy, radius, attrs, shapeIdentifier) {
+    var circle = this.parent.paper.circle(cx, cy, radius).attr(attrs);
+    circle.interval = this;
+    circle.shapeIdentifier = shapeIdentifier;
+    circle.drag(this.dragMove, this.dragStart, this.dragEnd);
+    return circle;
+}
+
+MoveBoxAndWhisker.prototype.createLine = function (start, end, cy, attrs, shapeIdentifier) {
+    var line = this.parent.paper.path(["M", start, cy, "L", end, cy]).attr(attrs);
+    line.interval = this;
+    line.shapeIdentifier = shapeIdentifier;
+    return line;
+}
+
+MoveBoxAndWhisker.prototype.createRectangle = function (start, end, cy, attrs, shapeIdentifier) {
+    var rectangle = this.parent.paper.rect(start, cy-8, end-start, 16).attr(attrs);
+    rectangle.interval = this;
+    rectangle.shapeIdentifier = shapeIdentifier;
+    return rectangle;
+}
+
+MoveBoxAndWhisker.prototype.dragStart = function () {
+    var shape = eval("this.interval.shape." + this.shapeIdentifier);
+    if (true || this.shapeIdentifier == 'minValue' || this.shapeIdentifier == 'maxValue') {
+        this.ox = this.attr("cx");
+        this.oy = this.attr("cy");
+    }
+};
+
+MoveBoxAndWhisker.prototype.dragMove = function (dx, dy) {
+    var shape = eval("this.interval.shape." + this.shapeIdentifier);
+    var client = this.interval.parent.client;
+
+    var minLimit = client.ruler.left;
+    var maxLimit = client.ruler.right;
+
+    switch (this.shapeIdentifier) {
+        case 'minValue':
+            maxLimit = client.pointToClient(this.interval.q1Value);
+            break;
+        case 'q1Dragger':
+            minLimit = client.pointToClient(this.interval.minValue);
+            maxLimit = client.pointToClient(this.interval.q2Value);
+            break;
+        case 'q2Dragger':
+            minLimit = client.pointToClient(this.interval.q1Value);
+            maxLimit = client.pointToClient(this.interval.q3Value);
+            break;
+        case 'q3Dragger':
+            minLimit = client.pointToClient(this.interval.q2Value);
+            maxLimit = client.pointToClient(this.interval.maxValue);
+            break;
+        case 'maxValue':
+            minLimit = client.pointToClient(this.interval.q3Value);
+            break;
+    }
+
+    var newcx = this.ox + dx;
+    // check upper / lower limit
+    newcx = Math.max(newcx, minLimit);
+    newcx = Math.min(newcx, maxLimit);
+
+    shape.attr({ cx: newcx });
+};
+
+MoveBoxAndWhisker.prototype.dragEnd = function () {
+    var client = this.interval.parent.client;
+    var interval = this.interval;
+    var settings = interval.parent.settings;
+
+    var currentValue = client.clientToPoint(this.attrs["cx"]);
+    var minimum = 999999999;
+    var value = 9999999999;
+
+    for (var i = settings.minValue; i <= settings.maxValue; i += settings.minorScale) {
+        var diff = Math.abs(currentValue - i);
+        if (diff < minimum) {
+            minimum = diff;
+            value = i;
+        }
+    }
+
+    console.info(this.shapeIdentifier);
+    switch (this.shapeIdentifier) {
+        case 'minValue':
+            this.interval.minValue = value;
+            break;
+        case 'q1Dragger':
+            this.interval.q1Value = value;
+            break;
+        case 'q2Dragger':
+            this.interval.q2Value = value;
+            break;
+        case 'q3Dragger':
+            this.interval.q3Value = value;
+            break;
+        case 'maxValue':
+            this.interval.maxValue = value;
+            break;
+    }
+
+    this.draggingCircle = null;
+    this.interval.redraw();
+};
+
+MoveBoxAndWhisker.prototype.redraw = function () {
+    var client = this.parent.client;
+    var shape = this.shape;
+    shape.minValue.attr('cx', client.pointToClient(this.minValue));
+
+    var q1Path = ["M", client.pointToClient(this.minValue), client.baseline, "L", client.pointToClient(this.q1Value), client.baseline];
+    shape.lineMinQ1.attr('path', q1Path);
+    shape.q1Dragger.attr('cx', client.pointToClient(this.q1Value));
+
+    shape.rectQ1Q2.attr({ 'x': client.pointToClient(this.q1Value), 'width': client.pointToClient(this.q2Value) - client.pointToClient(this.q1Value) });
+    shape.q2Dragger.attr('cx', client.pointToClient(this.q2Value));
+
+    shape.rectQ2Q3.attr({ 'x': client.pointToClient(this.q2Value), 'width': client.pointToClient(this.q3Value) - client.pointToClient(this.q2Value) });
+    shape.q3Dragger.attr('cx', client.pointToClient(this.q3Value));
+
+    var q3Path = ["M", client.pointToClient(this.q3Value), client.baseline, "L", client.pointToClient(this.maxValue), client.baseline];
+    shape.lineQ3Max.attr('path', q3Path);
+
+    shape.maxValue.attr('cx', client.pointToClient(this.maxValue));
+};
 
 
 MovePointsInterval.prototype.getAttrs = function (minmax) {
@@ -759,9 +967,3 @@ MovePointsInterval.prototype.getAttrs = function (minmax) {
     }
 };
 
-MovePointsInterval.prototype.createCircle = function (cx, cy, radius, attrs) {
-    var circle = this.parent.paper.circle(cx, cy, radius).attr(attrs);
-    circle.interval = this;
-    circle.drag(this.dragMove, this.dragStart, this.dragEnd);
-    return circle;
-}
