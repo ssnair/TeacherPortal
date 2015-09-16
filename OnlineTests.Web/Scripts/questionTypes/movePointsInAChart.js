@@ -155,7 +155,7 @@ $(function () {
         };
 
         $.post(
-            "/home/MovePointsInAChart_Save",    //TODO:Restore /OnlineDW pref fix
+            "/OnlineDW/home/MovePointsInAChart_Save",   
             $.toDictionary(request),
             function (data, textStatus, jqXHR) {
                 window.parent.postMessage(data.data + ',10', '*');
