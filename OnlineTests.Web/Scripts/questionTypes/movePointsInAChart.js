@@ -82,11 +82,24 @@ $(function () {
     });
 
     $("#movePointsInAChart_submitAnswer").click(function () {
-        var result = mpicPreview.settings.tgtCenterSpot.valueX == mpicPreview.centerSpot.valueX &&
-                mpicPreview.settings.tgtCenterSpot.valueY == mpicPreview.centerSpot.valueY &&
-                mpicPreview.settings.tgtMinMaxSpot.valueX == mpicPreview.minMaxSpot.valueX &&
-                mpicPreview.settings.tgtMinMaxSpot.valueY == mpicPreview.minMaxSpot.valueY;
-
+        var qFunction = $('#movePointsInAChart_Function').val();
+        var qAnswerType = $('#movePointsInAChart_AnswerType').val();
+        var result = false;
+        if (qFunction == '3' && qAnswerType == '2') {
+            result = (mpicPreview.settings.tgtCenterSpot.valueX == mpicPreview.centerSpot.valueX &&
+                     mpicPreview.settings.tgtCenterSpot.valueY == mpicPreview.centerSpot.valueY &&
+                     mpicPreview.settings.tgtMinMaxSpot.valueX == mpicPreview.minMaxSpot.valueX &&
+                     mpicPreview.settings.tgtMinMaxSpot.valueY == mpicPreview.minMaxSpot.valueY) ||
+                    (mpicPreview.settings.tgtCenterSpot.valueX == mpicPreview.minMaxSpot.valueX &&
+                     mpicPreview.settings.tgtCenterSpot.valueY == mpicPreview.minMaxSpot.valueY &&
+                     mpicPreview.settings.tgtMinMaxSpot.valueX == mpicPreview.centerSpot.valueX &&
+                     mpicPreview.settings.tgtMinMaxSpot.valueY == mpicPreview.centerSpot.valueY);
+        } else {
+           result = mpicPreview.settings.tgtCenterSpot.valueX == mpicPreview.centerSpot.valueX &&
+                    mpicPreview.settings.tgtCenterSpot.valueY == mpicPreview.centerSpot.valueY &&
+                    mpicPreview.settings.tgtMinMaxSpot.valueX == mpicPreview.minMaxSpot.valueX &&
+                    mpicPreview.settings.tgtMinMaxSpot.valueY == mpicPreview.minMaxSpot.valueY;
+        }
         if (result)
             $('#movePointsInAChart_result').html('<img src="/Content/images/win.png" width="50" height="50"/>')
         else
@@ -299,11 +312,6 @@ MovePointsInAChart = function (container, settings) {
         if (this.plot)
             this.plot.remove();
         this.plot = this.paper.path(path).attr({ stroke: "#00f", "stroke-width": 3 });
-
-        //if (this.plot)
-        //    this.plot.attr('path', path);
-        //else
-        //    this.plot = this.paper.path(path).attr({ stroke: "#00f", "stroke-width": 3 });
     };
 
     // run
