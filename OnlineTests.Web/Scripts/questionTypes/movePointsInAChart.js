@@ -297,9 +297,13 @@ MovePointsInAChart = function (container, settings) {
 
         var path = ["M", point1.x, point1.y, "L", point2.x, point2.y];
         if (this.plot)
-            this.plot.attr('path', path);
-        else
-            this.plot = this.paper.path(path).attr({ stroke: "#00f", "stroke-width": 3 });
+            this.plot.remove();
+        this.plot = this.paper.path(path).attr({ stroke: "#00f", "stroke-width": 3 });
+
+        //if (this.plot)
+        //    this.plot.attr('path', path);
+        //else
+        //    this.plot = this.paper.path(path).attr({ stroke: "#00f", "stroke-width": 3 });
     };
 
     // run
