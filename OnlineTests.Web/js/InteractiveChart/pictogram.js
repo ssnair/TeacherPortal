@@ -227,6 +227,10 @@
     this.changeImageColor = function (settings) {
         var parameters = _self.parameters(settings);
         if (parameters.symbol != '') {
+            var filePath = window.location.href;
+            filePath = filePath.replace('home', 'Content');
+            filePath = filePath.replace('interactivechart', 'pixastic/js/');
+
             var canvas = document.getElementById('output-canvas'),
                 context = canvas.getContext('2d'),
                 pixastic;
@@ -242,8 +246,7 @@
                 canvas.width = image.width;
                 canvas.height = image.height;
                 context.drawImage(image, 0, 0);
-
-                pixastic = new Pixastic(context, '/Content/pixastic/js/');
+                pixastic = new Pixastic(context,filePath);
                 pixastic['emboss'](options).done(function () {
                     //canvas.style.display = "block";
                     settings.pictogram.symbolEmboss = canvas.toDataURL();
