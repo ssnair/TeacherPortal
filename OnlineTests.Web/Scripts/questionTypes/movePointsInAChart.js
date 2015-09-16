@@ -11,6 +11,7 @@ $(function () {
             majorScale: 1,
             minorScale: 0.5,
             chartType: 0,
+            answerType: 1
         },
         centerPoint: { x: 0, y: 0 },
         minMaxPoint: { x: 1, y: 1 }
@@ -28,7 +29,9 @@ $(function () {
         var domain = $("#movePointsInAChart_Domain").val(),
             minorScale = $("#movePointsInAChart_MinorScale").val(),
             majorScale = $("#movePointsInAChart_MajorScale").val(),
-            chartType = $("#movePointsInAChart_Function").val();
+            chartType = $("#movePointsInAChart_Function").val(),
+            answerType = $("#movePointsInAChart_AnswerType").val();
+
         var centerX = 0;
         var centerY = 0;
         var minMaxPointX = 1;
@@ -41,7 +44,8 @@ $(function () {
                     maxValue: Number(domain),
                     majorScale: Number(majorScale),
                     minorScale: Number(minorScale),
-                    chartType: Number(chartType)
+                    chartType: Number(chartType),
+                    answerType: Number(answerType)
                 },
             
                 centerPoint: { x: centerX, y: centerY },
@@ -65,7 +69,8 @@ $(function () {
                 maxValue: mpic.settings.grid.maxValue,
                 majorScale: mpic.settings.grid.majorScale,
                 minorScale: mpic.settings.grid.minorScale,
-                chartType: mpic.settings.grid.chartType
+                chartType: mpic.settings.grid.chartType,
+                answerType: mpic.settings.grid.answerType
             },
             centerPoint: { x: centerX, y: centerY },
             minMaxPoint: { x: minMaxPointX, y: minMaxPointY },
@@ -150,7 +155,7 @@ $(function () {
         };
 
         $.post(
-            "/home/MovePointsInAChart_Save",    //TODO:Restore /OnlineDW preffix
+            "/home/MovePointsInAChart_Save",    //TODO:Restore /OnlineDW pref fix
             $.toDictionary(request),
             function (data, textStatus, jqXHR) {
                 window.parent.postMessage(data.data + ',10', '*');
@@ -194,7 +199,12 @@ MovePointsInAChart = function (container, settings) {
         this.centerSpot = new MovePointsInAChartSpot(this, settings.centerPoint);
         this.minMaxSpot = new MovePointsInAChartSpot(this, settings.minMaxPoint); 
 
-      
+        if (this.settings.grid.chartType == 3) {  // Linear
+            $('#movePointsInAChart_AnswerType').val(this.settings.grid.answerType);
+            $('.answer-type').removeClass('hidden');
+        } else {
+            $('.answer-type').addClass('hidden');
+        }
 
         var self = this;
         this.grid.draw();

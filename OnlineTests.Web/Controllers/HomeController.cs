@@ -62,7 +62,8 @@ namespace OnlineTests.Web.Controllers
                                 domain = mpic.Domain,
                                 majorScale = mpic.MajorScale,
                                 minorScale = mpic.MinorScale,
-                                chartType = mpic.chartType
+                                chartType = mpic.chartType,
+                                answerType = mpic.AnswerType
                             },
                             centerPoint = new { x = mpic.CenterSpot.X, y = mpic.CenterSpot.Y },
                             minMaxPoint = new { x = mpic.MinMaxSpot.X, y = mpic.MinMaxSpot.Y }
