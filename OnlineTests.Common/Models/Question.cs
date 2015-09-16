@@ -82,6 +82,8 @@ namespace OnlineTests.Common.Models
 
         public decimal chartType { get; set; }
 
+        public int AnswerType { get; set; }
+
         public SpotContent CenterSpot { get; set; }
 
         public SpotContent MinMaxSpot { get; set; }

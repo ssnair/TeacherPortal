@@ -62,7 +62,8 @@ namespace OnlineTests.Web.Controllers
                                 domain = mpic.Domain,
                                 majorScale = mpic.MajorScale,
                                 minorScale = mpic.MinorScale,
-                                chartType = mpic.chartType
+                                chartType = mpic.chartType,
+                                answerType = mpic.AnswerType
                             },
                             centerPoint = new { x = mpic.CenterSpot.X, y = mpic.CenterSpot.Y },
                             minMaxPoint = new { x = mpic.MinMaxSpot.X, y = mpic.MinMaxSpot.Y }
@@ -642,7 +643,8 @@ namespace OnlineTests.Web.Controllers
                     MajorScale = questionModel.MajorScale,
                     MinorScale = questionModel.MinorScale,
                     CenterSpot = new Common.Models.SpotContent { X = questionModel.CenterSpot.X, Y = questionModel.CenterSpot.Y },
-                    MinMaxSpot = new Common.Models.SpotContent { X = questionModel.MinMaxSpot.X, Y = questionModel.MinMaxSpot.Y }
+                    MinMaxSpot = new Common.Models.SpotContent { X = questionModel.MinMaxSpot.X, Y = questionModel.MinMaxSpot.Y },
+                    AnswerType = questionModel.answerType 
                 };
 
                 this.QuestionService.Save(question);

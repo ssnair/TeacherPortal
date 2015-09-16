@@ -116,6 +116,7 @@ namespace OnlineTests.Service
                     mpic.MinorScale = details.MinorScale;
                     mpic.MajorScale = details.MajorScale;
                     mpic.chartType = details.chartType;
+                    mpic.AnswerType = details.answerType;
 
                     foreach (var answer in mpic.Answers)
                     {
