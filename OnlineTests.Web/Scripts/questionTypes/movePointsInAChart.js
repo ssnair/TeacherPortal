@@ -145,12 +145,12 @@ $(function () {
             majorScale: mpic.settings.grid.majorScale,
             minorScale: mpic.settings.grid.minorScale,
             centerSpot: { "x": mpic.centerSpot.valueX, "y": mpic.centerSpot.valueY },
-            minMaxSpot: { "x": mpic.minMaxSpot.valueX, "y": mpic.minMaxSpot.valueY }
-           
+            minMaxSpot: { "x": mpic.minMaxSpot.valueX, "y": mpic.minMaxSpot.valueY },
+            answerType : $("#movePointsInAChart_AnswerType").val()           
         };
 
         $.post(
-            "/onlinedw/home/MovePointsInAChart_Save",
+            "/home/MovePointsInAChart_Save",    //TODO:Restore /OnlineDW preffix
             $.toDictionary(request),
             function (data, textStatus, jqXHR) {
                 window.parent.postMessage(data.data + ',10', '*');

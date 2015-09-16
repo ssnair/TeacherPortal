@@ -15,6 +15,7 @@ namespace OnlineTests.Common.Models
 
         public decimal MinorScale { get; set; }
         public decimal chartType { get; set; }
+        public int  answerType { get; set; }
     }
 
     public class MovePointsInAChart_SpotXmlModel

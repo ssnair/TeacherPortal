@@ -20,7 +20,8 @@ namespace OnlineTests.Repository
                 Domain = question.Domain,
                 MajorScale = question.MajorScale,
                 MinorScale = question.MinorScale,
-                chartType = question.chartType
+                chartType = question.chartType,
+                answerType = question.AnswerType
             };
 
             var questionXmlSerialized = Serializer.Serialize(questionXml);
@@ -64,7 +65,8 @@ namespace OnlineTests.Repository
                 Domain = question.Domain,
                 MajorScale = question.MajorScale,
                 MinorScale = question.MinorScale,
-                chartType = question.chartType
+                chartType = question.chartType,
+                answerType = question.AnswerType
             };
 
             var questionXmlSerialized = Serializer.Serialize(questionXml);

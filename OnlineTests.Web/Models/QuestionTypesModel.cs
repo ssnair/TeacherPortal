@@ -26,6 +26,10 @@ namespace OnlineTests.Web.Models
 
         [DataMember(Name = "minMaxSpot")]
         public SpotContent MinMaxSpot { get; set; }
+
+        [DataMember(Name = "answerType")]
+        public int answerType { get; set; }
+
     }
 
     public class MovePointsInALineModel : QuestionModel
