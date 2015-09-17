@@ -11,6 +11,7 @@ $(function () {
             majorScale: 1,
             minorScale: 0.5,
             chartType: 0,
+            answerType: 1
         },
         centerPoint: { x: 0, y: 0 },
         minMaxPoint: { x: 1, y: 1 }
@@ -28,7 +29,9 @@ $(function () {
         var domain = $("#movePointsInAChart_Domain").val(),
             minorScale = $("#movePointsInAChart_MinorScale").val(),
             majorScale = $("#movePointsInAChart_MajorScale").val(),
-            chartType = $("#movePointsInAChart_Function").val();
+            chartType = $("#movePointsInAChart_Function").val(),
+            answerType = $("#movePointsInAChart_AnswerType").val();
+
         var centerX = 0;
         var centerY = 0;
         var minMaxPointX = 1;
@@ -41,7 +44,8 @@ $(function () {
                     maxValue: Number(domain),
                     majorScale: Number(majorScale),
                     minorScale: Number(minorScale),
-                    chartType: Number(chartType)
+                    chartType: Number(chartType),
+                    answerType: Number(answerType)
                 },
             
                 centerPoint: { x: centerX, y: centerY },
@@ -65,7 +69,8 @@ $(function () {
                 maxValue: mpic.settings.grid.maxValue,
                 majorScale: mpic.settings.grid.majorScale,
                 minorScale: mpic.settings.grid.minorScale,
-                chartType: mpic.settings.grid.chartType
+                chartType: mpic.settings.grid.chartType,
+                answerType: mpic.settings.grid.answerType
             },
             centerPoint: { x: centerX, y: centerY },
             minMaxPoint: { x: minMaxPointX, y: minMaxPointY },
@@ -82,11 +87,24 @@ $(function () {
     });
 
     $("#movePointsInAChart_submitAnswer").click(function () {
-        var result = mpicPreview.settings.tgtCenterSpot.valueX == mpicPreview.centerSpot.valueX &&
-                mpicPreview.settings.tgtCenterSpot.valueY == mpicPreview.centerSpot.valueY &&
-                mpicPreview.settings.tgtMinMaxSpot.valueX == mpicPreview.minMaxSpot.valueX &&
-                mpicPreview.settings.tgtMinMaxSpot.valueY == mpicPreview.minMaxSpot.valueY;
-
+        var qFunction = $('#movePointsInAChart_Function').val();
+        var qAnswerType = $('#movePointsInAChart_AnswerType').val();
+        var result = false;
+        if (qFunction == '3' && qAnswerType == '2') {
+            result = (mpicPreview.settings.tgtCenterSpot.valueX == mpicPreview.centerSpot.valueX &&
+                     mpicPreview.settings.tgtCenterSpot.valueY == mpicPreview.centerSpot.valueY &&
+                     mpicPreview.settings.tgtMinMaxSpot.valueX == mpicPreview.minMaxSpot.valueX &&
+                     mpicPreview.settings.tgtMinMaxSpot.valueY == mpicPreview.minMaxSpot.valueY) ||
+                    (mpicPreview.settings.tgtCenterSpot.valueX == mpicPreview.minMaxSpot.valueX &&
+                     mpicPreview.settings.tgtCenterSpot.valueY == mpicPreview.minMaxSpot.valueY &&
+                     mpicPreview.settings.tgtMinMaxSpot.valueX == mpicPreview.centerSpot.valueX &&
+                     mpicPreview.settings.tgtMinMaxSpot.valueY == mpicPreview.centerSpot.valueY);
+        } else {
+           result = mpicPreview.settings.tgtCenterSpot.valueX == mpicPreview.centerSpot.valueX &&
+                    mpicPreview.settings.tgtCenterSpot.valueY == mpicPreview.centerSpot.valueY &&
+                    mpicPreview.settings.tgtMinMaxSpot.valueX == mpicPreview.minMaxSpot.valueX &&
+                    mpicPreview.settings.tgtMinMaxSpot.valueY == mpicPreview.minMaxSpot.valueY;
+        }
         if (result)
             $('#movePointsInAChart_result').html('<img src="/Content/images/win.png" width="50" height="50"/>')
         else
@@ -132,12 +150,12 @@ $(function () {
             majorScale: mpic.settings.grid.majorScale,
             minorScale: mpic.settings.grid.minorScale,
             centerSpot: { "x": mpic.centerSpot.valueX, "y": mpic.centerSpot.valueY },
-            minMaxSpot: { "x": mpic.minMaxSpot.valueX, "y": mpic.minMaxSpot.valueY }
-           
+            minMaxSpot: { "x": mpic.minMaxSpot.valueX, "y": mpic.minMaxSpot.valueY },
+            answerType : $("#movePointsInAChart_AnswerType").val()           
         };
 
         $.post(
-            "/onlinedw/home/MovePointsInAChart_Save",
+            "/OnlineDW/home/MovePointsInAChart_Save",   
             $.toDictionary(request),
             function (data, textStatus, jqXHR) {
                 window.parent.postMessage(data.data + ',10', '*');
@@ -154,6 +172,15 @@ $(function () {
                 //});
             },
             'json');
+    });
+
+    $("#movePointsInAChart_Function").change(function () {
+        if (this.value === '3') {
+            $('.answer-type').removeClass('hidden');
+        } else {
+            $('.answer-type').addClass('hidden');
+        }
+        console.info("change.this", this);
     });
 });
 
@@ -172,7 +199,12 @@ MovePointsInAChart = function (container, settings) {
         this.centerSpot = new MovePointsInAChartSpot(this, settings.centerPoint);
         this.minMaxSpot = new MovePointsInAChartSpot(this, settings.minMaxPoint); 
 
-      
+        if (this.settings.grid.chartType == 3) {  // Linear
+            $('#movePointsInAChart_AnswerType').val(this.settings.grid.answerType);
+            $('.answer-type').removeClass('hidden');
+        } else {
+            $('.answer-type').addClass('hidden');
+        }
 
         var self = this;
         this.grid.draw();
@@ -185,7 +217,11 @@ MovePointsInAChart = function (container, settings) {
             this.plotFnCos();
         }
         else if (this.settings.grid.chartType == 3) {
-            this.plotFnLinear();
+            if ($('#movePointsInAChart_AnswerType').val() == '1') {
+                this.plotFnLinear();
+            } else {
+                this.plotLine();
+            }
         }
         else if (this.settings.grid.chartType == 4) {
             this.plotFnQuad();
@@ -278,6 +314,15 @@ MovePointsInAChart = function (container, settings) {
         this.plot = this.paper.path(path).attr({ stroke: "#00f", "stroke-width": 3 });
     };
 
+    this.plotLine = function () {
+        var point1 = this.client.pointToClient(this.minMaxSpot.valueX, this.minMaxSpot.valueY);
+        var point2 = this.client.pointToClient(this.centerSpot.valueX, this.centerSpot.valueY);
+
+        var path = ["M", point1.x, point1.y, "L", point2.x, point2.y];
+        if (this.plot)
+            this.plot.remove();
+        this.plot = this.paper.path(path).attr({ stroke: "#00f", "stroke-width": 3 });
+    };
 
     // run
     settings = settings || {
@@ -505,7 +550,11 @@ MovePointsInAChartSpot = function (parent, coordinates) {
             spot.parent.plotFnCos();
         }
         else if (settings.grid.chartType == 3) {
-            spot.parent.plotFnLinear();
+            if ($('#movePointsInAChart_AnswerType').val() == '1') {
+                spot.parent.plotFnLinear();
+            } else {
+                spot.parent.plotLine();
+            }
         }
         else if (settings.grid.chartType == 4) {
             spot.parent.plotFnQuad();

@@ -1334,6 +1334,7 @@
     <Content Include="Content\css\ng-ckeditor.css" />
     <Content Include="Content\css\Question.css" />
     <Content Include="Content\images\btn1.png" />
+    <Content Include="Content\images\btn10.png" />
     <Content Include="Content\images\btn2.png" />
     <Content Include="Content\images\btn3.png" />
     <Content Include="Content\images\btn4.png" />

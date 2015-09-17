@@ -82,6 +82,8 @@ namespace OnlineTests.Common.Models
 
         public decimal chartType { get; set; }
 
+        public int AnswerType { get; set; }
+
         public SpotContent CenterSpot { get; set; }
 
         public SpotContent MinMaxSpot { get; set; }
@@ -151,6 +153,9 @@ namespace OnlineTests.Common.Models
         public decimal value { get; set; }
         public string shapeType { get; set; }
         public string label { get; set; }
+        public decimal q1Value { get; set; }
+        public decimal q2Value { get; set; }
+        public decimal q3Value { get; set; }
     }
 
     [Serializable]
