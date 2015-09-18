@@ -1,7 +1,7 @@
 ﻿function Pictogram(parent) {
     var _self = this;
     this._parent = parent;
-    this.firstTime = true;
+    //this.firstTime = true;
 
     this.parameters = function (settings) {        
         var plotArea = _self.getPlotArea(settings),
@@ -10,7 +10,7 @@
             symbolWidth = Number(settings.pictogram.symbolWidth),
             symbolHeight = Number(settings.pictogram.symbolHeight);
 
-        symbolValue = symbolValue > 10 ? 10 : symbolValue;
+        symbolValue = symbolValue > 10 ? 10 : symbolValue < 0 ? 1 : symbolValue;
         symbolWidth = symbolWidth < 25 ? 25 : symbolWidth;
         symbolHeight = symbolHeight < 25 ? 25 : symbolHeight;
         settings.pictogram.symbolWidth = symbolWidth;
@@ -42,11 +42,16 @@
         
         var parameters = _self.parameters(settings);
         _self.drawAxisTitleLabel(canvas, settings, parameters);
-        if (_self.firstTime) {
-            _self.changeImageColor(settings);
-            _self.firstTime = false;
-        }        
+
+        /***************************************** changes applied *****************************************/
+        //if (_self.firstTime) {
+        //    _self.changeImageColor(settings);
+        //    _self.firstTime = false;
+        //}
+        //_self.guideKeys(settings, parameters);        
+        /***************************************** changes applied *****************************************/
         _self.drawSeries(canvas, settings, parameters);
+        _self.updateGuideReferences(settings, parameters);
     }
 
     this.setViewMode = function (settings, viewMode) {
@@ -197,7 +202,7 @@
     }
 
     this.changeSymbol = function (settings) {
-        _self.changeImageColor(settings);        
+        _self.changeImageColor(settings);    
     }
 
     this.changeValue = function (settings, serie) {
@@ -223,6 +228,52 @@
             image.src = parameters.symbol;
         }
     }
+
+    /***************************************** changes applied *****************************************/
+    this.updateGuideReferences = function (settings, parameters) {
+        var keys = settings.pictogram.keys;
+        var value = parameters.symbolValue;
+        if (value > keys.length) {
+            for (var i = keys.length + 1; i <= value; i++) {
+                keys.push({ key: '' + i, value: 'More' });
+            }
+        } else if (keys.length > value) {
+            console.log(keys.length);
+            console.log(keys.length - value);
+            var auxiliar = [];
+            for (var i = 0; i < value; i++) {
+                auxiliar.push(keys[i]);
+            }
+            keys = auxiliar;
+            settings.pictogram.keys = keys;
+        }
+    }
+
+    this.guideKeys = function (settings) {//, parameters) {
+        var parameters = _self.parameters(settings);
+        var keys = settings.pictogram.keys;
+        
+        //$compile(document.getElementById("guide-reference"))($scope);
+
+        /*if (keys.length == 0 || keys.length != value) {            
+            for (var i = keys.length; i < value; i++) {
+                keys.push({ key: '' + (i + 1), value: '' });
+            }
+        }*/
+
+        //_self._parent.scope.$apply();
+
+        var width = 40 / keys.length;
+        for (var index = 0; index < keys.length; index++) {
+            var content = document.getElementById('guide-image-' + (index + 1));
+            content.style.width = (40 - (width * index)) + 'px';
+            content.style.height = '40px';        
+            content.style.backgroundImage = 'url(' + parameters.symbol + ')';
+            content.style.backgroundSize = '40px 40px';
+            content.style.backgroundRepeat = 'no-repeat'
+        }
+    }
+    /***************************************** changes applied *****************************************/
 
     this.changeImageColor = function (settings) {
         var parameters = _self.parameters(settings);

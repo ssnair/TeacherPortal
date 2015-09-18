@@ -214,6 +214,21 @@ onlineTestsApp.directive('interactiveChart', ['$timeout', 'FileUploader', 'quest
             }
         }
     };
-}]);
-
+}])
+/***************************************** changes applied *****************************************/
+.directive('refreshOptions', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            console.log(scope.engine);
+            if (scope.engine != undefined) {
+                scope.engine.pictogram.guideKeys(scope.settings);
+            }
+            scope.$on('$destroy', function () {
+                // event called after removing an option
+            });
+        }
+    };
+});
+/***************************************** changes applied *****************************************/
 
