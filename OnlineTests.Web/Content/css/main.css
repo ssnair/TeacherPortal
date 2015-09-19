@@ -193,6 +193,15 @@
 .pictogram .form-inline .form-group label.long { 
     width: 288px; 
 }
+.pictogram .guide-references .image-content {
+    width: 40px; 
+    padding-top: 0px; 
+    margin: 0; 
+    margin-bottom: 7px;
+}
+.pictogram .guide-references input {
+    display: inline;
+}
 .polygon-shape .form-inline .form-group label { 
     width: 100px;
 }

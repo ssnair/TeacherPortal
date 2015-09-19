@@ -153,6 +153,13 @@ namespace OnlineTests.Common.Models
         public string stringValue { get; set; }
         public int worth { get; set; }
     }
+
+    public class Guide
+    {
+        public int value { get; set; }
+        public string meaning { get; set; }
+    }
+
     public class LineChart
     {
         public int yAxisMin { get; set; }
@@ -262,6 +269,7 @@ namespace OnlineTests.Common.Models
         public string symbolEmboss { get; set; }
         public string key { get; set; }
         public string title { get; set; }
+        public List<Guide> keys { get; set; }
         public List<PictogramSeries> series { get; set; }
     }
 

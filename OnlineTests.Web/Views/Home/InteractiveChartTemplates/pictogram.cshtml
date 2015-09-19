@@ -59,30 +59,17 @@
                 </div>
                 <div>
                     <div class="form-group" ng-show="viewMode=='teacher'">
-                        <label>Key</label>
+                        <label>Keys</label>
                     </div>
-                    <div class="form-group" id="guide-reference">
-                        <div ng-repeat="k in settings.pictogram.keys" refresh-options="item">
-                            <div style="width: 40px; padding-top: 0px; margin: 0;" class="form-group">
-                                <div id="guide-image-{{k.key}}"></div>                                
+                    <div class="form-group" >
+                        <div class="guide-references" ng-repeat="k in settings.pictogram.keys" refresh-options="item">
+                            <div class="form-group image-content">
+                                <div id="guide-image-{{k.value}}" class="guide-image"></div>                                
                             </div>                            
-                            <input type="text" ng-model="k.value" class="form-control" style="display: inline;" ng-show="viewMode=='teacher'" />
-                            <strong ng-show="viewMode=='student'">= {{k.value}}</strong>
+                            <input type="text" ng-model="k.meaning" class="form-control" ng-show="viewMode=='teacher'" />
+                            <strong ng-show="viewMode=='student'">= {{k.meaning}}</strong>
                         </div>
                     </div>
-                    <div class="form-group" ng-show="viewMode=='teacher'">
-                        <label>Key</label>
-                    </div>
-                    <div class="form-group">
-                        <canvas id="show-symbol" width="35" height="35"></canvas>                        
-                    </div>
-                    <div class="form-group" ng-show="viewMode=='teacher'">
-                        <span>=</span>
-                        <input type="text" ng-model="settings.pictogram.key" class="form-control" />
-                    </div>
-                    <div class="form-group" ng-show="viewMode=='student'">
-                        <strong>=  {{settings.pictogram.key}}</strong>
-                    </div>        
                 </div>
             </div>
             <div class="row">

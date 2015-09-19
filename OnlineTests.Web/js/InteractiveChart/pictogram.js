@@ -1,7 +1,7 @@
 ﻿function Pictogram(parent) {
     var _self = this;
     this._parent = parent;
-    //this.firstTime = true;
+    this.firstTime = true;
 
     this.parameters = function (settings) {        
         var plotArea = _self.getPlotArea(settings),
@@ -42,16 +42,13 @@
         
         var parameters = _self.parameters(settings);
         _self.drawAxisTitleLabel(canvas, settings, parameters);
-
-        /***************************************** changes applied *****************************************/
-        //if (_self.firstTime) {
-        //    _self.changeImageColor(settings);
-        //    _self.firstTime = false;
-        //}
-        //_self.guideKeys(settings, parameters);        
-        /***************************************** changes applied *****************************************/
         _self.drawSeries(canvas, settings, parameters);
         _self.updateGuideReferences(settings, parameters);
+
+        if (_self.firstTime) {
+            _self.guideKeys(settings);
+            _self.firstTime = false;
+        }
     }
 
     this.setViewMode = function (settings, viewMode) {
@@ -211,35 +208,14 @@
         _self._parent.redraw(settings);
     }
 
-    this.loadImageOnCanvas = function (settings) {
-        var parameters = _self.parameters(settings);
-        if (parameters.symbol != '') {            
-            var canvas = document.getElementById('show-symbol'),
-                context = canvas.getContext('2d'),
-                image = new Image();
-            image.onload = function (img) {
-                var width = 35;
-                var height = 35;
-                canvas.width = width;
-                canvas.height = height;
-                context.clearRect(0, 0, width, height);
-                context.drawImage(image, 0, 0, width, height);
-            };
-            image.src = parameters.symbol;
-        }
-    }
-
-    /***************************************** changes applied *****************************************/
     this.updateGuideReferences = function (settings, parameters) {
         var keys = settings.pictogram.keys;
         var value = parameters.symbolValue;
         if (value > keys.length) {
             for (var i = keys.length + 1; i <= value; i++) {
-                keys.push({ key: '' + i, value: 'More' });
+                keys.push({ value: i, meaning: '' });
             }
         } else if (keys.length > value) {
-            console.log(keys.length);
-            console.log(keys.length - value);
             var auxiliar = [];
             for (var i = 0; i < value; i++) {
                 auxiliar.push(keys[i]);
@@ -249,31 +225,20 @@
         }
     }
 
-    this.guideKeys = function (settings) {//, parameters) {
+    this.guideKeys = function (settings) {
         var parameters = _self.parameters(settings);
-        var keys = settings.pictogram.keys;
-        
-        //$compile(document.getElementById("guide-reference"))($scope);
-
-        /*if (keys.length == 0 || keys.length != value) {            
-            for (var i = keys.length; i < value; i++) {
-                keys.push({ key: '' + (i + 1), value: '' });
-            }
-        }*/
-
-        //_self._parent.scope.$apply();
-
-        var width = 40 / keys.length;
-        for (var index = 0; index < keys.length; index++) {
-            var content = document.getElementById('guide-image-' + (index + 1));
-            content.style.width = (40 - (width * index)) + 'px';
-            content.style.height = '40px';        
-            content.style.backgroundImage = 'url(' + parameters.symbol + ')';
-            content.style.backgroundSize = '40px 40px';
-            content.style.backgroundRepeat = 'no-repeat'
+        var keys = settings.pictogram.keys;        
+        var images = document.getElementsByClassName('guide-image');        
+        var width = 40 / images.length;
+        for (var index = 0; index < images.length; index++) {
+            var image = images[index];
+            image.style.width = (40 - (width * index)) + 'px';
+            image.style.height = '40px';
+            image.style.backgroundImage = 'url(' + parameters.symbol + ')';
+            image.style.backgroundSize = '40px 40px';
+            image.style.backgroundRepeat = 'no-repeat'
         }
     }
-    /***************************************** changes applied *****************************************/
 
     this.changeImageColor = function (settings) {
         var parameters = _self.parameters(settings);
@@ -299,11 +264,10 @@
                 context.drawImage(image, 0, 0);
                 pixastic = new Pixastic(context,filePath);
                 pixastic['emboss'](options).done(function () {
-                    //canvas.style.display = "block";
                     settings.pictogram.symbolEmboss = canvas.toDataURL();
                     //_self.graySymbol = canvas.toDataURL();
-                    _self.loadImageOnCanvas(settings);
                     _self._parent.redraw(settings);
+                    _self.guideKeys(settings);
                 }, function (p) { });
             };
             image.src = parameters.symbol;            
@@ -377,6 +341,7 @@
             symbol: pictogram.symbol,
             symbolEmboss: pictogram.symbolEmboss,
             key: pictogram.key,
+            keys: [],
             title: pictogram.title,
             series: []
         };
@@ -389,6 +354,14 @@
                 order: src.order,
                 value: src.value,
                 worth: src.worth
+            });
+        }
+
+        for (var i = 0; i < pictogram.keys.length; i++) {
+            var guide = pictogram.keys[i];
+            result.keys.push({
+                value: guide.value,
+                meaning: guide.meaning
             });
         }
         return result;

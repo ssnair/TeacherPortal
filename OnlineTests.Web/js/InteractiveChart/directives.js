@@ -220,12 +220,11 @@ onlineTestsApp.directive('interactiveChart', ['$timeout', 'FileUploader', 'quest
     return {
         restrict: 'A',
         link: function (scope, element, attr) {
-            console.log(scope.engine);
             if (scope.engine != undefined) {
                 scope.engine.pictogram.guideKeys(scope.settings);
             }
             scope.$on('$destroy', function () {
-                // event called after removing an option
+                scope.engine.pictogram.guideKeys(scope.settings);
             });
         }
     };
