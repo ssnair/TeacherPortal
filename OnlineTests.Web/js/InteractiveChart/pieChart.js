@@ -218,7 +218,7 @@
         slice.text = Helpers.text(canvas, labelXPosition, labelYPosition, message, { 'font-size': 12, 'font-weight': 'normal' });
         /***************************************** Changes applied *****************************************/
         //var rect = canvas.rect(20, 20, 50, 50).attr({ fill: 'red' }).hover(function () { draw_tooltip(canvas, 1, 'This is an example the behavior', 50, 10) }, function () { draw_tooltip(canvas, 0); });
-        draw_tooltip(canvas, 1, message, labelXPosition, labelYPosition);
+        //draw_tooltip(canvas, 1, message, labelXPosition, labelYPosition);
         /***************************************** Changes applied *****************************************/
         if (!parameters.labelsOutside) {
             var textAngle = Math.abs(180 - angle) > 90 ? 360 - angle : 180 - angle;
