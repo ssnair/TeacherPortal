@@ -215,7 +215,6 @@ onlineTestsApp.directive('interactiveChart', ['$timeout', 'FileUploader', 'quest
         }
     };
 }])
-/***************************************** changes applied *****************************************/
 .directive('refreshOptions', function () {
     return {
         restrict: 'A',
@@ -229,5 +228,3 @@ onlineTestsApp.directive('interactiveChart', ['$timeout', 'FileUploader', 'quest
         }
     };
 });
-/***************************************** changes applied *****************************************/
-

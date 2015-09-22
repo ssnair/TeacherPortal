@@ -48,7 +48,7 @@
         if (settings.chartType.id != 'pie-chart') {
             return;
         }
-        
+
         _self.drawAxisTitleLabel(canvas, settings, _self.parameters(settings));
         _self.drawSlices(canvas, settings);
         if (_self.points.length > 0) {
@@ -215,7 +215,11 @@
             labelXPosition = parameters.cx + (parameters.radius + deltaX) * Math.cos(-angle * parameters.deg),
             labelYPosition = parameters.cy + (parameters.radius + deltaY) * Math.sin(-angle * parameters.deg);
 
-        slice.text = Helpers.text(canvas, labelXPosition, labelYPosition, message, { 'font-size': 11, 'font-weight': 'normal' });
+        slice.text = Helpers.text(canvas, labelXPosition, labelYPosition, message, { 'font-size': 12, 'font-weight': 'normal' });
+        /***************************************** Changes applied *****************************************/
+        //var rect = canvas.rect(20, 20, 50, 50).attr({ fill: 'red' }).hover(function () { draw_tooltip(canvas, 1, 'This is an example the behavior', 50, 10) }, function () { draw_tooltip(canvas, 0); });
+        draw_tooltip(canvas, 1, message, labelXPosition, labelYPosition);
+        /***************************************** Changes applied *****************************************/
         if (!parameters.labelsOutside) {
             var textAngle = Math.abs(180 - angle) > 90 ? 360 - angle : 180 - angle;
             slice.text.transform('R' + textAngle + ' ' + labelXPosition + ' ' + labelYPosition);
@@ -611,4 +615,45 @@
 
     /************************ Drag and Drop ************************/
 
+    /***************************************** Changes applied *****************************************/
+    function draw_tooltip(canvas, show, text, x, y) {
+        if (show == 0) {
+            popup.remove();
+            popup_txt.remove();
+            transparent_txt.remove();
+            return;
+        }
+        
+        //draw text somewhere to get its dimensions and make it transparent
+        transparent_txt = canvas.text(100, 100, text).attr({ fill: "transparent" });
+
+        //get text dimensions to obtain tooltip dimensions
+        var txt_box = transparent_txt.getBBox();
+
+        //draw text
+        console.log(x + txt_box.width);
+        console.log(y - txt_box.height - 5);
+        popup_txt = canvas.text(x + txt_box.width, y - txt_box.height - 5, text).attr({ fill: "black", font: "12px sans-serif" });
+        
+        var bb = popup_txt.getBBox();
+
+        //draw path for tooltip box
+        popup = canvas.path(
+                        // 'M'ove to the 'dent' in the bubble
+                        "M" + (x) + " " + (y) +
+                        // 'v'ertically draw a line 5 pixels more than the height of the text
+                        "v" + -(bb.height + 5) +
+                        // 'h'orizontally draw a line 10 more than the text's width
+                        "h" + (bb.width + 10) +
+                        // 'v'ertically draw a line to the bottom of the text
+                        "v" + bb.height +
+                        // 'h'orizontally draw a line so we're 5 pixels fro thge left side
+                        "h" + -(bb.width + 5) +
+                        // 'Z' closes the figure
+                        "Z").attr({ fill: "yellow" });
+
+        //finally put the text in front
+        popup_txt.toFront();
+    }
+    /***************************************** Changes applied *****************************************/
 }
