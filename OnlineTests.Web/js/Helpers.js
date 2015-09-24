@@ -63,6 +63,32 @@
 
         validateMinValue: function (value, defaultValue) {
             return value == 0 ? defaultValue : value;
+        },
+
+        isFirst: function (list, element) {
+            if (list.length > 0)
+                if (list[0].uuid === element.uuid)
+                    return true;
+            return false;
+        },
+
+        isLast: function (list, element) {
+            if (list.length > 0)
+                if (list[list.length - 1].uuid === element.uuid)
+                    return true;
+            return false;
+        },
+
+        getFirst: function (list) {
+            if (list.length > 0)
+                return list[0];
+            return null;
+        },
+
+        getLast: function (list) {
+            if (list.length > 0)
+                return list[list.length - 1];
+            return null;
         }
     }
 }();

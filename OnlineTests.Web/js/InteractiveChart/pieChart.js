@@ -1,20 +1,16 @@
 ﻿function PieChart(parent) {
     var _self = this;
     this._parent = parent;
-
     this.startAngle = 0;
     this.sectors = _self._parent.canvas.set();
     this.points = _self._parent.canvas.set();    
     this.teacherPoints = _self._parent.canvas.set();
     this.teacherSectors = _self._parent.canvas.set();
     this.oldArea = 0;
-    /***************************************** Changes applied *****************************************/
-    this.oldScale = 0;
-    /***************************************** Changes applied *****************************************/
-
+    this.oldScale = 0;    
     this.direction = {
-        before: false,
-        after: true
+        before: 0,
+        after: 1
     }
 
     this.parameters = function(settings){
@@ -51,13 +47,11 @@
         if (settings.chartType.id != 'pie-chart') {
             return;
         }        
-        /***************************************** Changes applied *****************************************/
+        
         var parameters = _self.parameters(settings);
         _self.oldArea = parameters.area;
         _self.oldScale = parameters.scale;
         _self.drawAxisTitleLabel(canvas, settings, parameters);
-        /***************************************** Changes applied *****************************************/
-        //_self.drawAxisTitleLabel(canvas, settings, _self.parameters(settings));
         _self.drawSlices(canvas, settings);
         if (_self.points.length > 0) {
             _self.points.toFront();
@@ -187,8 +181,6 @@
         var parameters = _self.parameters(settings),
             endAngle = ((slices[i].value / parameters.area) * 360) + _self.startAngle;
 
-        //_self.oldArea = parameters.area;
-        
         var x1 = parameters.cx + parameters.radius * Math.cos(-_self.startAngle * parameters.deg),
             x2 = parameters.cx + parameters.radius * Math.cos(-endAngle * parameters.deg),
             y1 = parameters.cy + parameters.radius * Math.sin(-_self.startAngle * parameters.deg),
@@ -240,12 +232,8 @@
     }
 
     this.addSlice = function (settings) {
-        //if (!_self.parametersValidation(settings))
-        //    return;
-        /***************************************** Changes applied *****************************************/
         _self.parametersValidation(settings);
-        /***************************************** Changes applied *****************************************/
-
+        
         var parameters = _self.parameters(settings),
             slices = settings.pieChart.slices;
 
@@ -270,10 +258,7 @@
 
             _self.updateListData(parameters, slices);
         } else {
-            /***************************************** Changes applied *****************************************/
-            var sliceAvailable = _self.getSliceWithSpace(slices, parameters.scale, false);
-            /***************************************** Changes applied *****************************************/
-            //var sliceAvailable = _self.getSliceWithSpace(slices, parameters.scale);
+            var sliceAvailable = _self.getSliceWithSpace(slices, parameters.scale);
             if (sliceAvailable != null) {
                 sliceAvailable.value -= newSlice.value;
                 slices.splice(sliceAvailable.order - 1, 0, newSlice);
@@ -312,6 +297,133 @@
         _self._parent.scope.$apply();
     }
 
+    this.changeArea = function (settings) {
+        _self.parametersValidation(settings);
+        var parameters = _self.parameters(settings);
+        if (_self.oldArea != parameters.area) {
+            _self.resetChart(settings);
+            _self.oldArea = parameters.area;
+        }
+    }
+
+    this.changeScale = function (settings) {
+        _self.parametersValidation(settings);
+        var parameters = _self.parameters(settings);
+        if (_self.oldScale != parameters.scale) {
+            _self.resetChart(settings);
+            _self.oldScale = parameters.scale;
+        }
+    }
+
+    this.changeValue = function (settings, slice) {
+        var parameters = _self.parameters(settings),
+            slices = settings.pieChart.slices;
+
+        if (slice.value != slice.oldValue) {
+            if (slices.length == 1) {
+                slice.value = slice.oldValue;
+                _self._parent.redraw(settings);
+                return;
+            }
+
+            slice.value = _self.snapToScale(parameters, slice.value);
+            if (slice.value >= parameters.area) {
+                slice.value = slice.oldValue;
+                _self._parent.redraw(settings);
+                return;
+            }
+
+            var sliceToChange = null;
+            var difference = slice.value - slice.oldValue;
+            if (Helpers.isFirst(slices, slice)) {
+                if (difference > 0)
+                    sliceToChange = _self.getAvailableSliceToChange(slices, slice, difference);
+                else
+                    sliceToChange = Helpers.getLast(slices);
+            } else if (Helpers.isLast(slices, slice)) {
+                if (difference > 0)
+                    sliceToChange = _self.getAvailableSliceToChange(slices, slice, difference);
+                else
+                    sliceToChange = _self.elementByPosition(slices, _self.positionByElementUUID(slices, slice), 1, _self.direction.before);
+            } else {
+                if (difference > 0)
+                    sliceToChange = _self.getAvailableSliceToChange(slices, slice, difference);
+                else
+                    sliceToChange = Helpers.getLast(slices);
+            }
+
+            if (sliceToChange) {
+                var difference = slice.value - slice.oldValue;
+                if (difference > 0)
+                    sliceToChange.value -= difference;
+                else
+                    sliceToChange.value += (-1) * difference;
+                sliceToChange.oldValue = sliceToChange.value;
+                slice.oldValue = slice.value;
+            } else {
+                slice.value = slice.oldValue;
+            }
+            _self._parent.redraw(settings);
+        }
+    }
+
+    this.updateListData = function (parameters, slices) {
+        for (var i = 0; i < slices.length; i++) {
+            slices[i].order = i + 1;
+            slices[i].oldValue = slices[i].value;
+            slices[i].percentage = slices[i].value / parameters.area;
+        }
+    }
+
+    this.getSliceWithSpace = function (slices, scale) {        
+        for (var i = 0; i < slices.length; i++) {
+            if (slices[i].value >= scale * 2)
+                return slices[i];
+        }        
+        return null;
+    }
+
+    this.getAvailableSliceToChange = function (slices, slice, spaceDifference) {
+        for (var i = slices.length - 1; i >= 0; i--) {
+            if (slices[i].value > spaceDifference && slices[i].uuid != slice.uuid)
+                return slices[i];
+        }        
+        return null;
+    }
+
+    this.resetChart = function (settings) {
+        var initialLength = settings.pieChart.slices.length;
+        settings.pieChart.slices.length = 0;
+        _self.points = this._parent.canvas.set();
+        _self.sectors = this._parent.canvas.set();
+        if (initialLength > 0)
+            _self.addSlice(settings);
+        _self._parent.redraw(settings);
+    }
+
+    this.snapToScale = function (parameters, value, oldValue) {
+        if (value <= parameters.scale) {
+            return Number(parameters.scale);
+        }
+        if (value % parameters.scale == 0) {
+            return Number(value);
+        } else {
+            var module = value % parameters.scale;
+            var rest = Math.floor(value / parameters.scale);
+            var adjust = module >= (parameters.scale / 2) ? parameters.scale : 0;
+            return (rest * parameters.scale) + adjust;
+        }
+    }
+
+    this.getPlotArea = function (settings) {
+        return {
+            top: settings.pieChart.plotAreaPadding.top,
+            left: settings.pieChart.plotAreaPadding.left,
+            bottom: settings.container.height - settings.pieChart.plotAreaPadding.bottom,
+            right: settings.container.width - settings.pieChart.plotAreaPadding.right,
+        }
+    }
+    
     this.update_sector = function (parameters, startAngle, endAngle, sec) {
         var cx = parameters.cx,
             cy = parameters.cy,
@@ -331,266 +443,6 @@
         }
 
         sec.attr('path', ["M", cx, cy, "L", x1, y1, "A", r, r, rotation, +(endAngle - startAngle > 180), 0, x2, y2, "z"]);
-    }
-
-    this.getPlotArea = function(settings) {
-        return {
-            top: settings.pieChart.plotAreaPadding.top,
-            left: settings.pieChart.plotAreaPadding.left,
-            bottom: settings.container.height - settings.pieChart.plotAreaPadding.bottom,
-            right: settings.container.width - settings.pieChart.plotAreaPadding.right,
-        }
-    }
-
-    this.updateListData = function (parameters, slices) {
-        for (var i = 0; i < slices.length; i++) {
-            slices[i].order = i + 1;
-            slices[i].oldValue = slices[i].value;
-            slices[i].percentage = slices[i].value / parameters.area;
-        }
-    }
-
-    /***************************************** Changes applied *****************************************/
-    this.changeScale = function (settings) {
-        _self.parametersValidation(settings);
-        var parameters = _self.parameters(settings);
-        if (_self.oldScale != parameters.scale) {
-            _self.resetChart(settings);
-            _self.oldScale = parameters.scale;
-        }
-    }
-    /***************************************** Changes applied *****************************************/
-
-    this.changeArea = function (settings) {
-        /***************************************** Changes applied *****************************************/
-        _self.parametersValidation(settings);
-        var parameters = _self.parameters(settings);
-        if (_self.oldArea != parameters.area) {
-            _self.resetChart(settings);
-            _self.oldArea = parameters.area;
-        }
-        /***************************************** Changes applied *****************************************/
-
-        //if (!_self.parametersValidation(settings)) 
-        //    return;
-
-        //var slices = settings.pieChart.slices,
-        //    parameters = _self.parameters(settings),
-        //    increase = _self.oldArea < parameters.area,
-        //    value = 0,
-        //    partial = 0;
-
-        //if (slices.length > 1) {
-        //    var calculatedArea = _self.calculateTotalArea(parameters, slices, increase);
-        //    if (calculatedArea <= parameters.area) {                
-        //        for (var i = 0; i < slices.length; i++) {
-        //            if (increase) {
-        //                slices[i].value = _self.snapToScale(parameters, slices[i].value);
-        //            } else {
-        //                slices[i].value = _self.snapToScale(parameters, parameters.area * slices[i].percentage);
-        //            }
-        //            value += slices[i].value;
-        //            if (i == slices.length - 1) {
-        //                slices[i].value = value <= parameters.area ? slices[i].value + (parameters.area - value) : parameters.area - partial;
-        //            }
-        //            partial += slices[i].value;
-        //        }
-        //    } else {
-        //        settings.pieChart.totalArea = _self.oldArea;
-        //    }
-        //} else {
-        //    slices[0].value = parameters.area;
-        //}
-        //_self.updateListData(parameters, slices);
-        //_self.oldArea = parameters.area;
-        //_self._parent.redraw(settings);
-    }
-
-    this.changeValue = function (settings, slice) {
-        var parameters = _self.parameters(settings),
-            slices = settings.pieChart.slices;
-        
-        /***************************************** Changes applied *****************************************/
-        if (slice.value != slice.oldValue) {
-            if (slices.length == 1) {
-                slice.value = slice.oldValue;
-                _self._parent.redraw(settings);
-                return;
-            }
-
-            slice.value = _self.snapToScale(parameters, slice.value);            
-            if (slice.value >= parameters.area) {
-                slice.value = slice.oldValue;
-                _self._parent.redraw(settings);
-                return;
-            }
-
-            var difference = slice.value - slice.oldValue;
-            var sliceToChange = _self.getSliceWithSpace(slices, parameters.scale, true);
-            if (sliceToChange != null) {
-                if (difference > 0)
-                    sliceToChange.value -= difference;
-                else
-                    sliceToChange.value += (-1) * difference;
-                console.log(sliceToChange.value);
-                sliceToChange.oldValue = sliceToChange.value;
-                slice.oldValue = slice.value;
-            }
-            _self._parent.redraw(settings);            
-        }
-        /***************************************** Changes applied *****************************************/
-
-        //if (slice.value != slice.oldValue) {
-        //    slice.value = _self.snapToScale(parameters, slice.value, slice.oldValue);            
-        //    var index = _self.positionByElementUUID(slices, slice);
-        //    var difference = slice.value - slice.oldValue;            
-        //    if (index == slices.length - 1) {
-        //        var previousSlice = _self.elementByPosition(slices, index, 1, _self.direction.before);
-        //        _self.resizeSector(parameters, slice, previousSlice, difference, difference > 0 ? previousSlice.value >= difference : slice.oldValue >= difference);
-        //    } else {
-        //        var nextSlice = _self.elementByPosition(slices, index, 1, _self.direction.after);
-        //        _self.resizeSector(parameters, slice, nextSlice, difference, difference > 0 ? nextSlice.value >= difference : slice.oldValue >= difference);
-        //    }
-        //    _self._parent.redraw(settings);
-        //}     
-    }
-
-    this.getSliceWithSpace = function (slices, scale, descendent, uuid) {
-        /***************************************** Changes applied *****************************************/
-        if (descendent)
-            for (var i = slices.length - 1; i >= 0; i--) {
-                if (slices[i].value >= scale && slices[i].uuid != uuid)
-                    return slices[i];
-            }
-        else
-            for (var i = 0; i < slices.length; i++) {
-                if (slices[i].value >= scale * 2)
-                    return slices[i];
-            }
-        return null;
-        /***************************************** Changes applied *****************************************/
-        
-        //for (var i = 0; i < slices.length; i++) {
-        //    if (slices[i].value >= scale * 2)
-        //        return slices[i];
-        //}        
-        //return null;
-    }
-
-    /***************************************** Changes applied *****************************************/
-    this.resetChart = function (settings) {
-        var initialLength = settings.pieChart.slices.length;
-        settings.pieChart.slices.length = 0;
-        _self.points = this._parent.canvas.set();
-        _self.sectors = this._parent.canvas.set();
-        if (initialLength > 0)
-            _self.addSlice(settings);
-        _self._parent.redraw(settings);
-    }
-    /***************************************** Changes applied *****************************************/
-
-    //this.resizeSector = function (parameters, slice, after, difference, isPossible) {
-    //    if (isPossible) {
-    //        if (difference > 0) {
-    //            after.value -= Math.abs(difference);
-    //        } else {
-    //            after.value += Math.abs(difference);
-    //        }
-    //        after.oldValue = after.value;
-    //        slice.oldValue = slice.value;
-    //    } else {
-    //        slice.value = slice.oldValue;
-    //    }
-    //}
-
-    this.snapToScale = function (parameters, value, oldValue) {
-        /***************************************** Changes applied *****************************************/
-        if (value <= parameters.scale) {
-            return Number(parameters.scale);
-        }
-        if (value % parameters.scale == 0) {
-            return Number(value);
-        } else {
-            var module = value % parameters.scale;
-            var rest = Math.floor(value / parameters.scale);
-            var adjust = module >= (parameters.scale / 2) ? parameters.scale : 0;
-            return (rest * parameters.scale) + adjust;
-        }
-        /***************************************** Changes applied *****************************************/
-        
-        //value = value < Math.round(parameters.scale / 2) - 1 ? Number(value) + parameters.scale : value;
-        //if (oldValue != undefined) {
-        //    value = value >= parameters.area ? _self.snapToScale(parameters, oldValue) : value;
-        //}
-        //return Math.round(value / parameters.scale) * parameters.scale;
-    }
-
-    //this.calculateTotalArea = function (parameters, slices, increase) {
-    //    var totalArea = 0;
-    //    for (var i = 0; i < slices.length; i++) {
-    //        if (increase) {
-    //            totalArea += _self.snapToScale(parameters, slices[i].value);
-    //        } else {
-    //            if (i < slices.length - 1) {
-    //                totalArea += _self.snapToScale(parameters, parameters.area * slices[i].percentage);
-    //            }                
-    //        }
-    //    }
-    //    return totalArea;
-    //}
-        
-    this.parametersValidation = function (settings) {
-        var area = Number(settings.pieChart.totalArea),
-            scale = Number(settings.pieChart.scale);
-        
-        /***************************************** Changes applied *****************************************/
-        if (area < 1) {
-            settings.pieChart.totalArea = _self.oldArea;
-            area = _self.oldArea;
-        }
-        if (scale < 1) {
-            settings.pieChart.scale = _self.oldScale;
-            scale = _self.oldScale;
-        }
-        if (_self.oldArea != area) {
-            if (area <= scale)
-                settings.pieChart.totalArea = _self.oldArea;
-            if (area % scale != 0)
-                settings.pieChart.scale = 1;
-        }
-        if (_self.oldScale != scale) {
-            if (area <= scale || area % scale != 0)
-                settings.pieChart.scale = _self.oldScale;
-        }
-        /***************************************** Changes applied *****************************************/
-
-        //if (scale >= area)
-        //    return false;
-
-        //if (area % scale != 0)
-        //    return false;
-
-        //return true;
-    }
-
-    this.elementByPosition = function (list, start, distance, direction) {
-        if (direction == _self.direction.after) {
-            var position = (start + distance) % list.length;
-            return list[position];
-        } else {
-            var module = Math.abs(start - distance) % list.length,
-                difference = module == 0 ? 0 : list.length - module,
-                position = start >= distance ? start - distance : difference;
-            return list[position];
-        }
-    }
-
-    this.positionByElementUUID = function (list, element) {
-        for (var i = 0; i < list.length; i++) {
-            if (list[i].uuid == element.uuid) {
-                return i;
-            }
-        }
     }
 
     this.moveLabel = function (parameters, slices, index, startAngle, endAngle) {
@@ -613,6 +465,50 @@
             slice.text.transform('R' + textAngle + ' ' + labelXPosition + ' ' + labelYPosition);
         }
         $('tspan', slice.text.node).attr('dy', 0);
+    }
+
+    this.elementByPosition = function (list, start, distance, direction) {
+        if (direction == _self.direction.after) {
+            var position = (start + distance) % list.length;
+            return list[position];
+        } else {
+            var module = Math.abs(start - distance) % list.length,
+                difference = module == 0 ? 0 : list.length - module,
+                position = start >= distance ? start - distance : difference;
+            return list[position];
+        }
+    }
+
+    this.positionByElementUUID = function (list, element) {
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].uuid == element.uuid) {
+                return i;
+            }
+        }
+    }
+
+    this.parametersValidation = function (settings) {
+        var area = Number(settings.pieChart.totalArea),
+            scale = Number(settings.pieChart.scale);
+
+        if (area < 1) {
+            settings.pieChart.totalArea = _self.oldArea;
+            area = _self.oldArea;
+        }
+        if (scale < 1) {
+            settings.pieChart.scale = _self.oldScale;
+            scale = _self.oldScale;
+        }
+        if (_self.oldArea != area) {
+            if (area <= scale)
+                settings.pieChart.totalArea = _self.oldArea;
+            if (area % scale != 0)
+                settings.pieChart.scale = 1;
+        }
+        if (_self.oldScale != scale) {
+            if (area <= scale || area % scale != 0)
+                settings.pieChart.scale = _self.oldScale;
+        }
     }
 
     this.exportJson = function (pieChart) {
