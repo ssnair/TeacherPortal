@@ -391,6 +391,7 @@ var multipleDragAndDropAnswer = function (parent, answer) {
         });
             
         $(".droppable-option").droppable({
+            tolerance: 'touch',
             accept: ".draggable-answer",
             activeClass: "ui-state-hover",
             hoverClass: "ui-state-active",
