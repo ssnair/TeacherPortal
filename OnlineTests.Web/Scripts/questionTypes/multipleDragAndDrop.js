@@ -1,4 +1,42 @@
-﻿$(function () {
+﻿(function (angular) {
+    angular.module('multipleDragAndDropApp', [])
+        .controller('multipleDragAndDropController', function ($scope) {
+            $scope.dropTargets = [
+                {
+                    id: "1",
+                    text: "",
+                    placeholder: "Click to add contents."
+                },
+                {
+                    id: "2",
+                    text: "",
+                    placeholder: "Click to add contents."
+                }
+            ];
+
+            $scope.answerOptions = [
+                {
+                    id: "1",
+                    text: "",
+                    placeholder: "Click to add contents."
+                },
+                {
+                    id: "2",
+                    text: "",
+                    placeholder: "Click to add contents."
+                }
+            ];
+
+            $scope.removeDropTarget = function (item) {
+                alert("remove Drop target");
+                console.info("item", item);
+            };
+
+
+        });
+})(window.angular);
+
+$(function () {
     var settings = settings || {
         targets: [],
         answers: []
