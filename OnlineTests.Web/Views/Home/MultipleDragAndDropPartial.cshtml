@@ -4,186 +4,230 @@
 <script src="~/Scripts/ui-bootstrap-tpls-0.14.3.min.js"></script>
 
 <div ng-app="multipleDragAndDropApp">
-    <div class="tab-content my-tab-center" ng-controller="multipleDragAndDropController">
-        <!-- QUESTIONS -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Question Text</div>
-                    <div id="divQBody" runat="server" class="qEditor qBody" title="Click to edit the question body">
-                        <span>Click to edit...</span>
-                    </div>
-                    <input type="hidden" value="" id="hfQBody" runat="server" clientidmode="Static" />
-                    Display answers side by side (if not selected, up and down):&nbsp<input type="checkbox" id="cboxAnswersVertically">
-                    <br />
-                    <br />
-                </div>
-            </div>
+  <div class="tab-content my-tab-center" ng-controller="multipleDragAndDropController">
+    <!-- QUESTIONS -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">Question Text</div>
+          <div id="divQBody" runat="server" class="qEditor qBody" title="Click to edit the question body">
+            <span>Click to edit...</span>
+          </div>
+          <input type="hidden" value="" id="hfQBody" runat="server" clientidmode="Static" />
+          Display answers side by side (if not selected, up and down):&nbsp<input type="checkbox" id="cboxAnswersVertically">
+          <br />
+          <br />
         </div>
+      </div>
+    </div>
 
-        <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <!-- DROP CONTAINERS -->
-                    <div id="MultipleDragAndDropContainer">
-                        <div class="col-md-6">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">Target Container</div>
-                                <div class="row" ng-repeat="item in dropTargets">
-                                    <div class="col-md-1">
-                                        <div>{{item.id}}</div>
-                                    </div>
-                                    <div class="col-md-9 qEditor">
-                                        <span>{{item.placeholder}}</span>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <a href="javascript:void(0)" ng-click="removeDropTarget(item)">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <a class="btn btn-success">Add new Drop Target</a>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div id="MultipleDragAndDropAnswerChoices">
-                        <div class="col-md-6">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">Draggable Answer Choices</div>
-                                <div class="row" ng-repeat="item in answerOptions">
-                                    <div class="col-md-1">
-                                        <div>{{item.id}}</div>
-                                    </div>
-                                    <div class="col-md-9 qEditor">
-                                        <span>{{item.placeholder}}</span><br />
-                                        <span>This answer choice can be used <select></select> times</span>
-                                    </div>
-                                    <div class="col-md-1">
-                                        <a href="javascript:void(0)" ng-click="removeAnswerOption(item.id)">
-                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                        </a>
-                                    </div>
-                                </div>
-                                <a class="btn btn-success">Add new Answer Option</a>
-                            </div>
-                        </div>
-
-                    </div>
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <!-- DROP CONTAINERS -->
+          <div id="MultipleDragAndDropContainer">
+            <div class="col-md-6">
+              <div class="panel panel-primary">
+                <div class="panel-heading">Target Container</div>
+                <div class="row" ng-repeat="item in dropTargets">
+                  <div class="col-md-1">
+                    <div>{{item.id}}</div>
+                  </div>
+                  <div class="col-md-9 qEditor">
+                    <span>{{item.placeholder}}</span>
+                  </div>
+                  <div class="col-md-1">
+                    <a href="javascript:void(0)" ng-click="removeDropTarget(item)">
+                      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </a>
+                  </div>
                 </div>
+                <a class="btn btn-success" ng-click="addDropTarget()">Add new Drop Target</a>
+              </div>
             </div>
-            <div>Match Target Containers with Answer Choices</div>
+          </div>
+          <div id="MultipleDragAndDropAnswerChoices">
+            <div class="col-md-6">
+              <div class="panel panel-primary">
+                <div class="panel-heading">Draggable Answer Choices</div>
+                <div class="row" ng-repeat="item in answerOptions">
+                  <div class="col-md-1">
+                    <div>{{item.id}}</div>
+                  </div>
+                  <div class="col-md-9 qEditor">
+                    <span>{{item.placeholder}}</span><br />
+                    <span>This answer choice can be used
+                                            <select></select>
+                      times</span>
+                  </div>
+                  <div class="col-md-1">
+                    <a href="javascript:void(0)" ng-click="removeAnswerOption(item.id)">
+                      <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </a>
+                  </div>
+                </div>
+                <a class="btn btn-success">Add new Answer Option</a>
+              </div>
+            </div>
 
+          </div>
         </div>
-        <!-- NOTES  -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Notes</div>
-                    <div class="panel-body">
-                        <textarea class="textarea-note" placeholder="enter comments  about this question (optional)" id="multipleDragAndDrop_Notes"></textarea>
-                        @*                    <div style="width: 130px;">
+      </div>
+
+      <!-- Match Target Containers with Answer Choices -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Match Target Containers with Answer Choices</div>
+            <uib-tabset>
+              <uib-tab ng-repeat="tab in dropTargets" heading="{{tab.id}}">
+                <div class="row">
+                  <div class="col-md-12">
+                      {{tab.id}}{{tab.placeholder}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <label><input type="checkbox" ng-model="tab.setContainerCapacity">Set container capacity to</label>
+                    <select ng-model="tab.containerCapacity" ng-disabled="tab.setContainerCapacity==false">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row">
+                  <h1>Answer choice list</h1>
+                  <div class="row" ng-repeat="item in answerOptions">
+                    <div class="col-md-1">
+                      <div>{{item.id}}</div>
+                    </div>
+                    <div class="col-md-4">
+                      <span>{{item.placeholder}}</span>
+                    </div>
+                    <div class="col-md-7">
+                      <span>is worth<input type="number" />point(s) and <label><input type="checkbox" ng-model="item.isCorrect">is correct</label>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </uib-tab>
+            </uib-tabset>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTES  -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">Notes</div>
+            <div class="panel-body">
+              <textarea class="textarea-note" placeholder="enter comments  about this question (optional)" id="multipleDragAndDrop_Notes"></textarea>
+              @*                    <div style="width: 130px;">
                         <input type="text" id="worthQuestion2" style="width: 50px;" placeholder="Worth"/>
                         pts
                     </div>*@
-                    </div>
-                </div>
             </div>
+          </div>
         </div>
+      </div>
 
-        <div class="panel panel-default">
-            <div class="footer-answer" style="display: block; padding-top: 100px; text-align: center;">
-                <button id="btnMultipleDragAndDrop_Preview" class="btn btn-info" data-toggle="modal" data-target="#multipleDragAndDrop_Preview">Preview</button>
-                <button class="btn btn-success" id="bntMultipleDragAndDrop_Save">Save</button>
+      <div class="panel panel-default">
+        <div class="footer-answer" style="display: block; padding-top: 100px; text-align: center;">
+          <button id="btnMultipleDragAndDrop_Preview" class="btn btn-info" data-toggle="modal" data-target="#multipleDragAndDrop_Preview">Preview</button>
+          <button class="btn btn-success" id="bntMultipleDragAndDrop_Save">Save</button>
+        </div>
+      </div>
+
+      <!-- EDITOR SECTION -------->
+      <div id="odwDialog" style="display: none;">
+        <textarea id="odwEditor"></textarea>
+      </div>
+
+      <div class="modal fade" id="multipleDragAndDrop_Preview"
+        data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
+        aria-labelledby="multipleDragAndDrop_Preview" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" id="multipleDragAndDrop_closeModal">Close</button>
+              <h4 class="modal-title">Preview</h4>
             </div>
-        </div>
+            <div class="modal-body">
+              <p id="multipleDragAndDrop_questionContainer"></p>
 
-        <!-- EDITOR SECTION -------->
-        <div id="odwDialog" style="display: none;">
-            <textarea id="odwEditor"></textarea>
-        </div>
-
-        <div class="modal fade" id="multipleDragAndDrop_Preview"
-            data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
-            aria-labelledby="multipleDragAndDrop_Preview" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" id="multipleDragAndDrop_closeModal">Close</button>
-                        <h4 class="modal-title">Preview</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p id="multipleDragAndDrop_questionContainer"></p>
-
-                        <div id="multipleDragAndDropPreviewContainer">
-                            <div class="panel panel-default" style="padding: 10px;">
-                                <div id="MultipleDragAndDropPreviewAnswers">
-                                </div>
-                            </div>
-                        </div>
-                        <div id="multipleDragAndDropOptionsPreviewContainer" class="panel panel-default" style="padding: 10px;">
-                            <div id="MultipleDragAndDropPreviewOptions">
-                            </div>
-                        </div>
-                        <p id="multipleDragAndDrop_result"></p>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" id="multipleDragAndDrop_submitAnswer" class="btn btn-primary" value="Submit Answer" />
-                    </div>
+              <div id="multipleDragAndDropPreviewContainer">
+                <div class="panel panel-default" style="padding: 10px;">
+                  <div id="MultipleDragAndDropPreviewAnswers">
+                  </div>
                 </div>
+              </div>
+              <div id="multipleDragAndDropOptionsPreviewContainer" class="panel panel-default" style="padding: 10px;">
+                <div id="MultipleDragAndDropPreviewOptions">
+                </div>
+              </div>
+              <p id="multipleDragAndDrop_result"></p>
             </div>
-        </div>
-
-
-        <div id="multipleDragAndDrop_AnswerTemplate" class="hidden">
-            <div class="qeditor-answer">
-                <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="{{id}}">
-                    {{answer}}
-                </div>
-                <div>
-                    <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteAnswer icon-delete" data-val="{{id}}">Delete</a>
-                </div>
+            <div class="modal-footer">
+              <input type="button" id="multipleDragAndDrop_submitAnswer" class="btn btn-primary" value="Submit Answer" />
             </div>
+          </div>
         </div>
+      </div>
 
 
-        <div id="multipleDragAndDrop_OptionTemplate" class="hidden">
-            <div class="qeditor-option">
-                <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="{{id}}" id="{{div_id}}">
-                    {{answerText}}
-                </div>
-                <br />
-                <div>
-                    {{option}}
-                </div>
-                <div>
-                    <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteOption icon-delete" data-val="{{id}}">Delete</a>
-                </div>
-            </div>
+      <div id="multipleDragAndDrop_AnswerTemplate" class="hidden">
+        <div class="qeditor-answer">
+          <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="{{id}}">
+            {{answer}}
+          </div>
+          <div>
+            <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteAnswer icon-delete" data-val="{{id}}">Delete</a>
+          </div>
         </div>
+      </div>
 
-        <div id="multipleDragAndDrop_PreviewAnswerTemplate" class="hidden">
-            <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="{{id}}">
-                {{answer}}
-            </div>
+
+      <div id="multipleDragAndDrop_OptionTemplate" class="hidden">
+        <div class="qeditor-option">
+          <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="{{id}}" id="{{div_id}}">
+            {{answerText}}
+          </div>
+          <br />
+          <div>
+            {{option}}
+          </div>
+          <div>
+            <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteOption icon-delete" data-val="{{id}}">Delete</a>
+          </div>
         </div>
+      </div>
 
-
-        <div id="multipleDragAndDrop_PreviewOptionTemplate" class="hidden">
-            <div class="qeditor-option">
-                <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="{{id}}" id="{{div_id}}">
-                    {{answerText}}
-                </div>
-                <br>
-                <br>
-                <div>
-                    {{option}}
-                </div>
-            </div>
+      <div id="multipleDragAndDrop_PreviewAnswerTemplate" class="hidden">
+        <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="{{id}}">
+          {{answer}}
         </div>
+      </div>
 
-        <!-- IMPORTANT: Required to display the floating Toolbox from the Question Creator page -------->
-        <br />
+
+      <div id="multipleDragAndDrop_PreviewOptionTemplate" class="hidden">
+        <div class="qeditor-option">
+          <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="{{id}}" id="{{div_id}}">
+            {{answerText}}
+          </div>
+          <br>
+          <br>
+          <div>
+            {{option}}
+          </div>
+        </div>
+      </div>
+
+      <!-- IMPORTANT: Required to display the floating Toolbox from the Question Creator page -------->
+      <br />
     </div>
+  </div>
 </div>

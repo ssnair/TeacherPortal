@@ -1544,6 +1544,7 @@
     <Content Include="Scripts\questionTypes\OnlineDwEditor.js" />
     <Content Include="Scripts\questionTypes\selectableChart.js" />
     <Content Include="Scripts\raphael-min.js" />
+    <Content Include="Scripts\ui-bootstrap-tpls-0.14.3.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Beta\Index.cshtml">
       <SubType>Code</SubType>

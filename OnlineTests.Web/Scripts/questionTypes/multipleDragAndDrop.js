@@ -1,16 +1,21 @@
 ﻿(function (angular) {
-    angular.module('multipleDragAndDropApp', [])
+    angular.module('multipleDragAndDropApp', ['ui.bootstrap'])
         .controller('multipleDragAndDropController', function ($scope) {
             $scope.dropTargets = [
                 {
                     id: "1",
                     text: "",
-                    placeholder: "Click to add contents."
+                    placeholder: "Click to add contents.",
+                    setContainerCapacity: false,
+                    containerCapacity:"5"
                 },
                 {
                     id: "2",
                     text: "",
-                    placeholder: "Click to add contents."
+                    placeholder: "Click to add contents.",
+                    setContainerCapacity: true,
+                    containerCapacity: "3"
+
                 }
             ];
 
@@ -28,10 +33,21 @@
             ];
 
             $scope.removeDropTarget = function (item) {
-                alert("remove Drop target");
-                console.info("item", item);
+                for (var i = 0; i < $scope.dropTargets.length; i++) {
+                    if ($scope.dropTargets[i].id === item.id) {
+                        $scope.dropTargets.splice(i, 1);
+                        break;
+                    }
+                }
             };
 
+            $scope.addDropTarget = function (item) {
+                $scope.dropTargets.push({
+                        id: "3",
+                        text: "",
+                        placeholder: "Click to add contents."
+                    });
+            };
 
         });
 })(window.angular);
