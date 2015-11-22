@@ -1,36 +1,13 @@
 ﻿(function (angular) {
     angular.module('multipleDragAndDropApp', ['ui.bootstrap'])
-        .controller('multipleDragAndDropController', function ($scope) {
-            $scope.dropTargets = [
-                {
-                    id: "1",
-                    text: "",
-                    placeholder: "Click to add contents.",
-                    setContainerCapacity: false,
-                    containerCapacity:"5"
-                },
-                {
-                    id: "2",
-                    text: "",
-                    placeholder: "Click to add contents.",
-                    setContainerCapacity: true,
-                    containerCapacity: "3"
+        .controller('multipleDragAndDropController', function ($scope, $rootScope) {
+            var vm = this;
 
-                }
-            ];
+            vm.dropTargets = [];
+            vm.answerOptions = [];
 
-            $scope.answerOptions = [
-                {
-                    id: "1",
-                    text: "",
-                    placeholder: "Click to add contents."
-                },
-                {
-                    id: "2",
-                    text: "",
-                    placeholder: "Click to add contents."
-                }
-            ];
+            $scope.dropTargets = vm.dropTargets;
+            $scope.answerOptions = vm.answerOptions;
 
             $scope.removeDropTarget = function (item) {
                 for (var i = 0; i < $scope.dropTargets.length; i++) {
@@ -41,13 +18,102 @@
                 }
             };
 
-            $scope.addDropTarget = function (item) {
-                $scope.dropTargets.push({
-                        id: "3",
-                        text: "",
-                        placeholder: "Click to add contents."
-                    });
+            $scope.removeAnswerOption = function (item) {
+                debugger;
+                for (var i = 0; i < vm.answerOptions.length; i++) {
+                    if (vm.answerOptions[i].id === item.id) {
+                        vm.answerOptions.splice(i, 1);
+                        // Remove answer option from matches
+                        for (var dt = 0; dt < vm.dropTargets.length; dt++) {
+                            for (var dto = 0; j < vm.dropTargets[dt].answerOptions; dto++) {
+                                if (vm.dropTargets[dt].answerOptions[dto].id == item.id) {
+                                    vm.dropTargets[dt].answerOptions.splice(dto, 1);
+                                }
+                            };
+                        };
+                        break;
+                    }
+                }
             };
+
+            function doAddDropTarget(id, text, setContainerCapacity, containerCapacity) {
+                id = typeof id !== 'undefined' ? id : getNextDropTargetId();
+                setContainerCapacity = setContainerCapacity !== 'undefined' ? setContainerCapacity : false;
+                containerCapacity = containerCapacity !== 'undefined' ? containerCapacity : 1;
+
+                var newDropTarget = {
+                    id: id,
+                    text: text,
+                    placeholder: "Click to add contents.",
+                    setContainerCapacity: setContainerCapacity,
+                    containerCapacity: containerCapacity,
+                    answerOptions: []
+                };
+
+                for (var i = 0; i < vm.answerOptions.length; i++) {
+                    var answerOption = vm.answerOptions[i];
+                    newDropTarget.answerOptions.push({
+                        id: answerOption.id,
+                        answerOption: answerOption,
+                        worth: 0,
+                        isCorrect: false
+                    });
+                };
+                vm.dropTargets.push(newDropTarget);
+            }
+
+            function doAddAnswerOption(id, text, timesCanBeUsed) {
+                id = typeof id !== 'undefined' ? id : getNextAnswerOptionId();
+                timesCanBeUsed = typeof timesCanBeUsed !== 'undefined' ? timesCanBeUsed : 1;
+
+                var newAnswerOption = {
+                    id: id,
+                    text: text,
+                    placeholder: "Click to add contents.",
+                    timesCanBeUsed: 1
+                };
+
+                for (var i = 0; i < vm.dropTargets.length; i++) {
+                    vm.dropTargets[i].answerOptions.push({
+                        id: newAnswerOption.id,
+                        answerOption: newAnswerOption,
+                        worth: 0,
+                        isCorrect: false
+                    });
+                };
+                vm.answerOptions.push(newAnswerOption);
+            }
+
+            function getNextDropTargetId() {
+                return getNextId(vm.dropTargets, '1');
+            }
+
+            function getNextAnswerOptionId() {
+                return getNextId(vm.answerOptions, 'A');
+            }
+
+            function getNextId(container, firstId) {
+                if (container.length == 0) {
+                    return firstId;
+                }
+
+                var maxId = firstId;
+                for (var i = 0; i < container.length; i++) {
+                    if (container[i].id > maxId) {
+                        maxId = container[i].id;
+                    }
+                }
+                return String.fromCharCode(maxId.charCodeAt(0) + 1);
+            }
+
+            (function init() {
+                $scope.addDropTarget = doAddDropTarget;
+                $scope.addAnswerOption = doAddAnswerOption;
+                doAddDropTarget();
+                doAddAnswerOption();
+
+            })();
+
 
         });
 })(window.angular);
@@ -84,7 +150,7 @@ $(function () {
     var multipleDragAndDropPreview = null;
 
     $("#multipleDragAndDrop_AddAnswer").click(function () {
-        if (true) {   
+        if (true) {
             if (!validateEmptyQuestionText(hfAnswerEditor.value))
                 return;
 
@@ -189,11 +255,11 @@ $(function () {
     $("#bntMultipleDragAndDrop_Save").click(function () {
         if (!validateEmptyQuestionText(hfQBody.value))
             return;
-        
+
         // TODO: IL - remove hardcoded answers vertically
         var answers = [];
         for (i = 0; i < multipleDragAndDrop.answers.length; i++) {
-            answers.push({ id: i + 1, text: multipleDragAndDrop.answers[i].text, DisplayAnswersVertically: $('#cboxAnswersVertically:checked').val()?1:0 });
+            answers.push({ id: i + 1, text: multipleDragAndDrop.answers[i].text, DisplayAnswersVertically: $('#cboxAnswersVertically:checked').val() ? 1 : 0 });
         }
 
         targets = [];
@@ -308,7 +374,7 @@ MultipleDragAndDrop = function (mode, settings) {
 
     this.targets = [];
     this.answers = [];
-    
+
     for (var i = 0; i < settings.targets.length; i++) {
         var option = new multipleDragAndDropOption(this, settings.targets[i].text);
         option.id = settings.targets[i].id;
@@ -331,7 +397,7 @@ MultipleDragAndDrop = function (mode, settings) {
         this.optionsContainer = $("#MultipleDragAndDropPreviewOptions");
     }
 
-    
+
     this.addAnswer = function (answer) {
         var newAnswer = new multipleDragAndDropAnswer(this, answer);
         this.answers.push(newAnswer);
@@ -393,7 +459,7 @@ MultipleDragAndDrop = function (mode, settings) {
 
 };
 
-var multipleDragAndDropOption = function(parent, option) {
+var multipleDragAndDropOption = function (parent, option) {
     this.parent = parent;
     this.id = Math.floor((Math.random() * 999999) + 1);
     this.text = option;
@@ -443,7 +509,7 @@ var multipleDragAndDropAnswer = function (parent, answer) {
             //    reloadAllMathJax();
             //}
         });
-            
+
         $(".droppable-option").droppable({
             tolerance: 'touch',
             accept: ".draggable-answer",
@@ -476,7 +542,7 @@ var multipleDragAndDropAnswer = function (parent, answer) {
                 reloadMathJax(tgtDivId);
             }
         });
-      
+
     };
 };
 

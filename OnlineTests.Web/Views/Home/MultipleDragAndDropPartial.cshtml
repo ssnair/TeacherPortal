@@ -29,7 +29,7 @@
             <div class="col-md-6">
               <div class="panel panel-primary">
                 <div class="panel-heading">Target Container</div>
-                <div class="row" ng-repeat="item in dropTargets">
+                <div class="row" ng-repeat="item in dropTargets track by $index">
                   <div class="col-md-1">
                     <div>{{item.id}}</div>
                   </div>
@@ -61,12 +61,12 @@
                       times</span>
                   </div>
                   <div class="col-md-1">
-                    <a href="javascript:void(0)" ng-click="removeAnswerOption(item.id)">
+                    <a href="javascript:void(0)" ng-click="removeAnswerOption(item)">
                       <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>
                   </div>
                 </div>
-                <a class="btn btn-success">Add new Answer Option</a>
+                <a class="btn btn-success" ng-click="addAnswerOption()">Add new Answer Option</a>
               </div>
             </div>
 
@@ -80,7 +80,7 @@
           <div class="panel panel-default">
             <div class="panel-heading">Match Target Containers with Answer Choices</div>
             <uib-tabset>
-              <uib-tab ng-repeat="tab in dropTargets" heading="{{tab.id}}">
+              <uib-tab ng-repeat="tab in dropTargets track by $index" heading="{{tab.id}}">
                 <div class="row">
                   <div class="col-md-12">
                       {{tab.id}}{{tab.placeholder}}
