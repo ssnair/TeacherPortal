@@ -747,14 +747,22 @@ namespace OnlineTests.Web.Controllers
                     {
                         id = x.Id,
                         text = x.Text,
-                        DisplayAnswersVertically = x.DisplayAnswersVertically
+                        displayAnswersVertically = x.DisplayAnswersVertically,
+                        timesCanBeUsed = x.TimesCanBeUsed
                     }).ToArray(),
                     Targets = questionModel.Targets.Select(x => new Common.Models.MultipleDragAndDrop_Target()
                     {
                         id = x.Id,
                         text = x.Text,
-                        answerId = x.AnswerId,
-                        answerText = x.AnswerText
+                        containerCapacity = x.ContainerCapacity,
+                        setContainerCapacity = x.SetContainerCapacity,
+                        answerOptions = x.AnswerOptions.Select(ao => new Common.Models.MultipleDragAndDrop_TargetAnswerMatch 
+                        { 
+                            id = ao.Id,
+                            isCorrect = ao.IsCorrect,
+                            worth = ao.Worth
+                        }).ToArray()
+
                     }).ToArray()
                 };
 
@@ -867,7 +875,7 @@ namespace OnlineTests.Web.Controllers
                     {
                         id = x.Id,
                         text = x.Text,
-                        DisplayAnswersVertically = x.DisplayAnswersVertically
+                        displayAnswersVertically = x.DisplayAnswersVertically
                     }).ToArray(),
 
                     Targets = questionModel.Targets.Select(x => new Common.Models.MultipleDragAndDrop_Target()

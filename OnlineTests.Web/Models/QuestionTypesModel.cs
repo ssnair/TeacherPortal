@@ -117,6 +117,8 @@ namespace OnlineTests.Web.Models
         public string Text { get; set; }
 
         public Int16 DisplayAnswersVertically { get; set; }
+
+        public int TimesCanBeUsed { get; set; }
     }
 
     public class MultipleDragAndDrop_Target
@@ -124,10 +126,20 @@ namespace OnlineTests.Web.Models
         public int Id { get; set; }
         [AllowHtml]
         public string Text { get; set; }
+        public bool SetContainerCapacity { get; set; }
+        public int ContainerCapacity { get; set; }
 
         public int AnswerId { get; set; }
         [AllowHtml]
         public string AnswerText  { get; set; }
+        public MultipleDragAndDrop_TargetAnswerMatch[] AnswerOptions { get; set; }
+    }
+
+    public class MultipleDragAndDrop_TargetAnswerMatch
+    {
+        public int Id { get; set; }
+        public bool IsCorrect { get; set; }
+        public int Worth { get; set; }
     }
 
     public class DragAndOrderModel : QuestionModel

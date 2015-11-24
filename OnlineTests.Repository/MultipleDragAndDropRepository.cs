@@ -22,7 +22,8 @@ namespace OnlineTests.Repository
                 {
                     Id = x.id,
                     Text = x.text,
-                    DisplayAnswersVertically = x.DisplayAnswersVertically
+                    DisplayAnswersVertically = x.displayAnswersVertically,
+                    TimesCanBeUsed = x.timesCanBeUsed
                 }).ToArray()
             };
             var questionXmlSerialized = Serializer.Serialize(questionXml);
@@ -43,8 +44,14 @@ namespace OnlineTests.Repository
                 {
                     Id = target.id,
                     Text = target.text,
-                    AnswerId = target.answerId,
-                    AnswerText = target.answerText ?? " "
+                    SetContainerCapacity = target.setContainerCapacity,
+                    ContainerCapacity = target.containerCapacity,
+                    AnswerOptions = target.answerOptions.Select(x => new MultipleDragAndDrop_TargetAnswerMatchXmlModel 
+                    { 
+                        Id = x.id,
+                        IsCorrect = x.isCorrect,
+                        Worth = x.worth
+                    }).ToArray()
                 };
                 var targetXmlSerialized = Serializer.Serialize(targetXml);
                 this.connection.Db.Answers_Insert(question.Id, "", null, 0, 0, "", targetXmlSerialized);
@@ -62,7 +69,8 @@ namespace OnlineTests.Repository
                 {
                     Id = x.id,
                     Text = x.text,
-                    DisplayAnswersVertically = x.DisplayAnswersVertically
+                    DisplayAnswersVertically = x.displayAnswersVertically,
+                     TimesCanBeUsed = x.timesCanBeUsed
                 }).ToArray()
             };
             var questionXmlSerialized = Serializer.Serialize(questionXml);
@@ -82,8 +90,14 @@ namespace OnlineTests.Repository
                 {
                     Id = target.id,
                     Text = target.text,
-                    AnswerId = target.answerId,
-                    AnswerText = target.answerText ?? " "
+                    ContainerCapacity = target.containerCapacity,
+                    SetContainerCapacity = target.setContainerCapacity,
+                    AnswerOptions = target.answerOptions.Select(x => new MultipleDragAndDrop_TargetAnswerMatchXmlModel 
+                    { 
+                        Id = x.id,
+                        IsCorrect = x.isCorrect,
+                        Worth = x.worth                    
+                    }).ToArray()
                 };
                 var targetXmlSerialized = Serializer.Serialize(targetXml);
                 this.connection.Db.Answers_Insert(question.Id, "", null, 0, 0, "", targetXmlSerialized);

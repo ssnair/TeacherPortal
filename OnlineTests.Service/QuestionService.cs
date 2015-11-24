@@ -199,7 +199,8 @@ namespace OnlineTests.Service
                     {
                         id = x.Id,
                         text = x.Text,
-                        DisplayAnswersVertically = x.DisplayAnswersVertically
+                        displayAnswersVertically = x.DisplayAnswersVertically,
+                        timesCanBeUsed = x.TimesCanBeUsed
                     }).ToArray() ;
 
                     var targetsBuffer = new List<MultipleDragAndDrop_Target>();
@@ -211,7 +212,15 @@ namespace OnlineTests.Service
                             id = answerDetails.Id,
                             text = answerDetails.Text,
                             answerId = answerDetails.AnswerId,
-                            answerText = answerDetails.AnswerText
+                            answerText = answerDetails.AnswerText,
+                            setContainerCapacity = answerDetails.SetContainerCapacity,
+                            containerCapacity = answerDetails.ContainerCapacity,
+                            answerOptions = answerDetails.AnswerOptions.Select(x => new MultipleDragAndDrop_TargetAnswerMatch 
+                            { 
+                                id = x.Id,
+                                isCorrect = x.IsCorrect,
+                                worth = x.Worth
+                            }).ToArray()
                         });
                     }
                     mdd.Targets = targetsBuffer.ToArray();
@@ -286,7 +295,15 @@ namespace OnlineTests.Service
                                 id = answerDetails.Id,
                                 text = answerDetails.Text,
                                 answerId = answerDetails.AnswerId,
-                                answerText = answerDetails.AnswerText
+                                answerText = answerDetails.AnswerText,
+                                setContainerCapacity = answerDetails.SetContainerCapacity,
+                                containerCapacity = answerDetails.ContainerCapacity,
+                                answerOptions = answerDetails.AnswerOptions.Select(x => new MultipleDragAndDrop_TargetAnswerMatch
+                                { 
+                                    id = x.Id,
+                                    isCorrect = x.IsCorrect,
+                                    worth = x.Worth
+                                }).ToArray()
                             });
                         }
                         else if (answer.ExendedDetails.IndexOf("MultipleDragAndDrop_JustificationTargetXmlModel") >= 0)

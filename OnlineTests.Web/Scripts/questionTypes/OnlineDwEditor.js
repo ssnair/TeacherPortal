@@ -129,6 +129,7 @@
     function setupEditor() {
 
         $('.qEditor').click(function () {
+            debugger;
             editorElem = this;
             createEditor(this);
         });

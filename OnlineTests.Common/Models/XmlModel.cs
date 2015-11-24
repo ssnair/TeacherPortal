@@ -73,6 +73,7 @@ namespace OnlineTests.Common.Models
         public int Id { get; set; }
         public string Text { get; set; }
         public Int16 DisplayAnswersVertically { get; set; }
+        public int TimesCanBeUsed { get; set; }
     }
 
     public class MultipleDragAndDrop_TargetXmlModel
@@ -81,6 +82,16 @@ namespace OnlineTests.Common.Models
         public string Text { get; set; }
         public int AnswerId { get; set; }
         public string AnswerText { get; set; }
+        public bool SetContainerCapacity { get; set; }
+        public int ContainerCapacity { get; set; }
+        public MultipleDragAndDrop_TargetAnswerMatchXmlModel[] AnswerOptions { get; set; }
+    }
+
+    public class MultipleDragAndDrop_TargetAnswerMatchXmlModel
+    {
+        public int Id { get; set; }
+        public bool IsCorrect { get; set; }
+        public int Worth { get; set; }
     }
 
     public class MultipleDragAndDrop_JustificationQuestionXmlModel

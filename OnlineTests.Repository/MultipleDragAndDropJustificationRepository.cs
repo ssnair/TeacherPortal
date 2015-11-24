@@ -23,7 +23,7 @@ namespace OnlineTests.Repository
                 {
                     Id = x.id,
                     Text = x.text,
-                    DisplayAnswersVertically = x.DisplayAnswersVertically
+                    DisplayAnswersVertically = x.displayAnswersVertically
                 }).ToArray(),
                 JustificationAnswers = question.JustificationAnswersList.Select(x => new MultipleDragAndDrop_JustificationAnswerXmlModel()
                 {
@@ -87,7 +87,7 @@ namespace OnlineTests.Repository
                 {
                     Id = x.id,
                     Text = x.text,
-                    DisplayAnswersVertically = x.DisplayAnswersVertically
+                    DisplayAnswersVertically = x.displayAnswersVertically
                 }).ToArray(),
                 JustificationAnswers = question.JustificationAnswersList.Select(x => new MultipleDragAndDrop_JustificationAnswerXmlModel()
                 {

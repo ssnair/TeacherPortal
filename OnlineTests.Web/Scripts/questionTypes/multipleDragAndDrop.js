@@ -40,7 +40,8 @@
                 id = typeof id !== 'undefined' ? id : getNextDropTargetId();
                 setContainerCapacity = setContainerCapacity !== 'undefined' ? setContainerCapacity : false;
                 containerCapacity = containerCapacity !== 'undefined' ? containerCapacity : 1;
-
+                text = text || 'DROP TARGET ' + id;
+                
                 var newDropTarget = {
                     id: id,
                     text: text,
@@ -65,6 +66,7 @@
             function doAddAnswerOption(id, text, timesCanBeUsed) {
                 id = typeof id !== 'undefined' ? id : getNextAnswerOptionId();
                 timesCanBeUsed = typeof timesCanBeUsed !== 'undefined' ? timesCanBeUsed : 1;
+                text = text || 'ANSWER OPTION ' + id;
 
                 var newAnswerOption = {
                     id: id,
@@ -106,9 +108,101 @@
                 return String.fromCharCode(maxId.charCodeAt(0) + 1);
             }
 
+            function save() {
+                debugger;
+                if (false && !validateEmptyQuestionText(hfQBody.value))
+                    return;
+
+                // TODO: IL - remove hardcoded answers vertically
+                var answers = [];
+                for (i = 0; i < vm.answerOptions.length; i++) {
+                    answers.push({
+                        Id: vm.answerOptions[i].id,
+                        Text: vm.answerOptions[i].text,
+                        DisplayAnswersVertically: $('#cboxAnswersVertically:checked').val() ? 1 : 0,
+                        TimesCanBeUsed: vm.answerOptions[i].timesCanBeUsed
+                    });
+                }
+
+                targets = [];
+                for (i = 0; i < vm.dropTargets.length; i++) {
+                    var dropTarget = {
+                        Id: vm.dropTargets[i].id,
+                        Text: vm.dropTargets[i].text,
+                        SetContainerCapacity: vm.dropTargets[i].setContainerCapacity,
+                        ContainerCapacity: vm.dropTargets[i].containerCapacity,
+                        AnswerOptions: []
+                    };
+                    var answerIndex = -1;
+                    for (var j = 0; j < vm.dropTargets[i].answerOptions.length; j++) {
+                        dropTarget.AnswerOptions.push({
+                            Id: vm.dropTargets[i].answerOptions[j].id,
+                            IsCorrect: vm.dropTargets[i].answerOptions[j].isCorrect,
+                            Worth: vm.dropTargets[i].answerOptions[j].worth
+                        });
+                    }
+                    targets.push(dropTarget);
+                }
+
+                var request = {
+                    id: typeof (globalQuestionId) === 'undefined' ? 0 : globalQuestionId,
+                    subjectId: null,
+                    gradeLevel: null,
+                    questionTypeId: 40,   // Multiple drag and drop
+                    questionText: specialTrim(hfQBody.value || ''),
+                    passageId: null,
+                    complexity: null,
+                    difficulty: null,
+                    userId: null,
+                    minScore: null,
+                    maxScore: null,
+                    targ: null,
+                    courseId: null,
+                    notes: $("#multipleDragAndDrop_Notes").val(),
+                    statusId: 1,
+                    approveUser: null,
+                    answers: answers,
+                    targets: targets
+                };
+
+                $.post(
+                    "/home/MultipleDragAndDrop_Save",
+                    $.toDictionary(request),
+                    function (data, textStatus, jqXHR) {
+                        window.parent.postMessage(data.data + ',40', '*');
+                        //BootstrapDialog.show({
+                        //    type: BootstrapDialog.TYPE_SUCCESS,
+                        //    title: 'Information',
+                        //    message: 'The Question was saved successfully! The Question ID is : ' + data.data,
+                        //    buttons: [{
+                        //        label: 'Ok',
+                        //        action: function (dialogItself) {
+                        //            dialogItself.close();
+                        //        }
+                        //    }]
+                        //});
+                    },
+                    'json')
+                .fail(function (data, textStatus, jqXHR) {
+                    BootstrapDialog.show({
+                        type: BootstrapDialog.TYPE_DANGER,
+                        title: 'Information',
+                        message: 'An error has occured trying to save your Question<br>Please try again!',
+                        buttons: [{
+                            label: 'Ok',
+                            action: function (dialogItself) {
+                                dialogItself.close();
+                            }
+                        }]
+                    });
+                });
+            };
+
+
             (function init() {
                 $scope.addDropTarget = doAddDropTarget;
                 $scope.addAnswerOption = doAddAnswerOption;
+                $scope.save = save;
                 doAddDropTarget();
                 doAddAnswerOption();
 
@@ -252,81 +346,6 @@ $(function () {
         $("#cboxAnswersVertically").prop("checked", displayAnswersVertically);
     });
 
-    $("#bntMultipleDragAndDrop_Save").click(function () {
-        if (!validateEmptyQuestionText(hfQBody.value))
-            return;
-
-        // TODO: IL - remove hardcoded answers vertically
-        var answers = [];
-        for (i = 0; i < multipleDragAndDrop.answers.length; i++) {
-            answers.push({ id: i + 1, text: multipleDragAndDrop.answers[i].text, DisplayAnswersVertically: $('#cboxAnswersVertically:checked').val() ? 1 : 0 });
-        }
-
-        targets = [];
-        for (i = 0; i < multipleDragAndDrop.targets.length; i++) {
-            var answerIndex = -1;
-            for (var j = 0; j < answers.length; j++) {
-                if (multipleDragAndDrop.answers[j].id === multipleDragAndDrop.targets[i].answerId) {
-                    answerIndex = j;
-                    break;
-                }
-            }
-            targets.push({ id: i + 1, text: multipleDragAndDrop.targets[i].text, answerId: answerIndex == -1 ? 0 : answers[answerIndex].id, answerText: answerIndex == -1 ? '' : answers[answerIndex].text });
-        }
-
-        var request = {
-            id: typeof (globalQuestionId) === 'undefined' ? 0 : globalQuestionId,
-            subjectId: null,
-            gradeLevel: null,
-            questionTypeId: 40,   // Multiple drag and drop
-            questionText: specialTrim(hfQBody.value),
-            passageId: null,
-            complexity: null,
-            difficulty: null,
-            userId: null,
-            minScore: null,
-            maxScore: null,
-            targ: null,
-            courseId: null,
-            notes: $("#multipleDragAndDrop_Notes").val(),
-            statusId: 1,
-            approveUser: null,
-            answers: answers,
-            targets: targets
-        };
-
-        $.post(
-            "/OnlineDW/home/MultipleDragAndDrop_Save",
-            $.toDictionary(request),
-            function (data, textStatus, jqXHR) {
-                window.parent.postMessage(data.data + ',40', '*');
-                //BootstrapDialog.show({
-                //    type: BootstrapDialog.TYPE_SUCCESS,
-                //    title: 'Information',
-                //    message: 'The Question was saved successfully! The Question ID is : ' + data.data,
-                //    buttons: [{
-                //        label: 'Ok',
-                //        action: function (dialogItself) {
-                //            dialogItself.close();
-                //        }
-                //    }]
-                //});
-            },
-            'json')
-        .fail(function (data, textStatus, jqXHR) {
-            BootstrapDialog.show({
-                type: BootstrapDialog.TYPE_DANGER,
-                title: 'Information',
-                message: 'An error has occured trying to save your Question<br>Please try again!',
-                buttons: [{
-                    label: 'Ok',
-                    action: function (dialogItself) {
-                        dialogItself.close();
-                    }
-                }]
-            });
-        });
-    });
 
     //// dblclick event for the answer containers (a div with class .draggable-answer)
     //$("#MultipleDragAndDropAnswers").on('dblclick', ".draggable-answer", function (event) {

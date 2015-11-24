@@ -210,8 +210,8 @@ namespace OnlineTests.Common.Models
     {
         public int id { get; set; }
         public string text { get; set; }
-        public Int16 DisplayAnswersVertically { get; set; }
-
+        public Int16 displayAnswersVertically { get; set; }
+        public int timesCanBeUsed { get; set; }
     }
 
     public class MultipleDragAndDrop_Target
@@ -220,6 +220,16 @@ namespace OnlineTests.Common.Models
         public string text { get; set; }
         public int answerId { get; set; }
         public string answerText { get; set; }
+        public bool setContainerCapacity { get; set; }
+        public int containerCapacity { get; set; }
+        public MultipleDragAndDrop_TargetAnswerMatch[] answerOptions { get; set; }
+    }
+
+    public class MultipleDragAndDrop_TargetAnswerMatch
+    {
+        public int id { get; set; }
+        public bool isCorrect { get; set; }
+        public int worth { get; set; }
     }
 
     public class DragAndOrder : Question

@@ -34,7 +34,7 @@
                     <div>{{item.id}}</div>
                   </div>
                   <div class="col-md-9 qEditor">
-                    <span>{{item.placeholder}}</span>
+                    <span>{{item.text}}</span>
                   </div>
                   <div class="col-md-1">
                     <a href="javascript:void(0)" ng-click="removeDropTarget(item)">
@@ -54,10 +54,21 @@
                   <div class="col-md-1">
                     <div>{{item.id}}</div>
                   </div>
-                  <div class="col-md-9 qEditor">
-                    <span>{{item.placeholder}}</span><br />
+                  <div class="col-md-9">
+                    <span>{{item.text}}</span><br />
                     <span>This answer choice can be used
-                                            <select></select>
+                        <select ng-model="item.timesCanBeUsed">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        </select>
                       times</span>
                   </div>
                   <div class="col-md-1">
@@ -83,7 +94,7 @@
               <uib-tab ng-repeat="tab in dropTargets track by $index" heading="{{tab.id}}">
                 <div class="row">
                   <div class="col-md-12">
-                      {{tab.id}}{{tab.placeholder}}
+                      {{tab.id}}{{tab.text}}
                   </div>
                 </div>
                 <div class="row">
@@ -95,20 +106,26 @@
                       <option value="3">3</option>
                       <option value="4">4</option>
                       <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
                     </select>
                   </div>
                 </div>
                 <div class="row">
                   <h1>Answer choice list</h1>
-                  <div class="row" ng-repeat="item in answerOptions">
+                  <div class="row" ng-repeat="item in tab.answerOptions">
                     <div class="col-md-1">
                       <div>{{item.id}}</div>
                     </div>
                     <div class="col-md-4">
-                      <span>{{item.placeholder}}</span>
+                      <span>{{item.answerOption.text}}</span>
                     </div>
                     <div class="col-md-7">
-                      <span>is worth<input type="number" />point(s) and <label><input type="checkbox" ng-model="item.isCorrect">is correct</label>
+                      <span>is worth<input type="number" ng-model="item.worth" />point(s) and <label>
+                        <input type="checkbox" ng-model="item.isCorrect">is correct</label>
                       </span>
                     </div>
                   </div>
@@ -138,7 +155,7 @@
       <div class="panel panel-default">
         <div class="footer-answer" style="display: block; padding-top: 100px; text-align: center;">
           <button id="btnMultipleDragAndDrop_Preview" class="btn btn-info" data-toggle="modal" data-target="#multipleDragAndDrop_Preview">Preview</button>
-          <button class="btn btn-success" id="bntMultipleDragAndDrop_Save">Save</button>
+          <button class="btn btn-success" id="bntMultipleDragAndDrop_Save" ng-click="save()">Save</button>
         </div>
       </div>
 
