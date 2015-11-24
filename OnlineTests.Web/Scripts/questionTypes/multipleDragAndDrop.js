@@ -219,7 +219,9 @@
                 for (var i = 0; i < vm.answerOptions.length; i++) {
                     settings.answers.push({
                         text: vm.answerOptions[i].text,
-                        id: vm.answerOptions[i].id
+                        id: vm.answerOptions[i].id,
+                        timesCanBeUsed: vm.answerOptions[i].timesCanBeUsed,
+                        timesUsed: 0
                     });
                 };
                 debugger;
@@ -405,8 +407,9 @@ MultipleDragAndDrop = function (mode, settings) {
     }
 
     for (var i = 0; i < settings.answers.length; i++) {
-        var answer = new multipleDragAndDropAnswer(this, settings.answers[i].text);
+        var answer = new multipleDragAndDropAnswer(this, settings.answers[i]);
         answer.id = settings.answers[i].id;
+        answer.timesUsed = 0;
         this.answers.push(answer);
     }
 
@@ -507,7 +510,9 @@ var multipleDragAndDropOption = function (parent, option) {
 var multipleDragAndDropAnswer = function (parent, answer) {
     this.parent = parent;
     this.id = Math.floor((Math.random() * 999999) + 1);
-    this.text = answer;
+    this.id = answer.id;
+    this.text = answer.text;
+    this.data = answer
 
     this.draw = function () {
         var self = this;
@@ -560,8 +565,15 @@ var multipleDragAndDropAnswer = function (parent, answer) {
 
                 tgt.answerId = srcId;
                 tgt.answerText = src.text;
+
+                src.data.timesUsed += 1;
+                if (src.data.timesUsed == src.data.timesCanBeUsed) {
+                    alert("foo");
+                }
                 $(event.target).html(src.text);
                 reloadMathJax(tgtDivId);
+
+
             }
         });
 
