@@ -154,7 +154,7 @@
 
       <div class="panel panel-default">
         <div class="footer-answer" style="display: block; padding-top: 100px; text-align: center;">
-          <button id="btnMultipleDragAndDrop_Preview" class="btn btn-info" data-toggle="modal" data-target="#multipleDragAndDrop_Preview">Preview</button>
+          <button id="btnMultipleDragAndDrop_Preview" class="btn btn-info" data-toggle="modal" data-target="#multipleDragAndDrop_Preview" ng-click="preview()">Preview</button>
           <button class="btn btn-success" id="bntMultipleDragAndDrop_Save" ng-click="save()">Save</button>
         </div>
       </div>
@@ -198,11 +198,11 @@
 
       <div id="multipleDragAndDrop_AnswerTemplate" class="hidden">
         <div class="qeditor-answer">
-          <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="{{id}}">
-            {{answer}}
+          <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="[[id]]">
+            [[answer]]
           </div>
           <div>
-            <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteAnswer icon-delete" data-val="{{id}}">Delete</a>
+            <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteAnswer icon-delete" data-val="[[id]]">Delete</a>
           </div>
         </div>
       </div>
@@ -210,35 +210,35 @@
 
       <div id="multipleDragAndDrop_OptionTemplate" class="hidden">
         <div class="qeditor-option">
-          <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="{{id}}" id="{{div_id}}">
-            {{answerText}}
+          <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="[[id]]" id="[[div_id]]">
+            [[answerText]]
           </div>
           <br />
           <div>
-            {{option}}
+            [[option]]
           </div>
           <div>
-            <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteOption icon-delete" data-val="{{id}}">Delete</a>
+            <a href="javascript:void(0)" class="multipleDragAndDrop_DeleteOption icon-delete" data-val="[[id]]">Delete</a>
           </div>
         </div>
       </div>
 
       <div id="multipleDragAndDrop_PreviewAnswerTemplate" class="hidden">
-        <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="{{id}}">
-          {{answer}}
+        <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="[[id]]">
+          [[answer]]
         </div>
       </div>
 
 
       <div id="multipleDragAndDrop_PreviewOptionTemplate" class="hidden">
         <div class="qeditor-option">
-          <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="{{id}}" id="{{div_id}}">
-            {{answerText}}
+          <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="[[id]]" id="[[div_id]]">
+            [[answerText]]
           </div>
           <br>
           <br>
           <div>
-            {{option}}
+            [[option]]
           </div>
         </div>
       </div>

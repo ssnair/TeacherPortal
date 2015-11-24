@@ -19,7 +19,6 @@
             };
 
             $scope.removeAnswerOption = function (item) {
-                debugger;
                 for (var i = 0; i < vm.answerOptions.length; i++) {
                     if (vm.answerOptions[i].id === item.id) {
                         vm.answerOptions.splice(i, 1);
@@ -199,10 +198,61 @@
             };
 
 
+            function preview() {
+                var settings = {
+                    answers: [],
+                    targets: [],
+                    expectedAnswers: []
+                }
+
+                for (var i = 0; i < vm.dropTargets.length; i++) {
+                    settings.targets.push({
+                        text: vm.dropTargets[i].text,
+                        id: vm.dropTargets[i].id
+                    });
+                    //settings.expectedAnswers.push({
+                    //    optionId: multipleDragAndDrop.targets[i].id,
+                    //    answerId: multipleDragAndDrop.targets[i].answerId
+                    //});
+                };
+
+                for (var i = 0; i < vm.answerOptions.length; i++) {
+                    settings.answers.push({
+                        text: vm.answerOptions[i].text,
+                        id: vm.answerOptions[i].id
+                    });
+                };
+                debugger;
+                multipleDragAndDropPreview = new MultipleDragAndDrop('preview', settings);
+
+                var editor = hfQBody.value;
+
+                $('#multipleDragAndDrop_questionContainer').html(editor);
+                $("#multipleDragAndDrop_result").html('');
+
+                // display answers vertically
+                if ($('#cboxAnswersVertically:checked').val() ? 1 : 0 == 1) {
+                    $('#multipleDragAndDropPreviewContainer').addClass("mddAnswerContainer");
+                    $('#multipleDragAndDropOptionsPreviewContainer').addClass("mddOptionContainer");
+
+                    $('#MultipleDragAndDropPreviewAnswers').find('div.draggable-answer').addClass("qeditor-answer-block");
+                    $('#MultipleDragAndDropPreviewOptions').find('div.qeditor-option').addClass("qeditor-option-block");
+                    $('#MultipleDragAndDropPreviewOptions').find('div.qeditor-option').removeClass("qeditor-option");
+
+                    displayAnswersVertically = true;
+                }
+                else {
+                    displayAnswersVertically = false;
+                }
+            };
+
+
+
             (function init() {
                 $scope.addDropTarget = doAddDropTarget;
                 $scope.addAnswerOption = doAddAnswerOption;
                 $scope.save = save;
+                $scope.preview = preview;
                 doAddDropTarget();
                 doAddAnswerOption();
 
@@ -266,54 +316,6 @@ $(function () {
             //ckEditor22.setData('');
             $("#divOptionEditor").html('<span>Click to edit...</span>');
             $("#divOptionEditor").next().val('<span>Click to edit...</span>');
-        }
-    });
-
-    $("#btnMultipleDragAndDrop_Preview").click(function () {
-        var settings = {
-            answers: [],
-            targets: [],
-            expectedAnswers: []
-        }
-
-        for (var i = 0; i < multipleDragAndDrop.targets.length; i++) {
-            settings.targets.push({
-                text: multipleDragAndDrop.targets[i].text,
-                id: multipleDragAndDrop.targets[i].id
-            });
-            settings.expectedAnswers.push({
-                optionId: multipleDragAndDrop.targets[i].id,
-                answerId: multipleDragAndDrop.targets[i].answerId
-            });
-        };
-
-        for (var i = 0; i < multipleDragAndDrop.answers.length; i++) {
-            settings.answers.push({
-                text: multipleDragAndDrop.answers[i].text,
-                id: multipleDragAndDrop.answers[i].id
-            });
-        };
-
-        multipleDragAndDropPreview = new MultipleDragAndDrop('preview', settings);
-
-        var editor = hfQBody.value;
-
-        $('#multipleDragAndDrop_questionContainer').html(editor);
-        $("#multipleDragAndDrop_result").html('');
-
-        // display answers vertically
-        if ($('#cboxAnswersVertically:checked').val() ? 1 : 0 == 1) {
-            $('#multipleDragAndDropPreviewContainer').addClass("mddAnswerContainer");
-            $('#multipleDragAndDropOptionsPreviewContainer').addClass("mddOptionContainer");
-
-            $('#MultipleDragAndDropPreviewAnswers').find('div.draggable-answer').addClass("qeditor-answer-block");
-            $('#MultipleDragAndDropPreviewOptions').find('div.qeditor-option').addClass("qeditor-option-block");
-            $('#MultipleDragAndDropPreviewOptions').find('div.qeditor-option').removeClass("qeditor-option");
-
-            displayAnswersVertically = true;
-        }
-        else {
-            displayAnswersVertically = false;
         }
     });
 
@@ -459,6 +461,7 @@ MultipleDragAndDrop = function (mode, settings) {
     };
 
     this.redraw = function () {
+        debugger;
         this.clearContainer();
         for (var i = 0; i < this.targets.length; i++) {
             this.targets[i].draw();
@@ -486,13 +489,13 @@ var multipleDragAndDropOption = function (parent, option) {
     this.draw = function () {
         var self = this;
         var template = this.parent.mode === 'edit' ? $("#multipleDragAndDrop_OptionTemplate").html() : $("#multipleDragAndDrop_PreviewOptionTemplate").html();
-        template = template.replace("{{option}}", this.text);
+        template = template.replace("[[option]]", this.text);
         // this is needed twice to replace the id on the first and second elements
-        template = template.replace("{{id}}", this.id);
-        template = template.replace("{{id}}", this.id);
+        template = template.replace("[[id]]", this.id);
+        template = template.replace("[[id]]", this.id);
         var divId = this.parent.mode === 'edit' ? this.id : 100 + this.id;
-        template = template.replace("{{div_id}}", 'do' + divId);
-        template = template.replace("{{answerText}}", this.answerText ? this.answerText : '&nbsp;');
+        template = template.replace("[[div_id]]", 'do' + divId);
+        template = template.replace("[[answerText]]", this.answerText ? this.answerText : '&nbsp;');
         this.parent.optionsContainer.html(this.parent.optionsContainer.html() + template);
         $(".multipleDragAndDrop_DeleteOption").click(function (event) {
             var id = $(this).attr('data-val');
@@ -509,11 +512,11 @@ var multipleDragAndDropAnswer = function (parent, answer) {
     this.draw = function () {
         var self = this;
         var template = this.parent.mode === 'edit' ? $("#multipleDragAndDrop_AnswerTemplate").html() : $("#multipleDragAndDrop_PreviewAnswerTemplate").html();
-        template = template.replace("{{answer}}", this.text);
+        template = template.replace("[[answer]]", this.text);
 
         // this is needed twice to replace the id on the first and second elements
-        template = template.replace("{{id}}", this.id);
-        template = template.replace("{{id}}", this.id);
+        template = template.replace("[[id]]", this.id);
+        template = template.replace("[[id]]", this.id);
         this.parent.answersContainer.html(this.parent.answersContainer.html() + template);
         $(".multipleDragAndDrop_DeleteAnswer").click(function () {
             var id = $(this).attr('data-val');
@@ -535,7 +538,7 @@ var multipleDragAndDropAnswer = function (parent, answer) {
             activeClass: "ui-state-hover",
             hoverClass: "ui-state-active",
             drop: function (event, ui) {
-                var srcId = Number(ui.draggable[0].attributes["data-val"].nodeValue);
+                var srcId = ui.draggable[0].attributes["data-val"].nodeValue;
                 var tgtId = Number(event.target.attributes["data-val"].nodeValue);
                 var tgtDivId = event.target.attributes["id"].nodeValue;
 
@@ -549,7 +552,7 @@ var multipleDragAndDropAnswer = function (parent, answer) {
 
                 var tgt = null;
                 for (var i = 0; i < self.parent.targets.length; i++) {
-                    if (self.parent.targets[i].id === tgtId) {
+                    if (self.parent.targets[i].id == tgtId) {
                         tgt = self.parent.targets[i];
                         break;
                     }
