@@ -568,7 +568,8 @@ var multipleDragAndDropAnswer = function (parent, answer) {
 
                 src.data.timesUsed += 1;
                 if (src.data.timesUsed == src.data.timesCanBeUsed) {
-                    alert("foo");
+                    $(ui.draggable[0]).removeClass('btn-primary').addClass('btn-default');
+                    $(ui.draggable[0]).draggable('disable');
                 }
                 $(event.target).html(src.text);
                 reloadMathJax(tgtDivId);
