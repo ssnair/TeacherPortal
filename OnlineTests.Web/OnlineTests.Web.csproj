@@ -1372,6 +1372,7 @@
     <Content Include="Content\spectrum\i18n\jquery.spectrum-zh-tw.js" />
     <Content Include="Content\spectrum\js\spectrum.js" />
     <Content Include="css\app.css" />
+    <Content Include="css\dragular.min.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\bootstrap\css\bootstrap-theme.css.map" />
@@ -1452,12 +1453,15 @@
     <Content Include="lib\angular\ui-bootstrap-custom-0.12.1.min.js" />
     <Content Include="lib\angular\ui-bootstrap-custom-tpls-0.12.1.min.js" />
     <Content Include="lib\angular\version.txt" />
+    <Content Include="Scripts\angular-classy.min.js" />
+    <Content Include="Scripts\angular-dragdrop.min.js" />
     <Content Include="Scripts\angular-mocks.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app\my-template.html" />
     <Content Include="Scripts\app\placeholderQuestion.js" />
     <Content Include="Scripts\app\templates\my-template.html" />
+    <Content Include="Scripts\dragular.min.js" />
     <Content Include="Scripts\iframe-resizer-master\.gitignore" />
     <Content Include="Scripts\iframe-resizer-master\.travis.yml" />
     <Content Include="Scripts\iframe-resizer-master\bower.json" />
@@ -1528,6 +1532,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\ng-ckeditor.min.js" />
     <Content Include="Scripts\ng-spectrum-colorpicker.js" />
+    <Content Include="Scripts\questionTypes\multipleDragAndDrop.js" />
     <Content Include="Scripts\questionTypes\multipleDragAndDrop2.js" />
     <Content Include="Scripts\questionTypes\multipleDragAndDropExpresion.js" />
     <Content Include="Scripts\questionTypes\drawLinesInAChart.js" />
@@ -1540,7 +1545,7 @@
     <Content Include="Scripts\questionTypes\libValidation.js" />
     <Content Include="Scripts\questionTypes\movePoints.js" />
     <Content Include="Scripts\questionTypes\movePointsInAChart.js" />
-    <Content Include="Scripts\questionTypes\multipleDragAndDrop.js" />
+    <None Include="Scripts\questionTypes\multipleDragAndDrop.js.old" />
     <Content Include="Scripts\questionTypes\OnlineDwEditor.js" />
     <Content Include="Scripts\questionTypes\selectableChart.js" />
     <Content Include="Scripts\raphael-min.js" />

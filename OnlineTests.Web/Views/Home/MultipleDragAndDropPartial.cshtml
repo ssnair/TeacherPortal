@@ -1,7 +1,13 @@
-﻿<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.1/angular.min.js"></script>
+﻿@section stylesheets {
+  <link href="~/css/dragular.min.css" rel="stylesheet" />
+  }
+
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.1/angular.min.js"></script>
+<script src="~/Scripts/angular-classy.min.js"></script>
 <script src="~/Scripts/questionTypes/OnlineDwEditor.js"></script>
 <script src="~/Scripts/questionTypes/multipleDragAndDrop.js"></script>
 <script src="~/Scripts/ui-bootstrap-tpls-0.14.3.min.js"></script>
+<script src="~/Scripts/dragular.min.js"></script>
 
 <div ng-app="multipleDragAndDropApp">
   <div class="tab-content my-tab-center" ng-controller="multipleDragAndDropController">
@@ -58,16 +64,16 @@
                     <span>{{item.text}}</span><br />
                     <span>This answer choice can be used
                         <select ng-model="item.timesCanBeUsed">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                          <option value="6">6</option>
+                          <option value="7">7</option>
+                          <option value="8">8</option>
+                          <option value="9">9</option>
+                          <option value="10">10</option>
                         </select>
                       times</span>
                   </div>
@@ -80,7 +86,6 @@
                 <a class="btn btn-success" ng-click="addAnswerOption()">Add new Answer Option</a>
               </div>
             </div>
-
           </div>
         </div>
       </div>
@@ -177,14 +182,22 @@
               <p id="multipleDragAndDrop_questionContainer"></p>
 
               <div id="multipleDragAndDropPreviewContainer">
-                <div class="panel panel-default" style="padding: 10px;">
-                  <div id="MultipleDragAndDropPreviewAnswers">
+                <div class="draggable panel panel-default" dragular="dragularOptions  " style="padding: 10px;">
+                  <div ng-repeat="answer in answerOptions">
+                    <div class="btn btn-primary AnswerOption_75px_55px" ">
+                      {{answer.text}}
+                    </div>
                   </div>
                 </div>
               </div>
-              <div id="multipleDragAndDropOptionsPreviewContainer" class="panel panel-default" style="padding: 10px;">
-                <div id="MultipleDragAndDropPreviewOptions">
+              <div class="panel panel-default" style="padding: 10px;">
+                <div ng-repeat="dropTarget in vm.dropTargets">
+                  {{dropTarget.text}}
+                  <div dragular="dragularOptions" style="border:1px; border-color:red">
+                    foo
+                  </div>
                 </div>
+              </div>
               </div>
               <p id="multipleDragAndDrop_result"></p>
             </div>
@@ -198,7 +211,7 @@
 
       <div id="multipleDragAndDrop_AnswerTemplate" class="hidden">
         <div class="qeditor-answer">
-          <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="[[id]]">
+          <div class="btn btn-primary AnswerOption_75px_55px" data-val="[[id]]">
             [[answer]]
           </div>
           <div>
@@ -210,7 +223,7 @@
 
       <div id="multipleDragAndDrop_OptionTemplate" class="hidden">
         <div class="qeditor-option">
-          <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="[[id]]" id="[[div_id]]">
+          <div class="btn btn-success AnswerOption_75px_55px" data-val="[[id]]" id="[[div_id]]">
             [[answerText]]
           </div>
           <br />
@@ -223,8 +236,13 @@
         </div>
       </div>
 
+      @*TODO: Remove*@
+@*      <div id="multipleDragAndDrop_DropAnswerMatchTemplate" class="hidden">
+        <li id="[[id]]">[[text]]</li>
+      </div>*@
+
       <div id="multipleDragAndDrop_PreviewAnswerTemplate" class="hidden">
-        <div class="btn btn-primary draggable-answer AnswerOption_75px_55px" data-val="[[id]]">
+        <div class="btn btn-primary AnswerOption_75px_55px" data-val="[[id]]">
           [[answer]]
         </div>
       </div>
@@ -232,7 +250,7 @@
 
       <div id="multipleDragAndDrop_PreviewOptionTemplate" class="hidden">
         <div class="qeditor-option">
-          <div class="droppable-option btn btn-success AnswerOption_75px_55px" data-val="[[id]]" id="[[div_id]]">
+          <div class="btn btn-success AnswerOption_75px_55px" data-val="[[id]]" id="[[div_id]]">
             [[answerText]]
           </div>
           <br>
