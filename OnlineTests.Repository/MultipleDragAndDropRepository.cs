@@ -46,6 +46,7 @@ namespace OnlineTests.Repository
                     Text = target.text,
                     SetContainerCapacity = target.setContainerCapacity,
                     ContainerCapacity = target.containerCapacity,
+                    AnswerText = string.Empty,
                     AnswerOptions = target.answerOptions.Select(x => new MultipleDragAndDrop_TargetAnswerMatchXmlModel 
                     { 
                         Id = x.id,
